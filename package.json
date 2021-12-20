@@ -3,7 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "beautiful": "prettier --tab-width 4 --single-quote --trailing-comma all --write 'src/**/*.{js, json}'",
+    "start": "node ./bin/www",
+    "dev": "nodemon src/bin/www"
+  },
+  "lint-staged": {
+    "src/**/*.{js, json}": "prettier --tab-width 4 --single-quote --trailing-comma all --write"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -12,5 +22,11 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "husky": "^4.3.6",
+    "lint-staged": "^10.5.3",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.2.1"
   }
 }
