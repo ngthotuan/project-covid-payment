@@ -1,4 +1,5 @@
-module.exports = {
-    engine: require('./engine'),
-    common: require('./common'),
+function middleware(app){
+    require('./engine')(app),
+    require('./common')(app)
 }
+module.exports = middleware;

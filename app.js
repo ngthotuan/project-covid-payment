@@ -1,13 +1,12 @@
 const createError = require('http-errors');
 const express = require('express');
 
-const {engine, common} = require('./middleware');
+const middleware = require('./middleware');
 const route = require('./routes');
 const db = require('./db');
 const app = express();
 
-engine(app);
-common(app);
+middleware(app);
 route(app);
 db.connect();
 
