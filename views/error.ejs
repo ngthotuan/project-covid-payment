@@ -1,3 +1,11 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!--Error Section-->
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2 text-center">
+        <h1 class="animation-pulse"><i class="fa fa-exclamation-circle text-warning"></i><%= error.status %></h1>
+        <h2 class="h3"><%= message %></h2>
+        <p class="text-muted">
+            <%= error.stack %>
+        </p>
+    </div>
+</div>
+<!-- End Error Section -->

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "beautiful": "prettier --tab-width 4 --single-quote --trailing-comma all --write 'src/**/*.{js, json}'",
-    "start": "node ./bin/www",
+    "start": "cross-env NODE_ENV=production node ./bin/www",
     "dev": "nodemon src/bin/www"
   },
   "lint-staged": {
@@ -17,11 +17,17 @@
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
+    "cross-env": "^7.0.3",
     "debug": "~2.6.9",
+    "dotenv": "^10.0.0",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
+    "express-ejs-layouts": "^2.5.1",
     "http-errors": "~1.6.3",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.12.0"
   },
   "devDependencies": {
     "husky": "^4.3.6",
