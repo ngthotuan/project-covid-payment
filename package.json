@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "beautiful": "prettier --tab-width 4 --single-quote --trailing-comma all --write 'src/**/*.{js, json}'",
-    "start": "cross-env NODE_ENV=production node ./bin/www",
+    "start": "cross-env NODE_ENV=production node src/bin/www",
     "dev": "nodemon src/bin/www"
   },
   "lint-staged": {
