@@ -1,9 +1,10 @@
-const accountModel = require('../models/account.model');
+const { sequelize } = require('../db');
+const { account: Account } = require('../models')(sequelize);
 
-function add() {}
+function findAll() {
+    return Account.findAll();
+}
 
 module.exports = {
-    add: function () {
-        //
-    },
+    findAll,
 };
