@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 module.exports = function (sequelize, DataTypes) {
     return sequelize.define(
-        'category',
+        'product_categories',
         {
             id: {
                 autoIncrement: true,
@@ -9,27 +9,35 @@ module.exports = function (sequelize, DataTypes) {
                 allowNull: false,
                 primaryKey: true,
             },
-            limit_person: {
+            category_id: {
+                type: DataTypes.BIGINT,
+                allowNull: true,
+                references: {
+                    model: 'categories',
+                    key: 'id',
+                },
+            },
+            product_id: {
+                type: DataTypes.BIGINT,
+                allowNull: true,
+                references: {
+                    model: 'product',
+                    key: 'id',
+                },
+            },
+            limit_product: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
-            },
-            limit_time: {
-                type: DataTypes.STRING(255),
-                allowNull: true,
-            },
-            name: {
-                type: DataTypes.STRING(255),
-                allowNull: true,
             },
         },
         {
             sequelize,
-            tableName: 'category',
+            tableName: 'product_categories',
             schema: 'public',
             timestamps: false,
             indexes: [
                 {
-                    name: 'category_pkey',
+                    name: 'product_categories_pkey',
                     unique: true,
                     fields: [{ name: 'id' }],
                 },

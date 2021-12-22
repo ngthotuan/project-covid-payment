@@ -21,14 +21,6 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING(255),
                 allowNull: true,
             },
-            category_id: {
-                type: DataTypes.BIGINT,
-                allowNull: true,
-                references: {
-                    model: 'category',
-                    key: 'id',
-                },
-            },
         },
         {
             sequelize,

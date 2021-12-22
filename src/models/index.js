@@ -10,6 +10,7 @@ const _order_product = require('./order_product.model');
 const _orders = require('./orders.model');
 const _patient = require('./patient.model');
 const _product = require('./product.model');
+const _product_categories = require('./product_categories.model');
 const _province = require('./province.model');
 const _status_histories = require('./status_histories.model');
 const _transaction_histories = require('./transaction_histories.model');
@@ -27,6 +28,7 @@ function initModels(sequelize) {
     const orders = _orders(sequelize, DataTypes);
     const patient = _patient(sequelize, DataTypes);
     const product = _product(sequelize, DataTypes);
+    const product_categories = _product_categories(sequelize, DataTypes);
     const province = _province(sequelize, DataTypes);
     const status_histories = _status_histories(sequelize, DataTypes);
     const transaction_histories = _transaction_histories(sequelize, DataTypes);
@@ -42,8 +44,24 @@ function initModels(sequelize) {
     });
     orders.belongsTo(category, { as: 'category', foreignKey: 'category_id' });
     category.hasMany(orders, { as: 'orders', foreignKey: 'category_id' });
-    product.belongsTo(category, { as: 'category', foreignKey: 'category_id' });
-    category.hasMany(product, { as: 'products', foreignKey: 'category_id' });
+    // product.belongsTo(category, { as: 'category', foreignKey: 'category_id' });
+    // category.hasMany(product, { as: 'products', foreignKey: 'category_id' });
+    product_categories.belongsTo(product, {
+        as: 'product',
+        foreignKey: 'product_id',
+    });
+    product.hasMany(product_categories, {
+        as: 'product_categories',
+        foreignKey: 'product_id',
+    });
+    product_categories.belongsTo(category, {
+        as: 'category',
+        foreignKey: 'category_id',
+    });
+    category.hasMany(product_categories, {
+        as: 'product_categories',
+        foreignKey: 'category_id',
+    });
     hospital.belongsTo(district, { as: 'district', foreignKey: 'district_id' });
     district.hasMany(hospital, { as: 'hospitals', foreignKey: 'district_id' });
     patient.belongsTo(district, { as: 'district', foreignKey: 'district_id' });
@@ -109,21 +127,22 @@ function initModels(sequelize) {
     ward.hasMany(patient, { as: 'patients', foreignKey: 'ward_id' });
 
     return {
-        account,
-        account_histories,
-        category,
-        district,
-        hospital,
-        hospital_histories,
-        image,
-        order_product,
-        orders,
-        patient,
-        product,
-        province,
-        status_histories,
-        transaction_histories,
-        ward,
+        AccountModel: account,
+        AccountHistoryModel: account_histories,
+        CategoryModel: category,
+        DistrictModel: district,
+        HospitalModel: hospital,
+        HospitalHistoryModel: hospital_histories,
+        ImageModel: image,
+        OrderProductModel: order_product,
+        OrdersModel: orders,
+        PatientModel: patient,
+        ProductModel: product,
+        ProductCategoryModel: product_categories,
+        ProvinceModel: province,
+        StatusHistoryModel: status_histories,
+        TransactionHistoryModel: transaction_histories,
+        WardModel: ward,
     };
 }
 module.exports = initModels;

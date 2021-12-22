@@ -8,7 +8,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
     dialect: DB_DIALECT /* one of 'mysql' | 'mariadb' | 'postgres' | 'mssql' */,
 });
 
-function connect() {
+async function connect() {
     sequelize
         .authenticate()
         .then(() => {
