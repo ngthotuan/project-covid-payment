@@ -1,8 +1,8 @@
 const { sequelize } = require('../db');
-const { AccountModel } = require('../models')(sequelize);
+const { CategoryModel } = require('../models')(sequelize);
 
 function findAll() {
-    return AccountModel.findAll();
+    return CategoryModel.findAll();
 }
 
 module.exports = {

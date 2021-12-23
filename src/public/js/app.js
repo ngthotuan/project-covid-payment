@@ -964,7 +964,7 @@ var App = (function () {
                     if (themeLink.length) {
                         themeLink.attr('href', themeColorCke);
                     } else {
-                        $('link[href="css/themes.css"]').before(
+                        $('link[href="/css/themes.css"]').before(
                             '<link id="theme-link" rel="stylesheet" href="' +
                                 themeColorCke +
                                 '">',
@@ -1000,7 +1000,7 @@ var App = (function () {
                 if (themeLink.length) {
                     themeLink.attr('href', themeColor);
                 } else {
-                    $('link[href="css/themes.css"]').before(
+                    $('link[href="/css/themes.css"]').before(
                         '<link id="theme-link" rel="stylesheet" href="' +
                             themeColor +
                             '">',
