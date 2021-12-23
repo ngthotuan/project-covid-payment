@@ -1,22 +1,32 @@
+<style>
+    @media (min-width: 768px) {
+        .row.equal {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
+</style>
 <!-- Page content -->
 <div id="page-content">
     <!-- Product Edit Content -->
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-sm-10 col-sm-offset-1">
             <!-- General Data Block -->
             <div class="block">
                 <!-- General Data Title -->
                 <div class="block-title">
-                    <h2><i class="fa fa-pencil"></i> <strong>Thông tin chung</strong></h2>
+                    <h2><i class="fa fa-pencil"></i> <strong>Thông tin sản phẩm</strong></h2>
                 </div>
                 <!-- END General Data Title -->
 
                 <!-- General Data Content -->
-                <form method="post" class="form-horizontal form-bordered">
+                <form method="post" enctype="multipart/form-data" class="form-horizontal form-bordered">
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="product-name">Tên</label>
                         <div class="col-md-9">
-                            <input type="text" id="product-name" name="name" class="form-control" placeholder="Nhập tên sản phẩm">
+                            <input type="text" id="product-name" name="name" class="form-control"
+                                   value="<%= typeof product !== 'undefined' ? product.name : '' %>"
+                                   placeholder="Nhập tên sản phẩm">
                         </div>
                     </div>
                     <div class="form-group">
@@ -24,20 +34,54 @@
                         <div class="col-md-9">
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-usd"></i></div>
-                                <input type="text" id="product-price" name="amount" class="form-control" placeholder="0,00">
+                                <input type="text" id="product-price" name="amount" class="form-control"
+                                       value="<%= typeof product !== 'undefined' ? Number(product.amount) : '' %>"
+                                       placeholder="0,00">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="product-unit">Đơn vị định lượng</label>
                         <div class="col-md-9">
-                            <input type="text" id="product-unit" name="unit" class="form-control" placeholder="Cái, Gói, Kg,...">
+                            <input type="text" id="product-unit" name="unit" class="form-control"
+                                   value="<%= typeof product !== 'undefined' ? product.unit : '' %>"
+                                   placeholder="Cái, Gói, Kg,...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="product-image">Hình ảnh</label>
+                        <div class="col-md-9">
+                            <div class="row equal" id="product-images">
+                                <% if (typeof product !== 'undefined' && product.images.length > 0) { %>
+                                    <% for (let i = 0; i < product.images.length; i++) { %>
+                                        <div class="col-sm-6 block extra-image">
+                                            <label></label><br>
+                                            <button onclick="removeExtraImage(this)"
+                                                    class="btn fa fa-times-circle fa-2x text-danger"
+                                                    title="Xóa ảnh này"></button>
+                                            <img class="img-fluid" style="width: 90%"
+                                                 src="/product-images/<%= product.images[i].path %>"
+                                                 alt="<%= product.images[i].path %>"><br>
+                                            <input accept="image/*" class="form-file m-2" name="images" type="file"/>
+                                            <input type="hidden" name="imageIds" value="<%= product.images[i].id %>">
+                                            <input type="hidden" name="imagePaths" value="<%= product.images[i].path %>">
+                                        </div>
+                                    <% } %>
+                                <% } %>
+                            <div class="col-sm-6 block extra-image">
+                                <label></label><br>
+                                <img alt="Xem trước hình ảnh" class="img-fluid" style="width: 90%"
+                                     src="/img/image-thumbnail.png"><br>
+                                <input accept="image/*" class="form-file m-2" name="images" type="file"/>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group form-actions">
-                        <div class="col-md-9 col-md-offset-3">
-                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i> Lưu</button>
-                            <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Xóa</button>
+                        <div class="col-md-6 col-md-offset-6">
+                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i> Lưu
+                            </button>
+                            <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Xóa
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -45,25 +89,58 @@
             </div>
             <!-- END General Data Block -->
         </div>
-        <div class="col-lg-6">
-            <!-- Product Images Block -->
-            <div class="block">
-                <!-- Product Images Title -->
-                <div class="block-title">
-                    <h2><i class="fa fa-picture-o"></i> <strong>Hình ảnh</strong></h2>
-                </div>
-                <!-- END Product Images Title -->
-
-                <!-- Product Images Content -->
-                <div class="block-section">
-                    <!-- Dropzone.js, You can check out https://github.com/enyo/dropzone/wiki for usage examples -->
-                    <form action="page_ecom_product_edit.html" class="dropzone"></form>
-                </div>
-                <!-- END Product Images Content -->
-            </div>
-            <!-- END Product Images Block -->
-        </div>
     </div>
     <!-- END Product Edit Content -->
 </div>
 <!-- END Page Content -->
+<script>
+    $(function () {
+        $('input[name=images]').change(function () {
+            handleExtraInputChange(this);
+        });
+        updateExtrasImageName();
+    })
+
+    function handleExtraInputChange(input) {
+        // show thumbnail
+        const parent = $(input).parent();
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            parent.children('img').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(file);
+        // update name (for update)
+        parent.children('input[name=imagePaths]').val(file.name);
+
+        const extraImages = $('.extra-image');
+        if (extraImages.last().is(parent)) {
+            // add remove button
+            const removeBtn = `<button onclick="removeExtraImage(this)"
+                            class="btn fa fa-times-circle fa-2x text-danger"
+                            title="Xóa ảnh này"></button>`;
+            parent.children('label').after(removeBtn);
+
+            // addNextExtraImageSection
+            const html = `<div class="col-sm-6 block extra-image">
+                                <label></label><br>
+                                <img alt="Xem trước hình ảnh" class="img-fluid" style="width: 90%"
+                                     src="/img/image-thumbnail.png"><br>
+                                <input onchange="handleExtraInputChange(this)
+                                    accept="image/*" class="form-file m-2" name="images" type="file"/>
+                            </div>`;
+            $("#product-images").append(html);
+        }
+    }
+
+    function removeExtraImage(btn) {
+        $(btn).parents('.extra-image').remove();
+        updateExtrasImageName();
+    }
+
+    function updateExtrasImageName() {
+        $('.extra-image label').each(function (index) {
+            $(this).text('#' + (index + 1));
+        });
+    }
+</script>
