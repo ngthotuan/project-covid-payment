@@ -1,11 +1,29 @@
 <!--Error Section-->
-<div class="row">
-    <div class="col-sm-8 col-sm-offset-2 text-center">
-        <h1 class="animation-pulse"><i class="fa fa-exclamation-circle text-warning"></i><%= error.status %></h1>
-        <h2 class="h3"><%= message %></h2>
-        <p class="text-muted">
-            <%= error.stack %>
-        </p>
+<div id="page-content">
+    <!-- Page Header -->
+    <div class="content-header">
+        <div class="header-section">
+            <h1>
+                <i class="gi gi-brush"></i>Lỗi</small>
+            </h1>
+        </div>
     </div>
+    <!-- END Page Header -->
+
+    <!-- Example Block -->
+    <div class="block">
+        <!-- Example Content -->
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <h1 class="animation-pulse"><i class="fa fa-exclamation-circle text-warning"></i><%= error.status %></h1>
+                <h2 class="h3"><%= message %></h2>
+                <p class="text-muted">
+                    <%= error.stack %>
+                </p>
+            </div>
+        </div>
+        <!-- END Example Content -->
+    </div>
+    <!-- END Example Block -->
 </div>
 <!-- End Error Section -->
