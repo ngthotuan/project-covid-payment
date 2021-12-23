@@ -1,22 +1,9 @@
 <!-- Page content -->
 <div id="page-content">
-    <!-- eCommerce Products Header -->
-    <div class="content-header">
-        <ul class="nav-horizontal text-center">
-            <li class="active">
-                <a href="/products"><i class="gi gi-shopping_bag"></i>Danh sách sản phẩm</a>
-            </li>
-            <li>
-                <a href="/products/new"><i class="gi gi-pencil"></i>Sửa sản phẩm</a>
-            </li>
-        </ul>
-    </div>
-    <!-- END eCommerce Products Header -->
-
     <!-- Quick Stats -->
     <div class="row text-center">
         <div class="col-sm-6">
-            <a href="/products/new" class="widget widget-hover-effect2">
+            <a href="/products/create" class="widget widget-hover-effect2">
                 <div class="widget-extra themed-background-success">
                     <h4 class="widget-content-light"><strong>Tạo mới</strong> sản phẩm</h4>
                 </div>
@@ -29,7 +16,7 @@
                 <div class="widget-extra themed-background-dark">
                     <h4 class="widget-content-light"><strong>Tất cả</strong> sản phẩm</h4>
                 </div>
-                <div class="widget-extra-full"><span class="h2 themed-color-dark animation-expandOpen">2</span>
+                <div class="widget-extra-full"><span class="h2 themed-color-dark animation-expandOpen"><%= products.length %></span>
                 </div>
             </a>
         </div>
@@ -56,38 +43,27 @@
             </tr>
             </thead>
             <tbody>
+            <% products.forEach(function(product) { %>
             <tr>
-                <td class="text-center"><a href="page_ecom_product_edit.html"><strong>PID.8799</strong></a></td>
-                <td><a href="page_ecom_product_edit.html">Product #99</a></td>
-                <td class="text-right hidden-xs"><strong>$81,00</strong></td>
-                <td class="hidden-xs text-center">Cái</td>
+                <td class="text-center"><a href="/products/edit/<%= product.id %>"><strong><%= product.id %></strong></a></td>
+                <td><a href="/products/edit/<%= product.id %>"><%= product.name %></a></td>
+                <td class="text-right hidden-xs"><strong><%= product.amount %></strong></td>
+                <td class="hidden-xs text-center"><%= product.unit %></td>
                 <td class="text-center">
                     <div class="btn-group btn-group-xs">
-                        <a href="page_ecom_product_edit.html" data-toggle="tooltip" title="Edit" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+                        <a href="/products/edit/<%= product.id %>" data-toggle="tooltip" title="Edit" class="btn btn-default"><i class="fa fa-pencil"></i></a>
                         <a href="javascript:void(0)" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
                     </div>
                 </td>
             </tr>
-            <tr>
-                <td class="text-center"><a href="page_ecom_product_edit.html"><strong>PID.8797</strong></a></td>
-                <td><a href="page_ecom_product_edit.html">Product #97</a></td>
-                <td class="text-right hidden-xs"><strong>$97,00</strong></td>
-                <td class="hidden-xs text-center">Cái</td>
-                <td class="text-center">
-                    <div class="btn-group btn-group-xs">
-                        <a href="page_ecom_product_edit.html" data-toggle="tooltip" title="Edit" class="btn btn-default"><i class="fa fa-pencil"></i></a>
-                        <a href="javascript:void(0)" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
-                    </div>
-                </td>
-            </tr>
+            <% }); %>
             </tbody>
         </table>
         <!-- END All Products Content -->
     </div>
     <!-- END All Products Block -->
-    <!-- Load and execute javascript code used only in this page -->
-
-    <script src="/js/pages/ecomProducts.js"></script>
-    <script>$(function(){ EcomProducts.init(); });</script>
 </div>
 <!-- END Page Content -->
+<!-- Load and execute javascript code used only in this page -->
+<script src="/js/pages/ecomProducts.js"></script>
+<script>$(function(){ EcomProducts.init(); });</script>
