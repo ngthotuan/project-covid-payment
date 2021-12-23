@@ -1,0 +1,69 @@
+<!-- Page content -->
+<div id="page-content">
+    <!-- Product Edit Content -->
+    <div class="row">
+        <div class="col-lg-6">
+            <!-- General Data Block -->
+            <div class="block">
+                <!-- General Data Title -->
+                <div class="block-title">
+                    <h2><i class="fa fa-pencil"></i> <strong>Thông tin chung</strong></h2>
+                </div>
+                <!-- END General Data Title -->
+
+                <!-- General Data Content -->
+                <form method="post" class="form-horizontal form-bordered">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="product-name">Tên</label>
+                        <div class="col-md-9">
+                            <input type="text" id="product-name" name="name" class="form-control" placeholder="Nhập tên sản phẩm">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="product-price">Giá tiền</label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-usd"></i></div>
+                                <input type="text" id="product-price" name="amount" class="form-control" placeholder="0,00">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="product-unit">Đơn vị định lượng</label>
+                        <div class="col-md-9">
+                            <input type="text" id="product-unit" name="unit" class="form-control" placeholder="Cái, Gói, Kg,...">
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i> Lưu</button>
+                            <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Xóa</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END General Data Content -->
+            </div>
+            <!-- END General Data Block -->
+        </div>
+        <div class="col-lg-6">
+            <!-- Product Images Block -->
+            <div class="block">
+                <!-- Product Images Title -->
+                <div class="block-title">
+                    <h2><i class="fa fa-picture-o"></i> <strong>Hình ảnh</strong></h2>
+                </div>
+                <!-- END Product Images Title -->
+
+                <!-- Product Images Content -->
+                <div class="block-section">
+                    <!-- Dropzone.js, You can check out https://github.com/enyo/dropzone/wiki for usage examples -->
+                    <form action="page_ecom_product_edit.html" class="dropzone"></form>
+                </div>
+                <!-- END Product Images Content -->
+            </div>
+            <!-- END Product Images Block -->
+        </div>
+    </div>
+    <!-- END Product Edit Content -->
+</div>
+<!-- END Page Content -->

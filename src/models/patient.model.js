@@ -70,6 +70,7 @@ module.exports = function (sequelize, DataTypes) {
                 },
             },
             ward_id: {
+                fetch: 'EAGER',
                 type: DataTypes.BIGINT,
                 allowNull: true,
                 references: {

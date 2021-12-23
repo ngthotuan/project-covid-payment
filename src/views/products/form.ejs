@@ -1,18 +1,5 @@
 <!-- Page content -->
 <div id="page-content">
-    <!-- eCommerce Products Header -->
-    <div class="content-header">
-        <ul class="nav-horizontal text-center">
-            <li>
-                <a href="/products"><i class="gi gi-shopping_bag"></i>Danh sách sản phẩm</a>
-            </li>
-            <li class="active">
-                <a href="/products/new"><i class="gi gi-pencil"></i>Sửa sản phẩm</a>
-            </li>
-        </ul>
-    </div>
-    <!-- END eCommerce Products Header -->
-
     <!-- Product Edit Content -->
     <div class="row">
         <div class="col-lg-6">
@@ -25,11 +12,11 @@
                 <!-- END General Data Title -->
 
                 <!-- General Data Content -->
-                <form method="post" class="form-horizontal form-bordered" onsubmit="return false;">
+                <form method="post" class="form-horizontal form-bordered">
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="product-name">Tên</label>
                         <div class="col-md-9">
-                            <input type="text" id="product-name" name="product-name" class="form-control" placeholder="Nhập tên sản phẩm">
+                            <input type="text" id="product-name" name="name" class="form-control" placeholder="Nhập tên sản phẩm">
                         </div>
                     </div>
                     <div class="form-group">
@@ -37,20 +24,20 @@
                         <div class="col-md-9">
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-usd"></i></div>
-                                <input type="text" id="product-price" name="product-price" class="form-control" placeholder="0,00">
+                                <input type="text" id="product-price" name="amount" class="form-control" placeholder="0,00">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="product-name">Đơn vị định lượng</label>
+                        <label class="col-md-3 control-label" for="product-unit">Đơn vị định lượng</label>
                         <div class="col-md-9">
-                            <input type="text" id="product-name" name="product-name" class="form-control" placeholder="Cái, Gói, Kg,...">
+                            <input type="text" id="product-unit" name="unit" class="form-control" placeholder="Cái, Gói, Kg,...">
                         </div>
                     </div>
                     <div class="form-group form-actions">
                         <div class="col-md-9 col-md-offset-3">
-                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i> Save</button>
-                            <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Reset</button>
+                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i> Lưu</button>
+                            <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Xóa</button>
                         </div>
                     </div>
                 </form>
