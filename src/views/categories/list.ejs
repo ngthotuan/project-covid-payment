@@ -1,0 +1,109 @@
+<!-- Page content -->
+<div id="page-content">
+  <!-- Quick Stats -->
+  <div class="row text-center">
+    <div class="col-sm-6">
+      <a href="/categories/create" class="widget widget-hover-effect2">
+        <div class="widget-extra themed-background-success">
+          <h4 class="widget-content-light">
+            <strong>Tạo mới</strong> gói nhu yếu phẩm
+          </h4>
+        </div>
+        <div class="widget-extra-full">
+          <span class="h2 text-success animation-expandOpen"
+            ><i class="fa fa-plus"></i
+          ></span>
+        </div>
+      </a>
+    </div>
+    <div class="col-sm-6">
+      <a href="javascript:void(0)" class="widget widget-hover-effect2">
+        <div class="widget-extra themed-background-dark">
+          <h4 class="widget-content-light">
+            <strong>Tất cả</strong> gói nhu yếu phẩm
+          </h4>
+        </div>
+        <div class="widget-extra-full">
+          <span class="h2 themed-color-dark animation-expandOpen"
+            ><%= categories.length%></span
+          >
+        </div>
+      </a>
+    </div>
+  </div>
+  <!-- END Quick Stats -->
+
+  <!-- All Products Block -->
+  <div class="block full">
+    <!-- All Products Title -->
+    <div class="block-title">
+      <h2><strong>Tất cả</strong> gói nhu yếu phẩm</h2>
+    </div>
+    <!-- END All Products Title -->
+
+    <!-- All Products Content -->
+    <table
+      id="ecom-categories"
+      class="table table-bordered table-striped table-vcenter"
+    >
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 70px">Mã</th>
+          <th>Tên</th>
+          <th class="text-right hidden-xs">Giới hạn</th>
+          <th class="hidden-xs text-center">Thời gian</th>
+          <th class="text-center">Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% categories.forEach(function(category) { %>
+        <tr>
+          <td class="text-center">
+            <a href="/categorys/edit/<%= category.id %>"
+              ><strong><%= category.id %></strong></a
+            >
+          </td>
+          <td>
+            <a href="/categorys/edit/<%= category.id %>"
+              ><%= category.name %></a
+            >
+          </td>
+          <td class="text-right hidden-xs">
+            <strong><%= category.limit_person %></strong>
+          </td>
+          <td class="hidden-xs text-center"><%= category.limit_time %></td>
+          <td class="text-center">
+            <div class="btn-group btn-group-xs">
+              <a
+                href="/categorys/edit/<%= category.id %>"
+                data-toggle="tooltip"
+                title="Edit"
+                class="btn btn-default"
+                ><i class="fa fa-pencil"></i
+              ></a>
+              <a
+                href="javascript:void(0)"
+                data-toggle="tooltip"
+                title="Delete"
+                class="btn btn-xs btn-danger"
+                ><i class="fa fa-times"></i
+              ></a>
+            </div>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+    <!-- END All Products Content -->
+  </div>
+  <!-- END All Products Block -->
+  <!-- Load and execute javascript code used only in this page -->
+
+  <script src="/js/pages/ecomCategory.js"></script>
+  <script>
+    $(function () {
+      EcomCategory.init();
+    });
+  </script>
+</div>
+<!-- END Page Content -->

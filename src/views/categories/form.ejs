@@ -1,0 +1,143 @@
+<!-- Page content -->
+<div id="page-content">
+  <div class="block full">
+    <!-- All Products Title -->
+    <div class="block-title">
+      <h2><strong>Tạo mới</strong> gói nhu yếu phẩm</h2>
+    </div>
+
+    <!-- Product Edit Content -->
+    <div class="row">
+      <form method="post" actions="/categories/create">
+        <div class="col-lg-5">
+          <!-- General Data Block -->
+          <div class="block" class="">
+            <!-- General Data Title -->
+            <div class="block-title">
+              <h2>
+                <i class="fa fa-pencil"></i> <strong>Thông tin gói</strong>
+              </h2>
+            </div>
+            <!-- END General Data Title -->
+
+            <!-- General Data Content -->
+            <div class="form-horizontal form-bordered">
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="product-name"
+                  >Tên</label
+                >
+                <div class="col-md-9">
+                  <input
+                    type="text"
+                    id="product-name"
+                    name="name"
+                    class="form-control"
+                    placeholder="Nhập tên sản phẩm"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label"
+                  >Giới hạn/người</label
+                >
+                <div class="col-md-9">
+                  <input
+                    type="number"
+                    id="limit-person"
+                    name="limit_person"
+                    class="form-control"
+                    placeholder="Nhập số lượng"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="example-chosen">Thời gian giới hạn</label>
+                <div class="col-md-9">
+                    <select
+                    id="limitTime"
+                     name="limit_time"
+                    class="select-chosen"
+                    data-placeholder="Chọn thời gian..."
+                    style="width: 250px"
+                  >
+                    <option></option>
+                    <!-- Required for data-placeholder attribute to work with Chosen plugin -->
+                    <option value="DATE">DATE</option>
+                    <option value="WEEK">WEEK</option>
+                    <option value="MONTH">MONTH</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!-- END General Data Content -->
+          </div>
+          <!-- END General Data Block -->
+        </div>
+        <div class="col-lg-7">
+          <!-- Product Images Block -->
+          <div class="block">
+            <!-- Product Images Title -->
+            <div class="block-title">
+              <h2>
+                <i class="gi gi-cake sidebar-nav-icon"></i>
+                <strong>Sản phẩm</strong>
+              </h2>
+            </div>
+            <!-- END Product Images Title -->
+            <div id="category-product">
+            <div id="product1" class="form-horizontal form-bordered">
+              <div class="form-group">
+                <label class="col-md-2 control-label"
+                  >Sản phẩm</label
+                >
+                <div class="col-md-5">
+                  <select
+                    id="example-chosen"
+                    name="product_id"
+                    class="select-chosen"
+                    data-placeholder="Chọn sản phẩm..."
+                    style="width: 250px"
+                  >
+                    <option></option>
+                    <!-- Required for data-placeholder attribute to work with Chosen plugin -->
+                    <% products.forEach(function(product) { %>
+                    <option value=<%=product.id%>
+                      ><%= product.name%>
+                    </option>
+                    <%})%>
+                  </select>
+                </div>
+                <label class="col-md-2 control-label">Giới hạn</label>
+                <div class="col-md-3">
+                  <input type="number" id="limit_product" name="limit_product"
+                  class="form-control" placeholder="Nhập số lượng" min="0"
+                  step="1">
+                </div>
+              </div>
+            </div>
+
+            <!-- END Product Images Content -->
+          </div>
+          <div><button type="button" class="btn btn-primary mb-2" onClick="addNextProduct()">
+                                                      Thêm sản phẩm
+                                                   </button></div>
+                      </div>
+          <!-- END Product Images Block -->
+        </div>
+        <div class="form-group form-actions">
+          <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary">
+              <i class="fa fa-floppy-o"></i> Save
+            </button>
+            <button type="reset" class="btn btn-warning">
+              <i class="fa fa-repeat"></i> Reset
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- END Product Edit Content -->
+  </div>
+  <!-- END Page Content -->
+  <script src="/js/pages/ecomCategory.js"></script>
+</div>

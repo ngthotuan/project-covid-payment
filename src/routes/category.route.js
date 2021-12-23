@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const { accountController } = require('../controllers');
+const { categoryController } = require('../controllers');
 
-router.get('/', accountController.list);
+router.get('/', categoryController.list);
+router.get('/create', categoryController.showCreate);
+router.post('/create', categoryController.create);
 
 module.exports = router;

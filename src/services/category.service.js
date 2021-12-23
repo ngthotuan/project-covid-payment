@@ -1,10 +1,29 @@
 const { sequelize } = require('../db');
-const { CategoryModel } = require('../models')(sequelize);
+const { CategoryModel, ProductCategoryModel } = require('../models')(sequelize);
 
-function findAll() {
+const findAll = () => {
     return CategoryModel.findAll();
-}
+};
+
+const createCategory = async (category, products, limitProducts) => {
+    const categorySave = await CategoryModel.create(category);
+    await categorySave.save();
+    for (let i = 0; i < products.length; i++) {
+        const product_id = products[i];
+        const limit_product = limitProducts[i];
+        const category_id = categorySave.id;
+        if (product_id) {
+            const productCategory = await ProductCategoryModel.create({
+                category_id,
+                product_id,
+                limit_product,
+            });
+            await productCategory.save();
+        }
+    }
+};
 
 module.exports = {
     findAll,
+    createCategory,
 };
