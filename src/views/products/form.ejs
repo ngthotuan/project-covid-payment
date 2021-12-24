@@ -1,11 +1,4 @@
-<style>
-    @media (min-width: 768px) {
-        .row.equal {
-            display: flex;
-            flex-wrap: wrap;
-        }
-    }
-</style>
+<link rel="stylesheet" href="/css/products/product-form.css">
 <!-- Page content -->
 <div id="page-content">
     <!-- Product Edit Content -->
@@ -51,15 +44,14 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="product-image">Hình ảnh</label>
                         <div class="col-md-9">
-                            <div class="row equal" id="product-images">
+                            <div class="row equal m-2" id="product-images">
                                 <% if (typeof product !== 'undefined' && product.images.length > 0) { %>
                                     <% for (let i = 0; i < product.images.length; i++) { %>
                                         <div class="col-sm-6 block extra-image">
-                                            <label></label><br>
                                             <button onclick="removeExtraImage(this)"
-                                                    class="btn fa fa-times-circle fa-2x text-danger"
+                                                    class="btn fa fa-times-circle fa-2x text-danger center"
                                                     title="Xóa ảnh này"></button>
-                                            <img class="img-fluid" style="width: 90%"
+                                            <img class="w-90"
                                                  src="/product-images/<%= product.images[i].path %>"
                                                  alt="<%= product.images[i].path %>"><br>
                                             <input accept="image/*" class="form-file m-2" name="images" type="file"/>
@@ -69,8 +61,7 @@
                                     <% } %>
                                 <% } %>
                             <div class="col-sm-6 block extra-image">
-                                <label></label><br>
-                                <img alt="Xem trước hình ảnh" class="img-fluid" style="width: 90%"
+                                <img alt="Xem trước hình ảnh" class="w-90"
                                      src="/img/image-thumbnail.png"><br>
                                 <input accept="image/*" class="form-file m-2" name="images" type="file"/>
                             </div>
@@ -93,54 +84,4 @@
     <!-- END Product Edit Content -->
 </div>
 <!-- END Page Content -->
-<script>
-    $(function () {
-        $('input[name=images]').change(function () {
-            handleExtraInputChange(this);
-        });
-        updateExtrasImageName();
-    })
-
-    function handleExtraInputChange(input) {
-        // show thumbnail
-        const parent = $(input).parent();
-        const file = input.files[0];
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            parent.children('img').attr('src', e.target.result);
-        }
-        reader.readAsDataURL(file);
-        // update name (for update)
-        parent.children('input[name=imagePaths]').val(file.name);
-
-        const extraImages = $('.extra-image');
-        if (extraImages.last().is(parent)) {
-            // add remove button
-            const removeBtn = `<button onclick="removeExtraImage(this)"
-                            class="btn fa fa-times-circle fa-2x text-danger"
-                            title="Xóa ảnh này"></button>`;
-            parent.children('label').after(removeBtn);
-
-            // addNextExtraImageSection
-            const html = `<div class="col-sm-6 block extra-image">
-                                <label></label><br>
-                                <img alt="Xem trước hình ảnh" class="img-fluid" style="width: 90%"
-                                     src="/img/image-thumbnail.png"><br>
-                                <input onchange="handleExtraInputChange(this)
-                                    accept="image/*" class="form-file m-2" name="images" type="file"/>
-                            </div>`;
-            $("#product-images").append(html);
-        }
-    }
-
-    function removeExtraImage(btn) {
-        $(btn).parents('.extra-image').remove();
-        updateExtrasImageName();
-    }
-
-    function updateExtrasImageName() {
-        $('.extra-image label').each(function (index) {
-            $(this).text('#' + (index + 1));
-        });
-    }
-</script>
+<script src="/js/products/product-form.js"></script>

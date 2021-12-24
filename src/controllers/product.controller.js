@@ -39,29 +39,15 @@ const getEdit = async (req, res, next) => {
 const postEdit = async (req, res, next) => {
     try {
         const id = req.params.id;
-        // await productService.update(id, req.body);
-        const { name, amount, unit } = req.body;
-        const product = await productService.findById(id);
-        const imageOld = Array.from(req.body.imagePaths);
-        const newImages = product.images.filter((image) => {
-            return !imageOld.includes(image.path);
+        req.body.files = req.files.map((file) => {
+            return {
+                path: file.filename,
+            };
         });
-        newImages.push(
-            ...req.files.map((file) => {
-                return {
-                    path: file.filename,
-                };
-            }),
-        );
-        product.update({
-            name,
-            amount,
-            unit,
-            images: newImages,
-        });
-        await productService.create(product);
+        await productService.update(id, req.body);
         res.redirect('/products');
     } catch (error) {
+        console.log(error);
         next(error);
     }
 };
