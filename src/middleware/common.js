@@ -23,13 +23,6 @@ function common(app) {
     app.use('/product-images', express.static('uploads'));
     app.use(logger('dev'));
     app.use(expressLayouts);
-
-    app.use('/', (req, res, next) => {
-        res.locals.success_msg = req.flash('success_msg');
-        res.locals.error_msg = req.flash('error_msg');
-        console.log(res.locals);
-        next();
-    });
 }
 
 module.exports = common;
