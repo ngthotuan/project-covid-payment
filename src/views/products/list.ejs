@@ -30,7 +30,7 @@
             <h2><strong>Tất cả</strong> sản phẩm</h2>
         </div>
         <!-- END All Products Title -->
-
+        <%- include('../partials/messages') %>
         <!-- All Products Content -->
         <table id="ecom-products" class="table table-bordered table-striped table-vcenter">
             <thead>
@@ -52,7 +52,7 @@
                 <td class="text-center">
                     <div class="btn-group btn-group-xs">
                         <a href="/products/edit/<%= product.id %>" data-toggle="tooltip" title="Chỉnh sửa" class="btn btn-default"><i class="fa fa-pencil"></i></a>
-                        <a href="/products/remove/<%= product.id %>" data-toggle="tooltip" title="Xóa" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                        <button data-toggle="tooltip" onclick="showConfirmDelete(this)" title="Xóa" class="btn-delete btn btn-xs btn-danger"><i class="fa fa-times"></i></button>
                     </div>
                 </td>
             </tr>
@@ -64,6 +64,25 @@
     <!-- END All Products Block -->
 </div>
 <!-- END Page Content -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Xác nhận xóa</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Bạn có chắc chắn muốn xóa sản phẩm với thông tin như sau:</h4>
+                <h5>Mã: <b id="productId"></b></h5>
+                <h5>Tên: <b id="productName"></b></h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy bỏ</button>
+                <a id="productDeleteLink" type="button" class="btn btn-danger">Xóa</a>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Load and execute javascript code used only in this page -->
-<script src="/js/pages/ecomProducts.js"></script>
-<script>$(function(){ EcomProducts.init(); });</script>
+<script src="/js/products/product-list.js"></script>

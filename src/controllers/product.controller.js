@@ -21,6 +21,7 @@ const postCreate = async (req, res, next) => {
             };
         });
         await productService.create(req.body);
+        req.flash('success_msg', 'Thêm sản phẩm thành công');
         res.redirect('/products');
     } catch (error) {
         next(error);
@@ -45,6 +46,7 @@ const postEdit = async (req, res, next) => {
             };
         });
         await productService.update(id, req.body);
+        req.flash('success_msg', 'Cập nhật sản phẩm thành công');
         res.redirect('/products');
     } catch (error) {
         console.log(error);
@@ -56,9 +58,15 @@ const remove = async (req, res, next) => {
     try {
         const id = req.params.id;
         await productService.remove(id);
-        res.redirect('/products');
+        req.flash('success_msg', 'Xóa sản phẩm thành công');
+        return res.redirect('/products');
     } catch (error) {
-        next(error);
+        if (error.name === 'SequelizeForeignKeyConstraintError') {
+            req.flash('error_msg', 'Sản phẩm đang được sử dụng, không thể xóa');
+            return res.redirect('/products');
+        } else {
+            next(error);
+        }
     }
 };
 

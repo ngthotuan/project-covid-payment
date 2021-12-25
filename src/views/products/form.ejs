@@ -19,7 +19,7 @@
                         <div class="col-md-9">
                             <input type="text" id="product-name" name="name" class="form-control"
                                    value="<%= typeof product !== 'undefined' ? product.name : '' %>"
-                                   placeholder="Nhập tên sản phẩm">
+                                   required placeholder="Nhập tên sản phẩm">
                         </div>
                     </div>
                     <div class="form-group">
@@ -29,7 +29,7 @@
                                 <div class="input-group-addon"><i class="fa fa-usd"></i></div>
                                 <input type="text" id="product-price" name="amount" class="form-control"
                                        value="<%= typeof product !== 'undefined' ? Number(product.amount) : '' %>"
-                                       placeholder="0,00">
+                                       required placeholder="0,00">
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                         <div class="col-md-9">
                             <input type="text" id="product-unit" name="unit" class="form-control"
                                    value="<%= typeof product !== 'undefined' ? product.unit : '' %>"
-                                   placeholder="Cái, Gói, Kg,...">
+                                   required placeholder="Cái, Gói, Kg,...">
                         </div>
                     </div>
                     <div class="form-group">
@@ -69,10 +69,16 @@
                     </div>
                     <div class="form-group form-actions">
                         <div class="col-md-6 col-md-offset-6">
-                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i> Lưu
-                            </button>
-                            <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Xóa
-                            </button>
+                            <% if(typeof product !== "undefined") {%>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Cập nhật
+                                </button>
+                                <a href="/products" class="btn btn-danger"><i class="fa fa-times"></i> Hủy bỏ</a>
+                            <% } else { %>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Tạo mới
+                                </button>
+                                <button type="reset" class="btn btn-warning"><i class="fa fa-repeat"></i> Xóa trắng
+                                </button>
+                            <% } %>
                         </div>
                     </div>
                 </form>
