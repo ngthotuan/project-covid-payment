@@ -106,7 +106,12 @@ function initModels(sequelize) {
         foreignKey: 'patient_id',
     });
     image.belongsTo(product, { as: 'product', foreignKey: 'product_id' });
-    product.hasMany(image, { as: 'images', foreignKey: 'product_id' });
+    product.hasMany(image, {
+        as: 'images',
+        foreignKey: 'product_id',
+        onDelete: 'cascade',
+        hooks: true,
+    });
     order_product.belongsTo(product, {
         as: 'product',
         foreignKey: 'product_id',
