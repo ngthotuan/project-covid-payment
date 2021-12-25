@@ -37,9 +37,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-md-3 control-label"
-                  >Giới hạn/người</label
-                >
+                <label class="col-md-3 control-label">Giới hạn/người</label>
                 <div class="col-md-9">
                   <input
                     type="number"
@@ -51,11 +49,13 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-md-3 control-label" for="example-chosen">Thời gian giới hạn</label>
+                <label class="col-md-3 control-label" for="example-chosen"
+                  >Thời gian giới hạn</label
+                >
                 <div class="col-md-9">
-                    <select
+                  <select
                     id="limitTime"
-                     name="limit_time"
+                    name="limit_time"
                     class="select-chosen"
                     data-placeholder="Chọn thời gian..."
                     style="width: 250px"
@@ -85,43 +85,51 @@
             </div>
             <!-- END Product Images Title -->
             <div id="category-product">
-            <div id="product1" class="form-horizontal form-bordered">
-              <div class="form-group">
-                <label class="col-md-2 control-label"
-                  >Sản phẩm</label
-                >
-                <div class="col-md-5">
-                  <select
-                    id="example-chosen"
-                    name="product_id"
-                    class="select-chosen"
-                    data-placeholder="Chọn sản phẩm..."
-                    style="width: 250px"
-                  >
-                    <option></option>
-                    <!-- Required for data-placeholder attribute to work with Chosen plugin -->
-                    <% products.forEach(function(product) { %>
-                    <option value=<%=product.id%>
-                      ><%= product.name%>
-                    </option>
-                    <%})%>
-                  </select>
-                </div>
-                <label class="col-md-2 control-label">Giới hạn</label>
-                <div class="col-md-3">
-                  <input type="number" id="limit_product" name="limit_product"
-                  class="form-control" placeholder="Nhập số lượng" min="0"
-                  step="1">
+              <div id="product1" class="form-horizontal form-bordered" style="margin-bottom: 25px">
+                <div class="form-inline">
+                  <label class="col-md-2 control-label">Sản phẩm</label>
+                  <div class="col-md-5">
+                    <select
+                      name="product_id"
+                      class="select-chosen select-product"
+                      data-placeholder="Chọn sản phẩm..."
+                      style="width: 100%"
+                      onchange="handleOnChangeProduct(event, this)"
+                    >
+                      <option></option>
+                      <!-- Required for data-placeholder attribute to work with Chosen plugin -->
+                      <% products.forEach(function(product) { %>
+                      <option value=<%=product.id%>
+                        ><%= product.name%>
+                      </option>
+                      <%})%>
+                    </select>
+                  </div>
+                  <label class="col-md-2 control-label">Giới hạn</label>
+                  <div class="col-md-2">
+                    <input
+                      type="number"
+                      id="limit_product"
+                      name="limit_product"
+                      class="form-control"
+                      placeholder="Nhập số lượng"
+                      min="0"
+                      step="1"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-
-            <!-- END Product Images Content -->
+            <div>
+              <button
+                type="button"
+                class="btn btn-primary mb-2"
+                onClick="addNextProduct()"
+              >
+                Thêm sản phẩm
+              </button>
+            </div>
           </div>
-          <div><button type="button" class="btn btn-primary mb-2" onClick="addNextProduct()">
-                                                      Thêm sản phẩm
-                                                   </button></div>
-                      </div>
           <!-- END Product Images Block -->
         </div>
         <div class="form-group form-actions">
@@ -138,6 +146,5 @@
     </div>
     <!-- END Product Edit Content -->
   </div>
-  <!-- END Page Content -->
   <script src="/js/pages/ecomCategory.js"></script>
 </div>

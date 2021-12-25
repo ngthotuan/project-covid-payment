@@ -22,8 +22,15 @@ const createCategory = async (category, products, limitProducts) => {
         }
     }
 };
+const createCategory2 = async (category) => {
+    const categorySave = await CategoryModel.create(category, {
+        include: 'product_categories',
+    });
+    return categorySave;
+};
 
 module.exports = {
     findAll,
     createCategory,
+    createCategory2,
 };

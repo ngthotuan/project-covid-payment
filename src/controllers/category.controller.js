@@ -11,18 +11,29 @@ const showCreate = async (req, res, next) => {
 };
 
 const create = async (req, res, next) => {
+    const products = req.body.product_id;
+    const limitProducts = req.body.limit_product;
+    const product_categories = [];
+
+    for (let i = 0; i < products.length; i++) {
+        const product_id = products[i];
+        const limit_product = limitProducts[i];
+        if (product_id && limit_product) {
+            product_categories.push({
+                product_id,
+                limit_product,
+            });
+        }
+    }
+
     const category = {
         name: req.body.name,
         limit_person: req.body.limit_person,
         limit_time: req.body.limit_time,
+        product_categories,
     };
-    const products = req.body.product_id;
-    const limitProduct = req.body.limit_product;
-    const categorySaved = await categoryService.createCategory(
-        category,
-        products,
-        limitProduct,
-    );
+
+    const categorySaved = await categoryService.createCategory2(category);
     res.redirect('/categories');
 };
 
