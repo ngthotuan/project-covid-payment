@@ -1,4 +1,7 @@
 ## This is source code of Project Covid-19
+### Deployment
+1. https://webprojectcovid.herokuapp.com/
+2. https://project-covid.ngthotuan.repl.co/
 
 ### How to use ?
 **Using this project, you need to install `git` `nodejs` `npm`**
