@@ -25,6 +25,8 @@
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.17.2",
     "http-errors": "~1.6.3",
+    "jquery": "^3.6.0",
+    "moment": "^2.29.1",
     "morgan": "~1.9.1",
     "multer": "^1.4.4",
     "pg": "^8.7.1",
@@ -34,7 +36,21 @@
   "devDependencies": {
     "husky": "^4.3.6",
     "lint-staged": "^10.5.3",
+    "node": "^16.13.1",
     "nodemon": "^2.0.7",
     "prettier": "^2.2.1"
-  }
+  },
+  "description": "### How to use ? **Using this project, you need to install `git` `nodejs` `npm`** ```shell script     $ git clone https://github.com/ngthotuan/project-covid.git or  $ git clone git@github.com:ngthotuan/project-covid.git ```  **Run project with command** ```shell script   $ npm start ``` **After that, you may be seen a notice look like that** ```text   Server is running on http://localhost:3000/ ```",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngthotuan/project-covid.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ngthotuan/project-covid/issues"
+  },
+  "homepage": "https://github.com/ngthotuan/project-covid#readme"
 }
