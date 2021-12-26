@@ -82,10 +82,12 @@
                 ><i class="fa fa-pencil"></i
               ></a>
               <a
-                href="javascript:void(0)"
+                categoryId="<%=category.id%>"
+                categoryName="<%=category.name%>"
+                href='/categories/delete/<%=category.id%>'
                 data-toggle="tooltip"
                 title="Delete"
-                class="btn btn-xs btn-danger"
+                class="btn btn-xs btn-danger btnDelete"
                 ><i class="fa fa-times"></i
               ></a>
             </div>
@@ -97,8 +99,28 @@
     <!-- END All Products Content -->
   </div>
   <!-- END All Products Block -->
+  <!-- Button trigger modal -->
+  <!-- Modal -->
+  <div class="modal fade" id="modal-dialog" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h3 class="modal-title">Xác nhận xóa</h3>
+              </div>
+              <div class="modal-body">
+                  <h4>Bạn có chắc chắn muốn xóa gói sản phẩm với thông tin như sau:</h4>
+                  <h5>Mã: <b id="modal-categoryId"></b></h5>
+                  <h5>Tên: <b id="modal-categoryName"></b></h5>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy bỏ</button>
+                  <a id="delete-link" type="button" class="btn btn-danger">Xóa</a>
+              </div>
+          </div>
+      </div>
+  </div>
   <!-- Load and execute javascript code used only in this page -->
-
+  <script src="/js/category/category-list.js"></script>
   <script src="/js/pages/ecomCategory.js"></script>
   <script>
     $(function () {
