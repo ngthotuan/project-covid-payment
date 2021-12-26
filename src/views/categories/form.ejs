@@ -33,6 +33,7 @@
                     name="name"
                     class="form-control"
                     placeholder="Nhập tên sản phẩm"
+                    required
                   />
                 </div>
               </div>
@@ -44,7 +45,9 @@
                     id="limit-person"
                     name="limit_person"
                     class="form-control"
-                    placeholder="Nhập số lượng"
+                    placeholder="Số lượng"
+                   min="1"
+                   step="1"
                   />
                 </div>
               </div>
@@ -56,11 +59,12 @@
                   <select
                     id="limitTime"
                     name="limit_time"
-                    class="select-chosen"
+                    class="select-chosen required"
                     data-placeholder="Chọn thời gian..."
                     style="width: 250px"
+
                   >
-                    <option></option>
+                    <option value="" selected></option>
                     <!-- Required for data-placeholder attribute to work with Chosen plugin -->
                     <option value="DATE">DATE</option>
                     <option value="WEEK">WEEK</option>
@@ -96,7 +100,7 @@
                       style="width: 100%"
                       onchange="handleOnChangeProduct(event, this)"
                     >
-                      <option></option>
+                      <option value=""></option>
                       <!-- Required for data-placeholder attribute to work with Chosen plugin -->
                       <% products.forEach(function(product) { %>
                       <option value=<%=product.id%>
@@ -109,11 +113,10 @@
                   <div class="col-md-2">
                     <input
                       type="number"
-                      id="limit_product"
                       name="limit_product"
-                      class="form-control"
-                      placeholder="Nhập số lượng"
-                      min="0"
+                      class="form-control limit-product"
+                      placeholder="Số lượng"
+                      min="1"
                       step="1"
                     />
                   </div>
@@ -146,5 +149,5 @@
     </div>
     <!-- END Product Edit Content -->
   </div>
-  <script src="/js/pages/ecomCategory.js"></script>
+  <script src="/js/category/category-form.js"></script>
 </div>
