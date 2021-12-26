@@ -3,7 +3,7 @@
  *  Author     : pixelcave
  *  Description: Custom javascript code used in eCommerce Products page
  */
-let extraIdProduct = 1;
+let extraIdProduct;
 
 $(document).ready(function () {
     $("a[name='linkRemoveDetail']").each(function (index) {
@@ -11,6 +11,8 @@ $(document).ready(function () {
             removeDetailByIndex(index);
         });
     });
+    allDivProduct = $("[id^='product']");
+    extraIdProduct = allDivProduct.length - 1;
 });
 
 function addNextProduct() {
@@ -77,9 +79,9 @@ function addNextProduct() {
     prevDivProductId = prevDivProduct.attr('id');
 
     htmlBtnRemove = `
-    <a class="btn fa fa-times-circle-o fa-2x"
-    href="javascript:removeDetail('${prevDivProductId}')" title="Remove detail"
-    ></a>`;
+    <button class="btn fa fa-times-circle-o fa-2x"
+    onclick="removeDetail('${prevDivProductId}')" title="Remove detail"
+    ></button>`;
     prevDivProduct.append(htmlBtnRemove);
 
     $("input[name='product_id']").last().focus();
@@ -95,11 +97,12 @@ function removeDetailByIndex(index) {
     $('#detail' + index).remove();
 }
 
-const handleOnChangeProduct = (event) => {
-    const checkOption = checkOptionProduct(event);
+const handleOnChangeProduct = (event, select) => {
+    const checkOption = checkOptionProduct(event, select);
 };
 
-const checkOptionProduct = (event) => {
+const checkOptionProduct = (event, select) => {
+    console.log(select);
     let repeatNumberValue = 0;
     const changeValue = event.target.value;
     $("select[name='product_id']").each(function (index) {
@@ -107,9 +110,8 @@ const checkOptionProduct = (event) => {
         if (value === changeValue) repeatNumberValue++;
     });
     if (repeatNumberValue > 1) {
-        console.log('da vao');
-        event.target.setCustomValidity('Sản phẩm đã được chọn!');
-        event.target.reportValidity();
+        $(select).get(0).setCustomValidity('Sản phẩm đã được chọn!');
+        $(select).get(0).reportValidity();
         return false;
     }
     event.target.setCustomValidity('');

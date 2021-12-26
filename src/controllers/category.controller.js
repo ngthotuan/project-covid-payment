@@ -1,16 +1,22 @@
 const { categoryService, productService } = require('../services');
 
-const list = async (req, res, next) => {
+const getList = async (req, res, next) => {
     const categories = await categoryService.findAll();
     res.render('categories/list', { title: 'Danh sách gói', categories });
 };
 
-const showCreate = async (req, res, next) => {
+const detail = async (req, res, next) => {
+    const id = req.params.id;
+    const category = await categoryService.findCategoryIncludeProduct(id);
+    res.render('categories/view', { title: 'Chi tiết gói', category });
+};
+
+const getCreate = async (req, res, next) => {
     const products = await productService.findAll();
     res.render('categories/form', { title: 'Tạo gói', products });
 };
 
-const create = async (req, res, next) => {
+const postCreate = async (req, res, next) => {
     const products = req.body.product_id;
     const limitProducts = req.body.limit_product;
     const product_categories = [];
@@ -32,13 +38,50 @@ const create = async (req, res, next) => {
         limit_time: req.body.limit_time,
         product_categories,
     };
+    if (req.body.id) {
+        category.id = req.body.id;
+    }
+    try {
+        const categorySaved = await categoryService.createCategory(category);
+        req.flash('success_msg', 'Thêm sản phẩm thành công');
+    } catch (err) {
+        req.flash('error_msg', 'Thêm sản phẩm thất bại');
+    }
+    res.redirect('/categories');
+};
 
-    const categorySaved = await categoryService.createCategory2(category);
+const getUpdate = async (req, res, next) => {
+    const id = req.params.id;
+    const category = await categoryService.findById(id);
+    const products = await productService.findAll();
+    res.render('categories/form', {
+        title: 'Cập nhật gói',
+        category,
+        products,
+    });
+};
+
+const destroy = async (req, res, next) => {
+    const id = req.params.id;
+    try {
+        const category = await categoryService.destroy(id);
+        if (category) {
+            req.flash('success_msg', 'Xoá gói sản phẩm thành công');
+        } else {
+            req.flash('error_msg', 'Không tìm thấy gói sản phẩm');
+        }
+    } catch (error) {
+        console.log(error);
+        req.flash('error_msg', 'Không thể xóa gói sản phẩm này');
+    }
     res.redirect('/categories');
 };
 
 module.exports = {
-    list,
-    showCreate,
-    create,
+    getList,
+    getCreate,
+    postCreate,
+    destroy,
+    getUpdate,
+    detail,
 };

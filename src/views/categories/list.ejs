@@ -40,7 +40,7 @@
       <h2><strong>Tất cả</strong> gói nhu yếu phẩm</h2>
     </div>
     <!-- END All Products Title -->
-
+    <%- include('../partials/messages') %>
     <!-- All Products Content -->
     <table
       id="ecom-categories"
@@ -59,12 +59,12 @@
         <% categories.forEach(function(category) { %>
         <tr>
           <td class="text-center">
-            <a href="/categorys/edit/<%= category.id %>"
+            <a href="/categories/<%= category.id %>"
               ><strong><%= category.id %></strong></a
             >
           </td>
           <td>
-            <a href="/categorys/edit/<%= category.id %>"
+            <a href="/categories/<%= category.id %>"
               ><%= category.name %></a
             >
           </td>
@@ -75,21 +75,21 @@
           <td class="text-center">
             <div class="btn-group btn-group-xs">
               <a
-                href="/categorys/edit/<%= category.id %>"
+                href="/categories/edit/<%= category.id %>"
                 data-toggle="tooltip"
                 title="Edit"
                 class="btn btn-default"
                 ><i class="fa fa-pencil"></i
               ></a>
-              <a
+              <button
                 categoryId="<%=category.id%>"
                 categoryName="<%=category.name%>"
-                href='/categories/delete/<%=category.id%>'
                 data-toggle="tooltip"
                 title="Delete"
                 class="btn btn-xs btn-danger btnDelete"
+                onClick="showModalDialog(this)"
                 ><i class="fa fa-times"></i
-              ></a>
+              ></button>
             </div>
           </td>
         </tr>

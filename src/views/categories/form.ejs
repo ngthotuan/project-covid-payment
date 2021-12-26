@@ -20,6 +20,11 @@
             </div>
             <!-- END General Data Title -->
 
+                <input
+                    type="hidden"
+                    name="id"
+                     value="<%= typeof category !== 'undefined' ? category.id : '' %>"
+                  />
             <!-- General Data Content -->
             <div class="form-horizontal form-bordered">
               <div class="form-group">
@@ -33,6 +38,7 @@
                     name="name"
                     class="form-control"
                     placeholder="Nhập tên sản phẩm"
+                     value="<%= typeof category !== 'undefined' ? category.name : '' %>"
                     required
                   />
                 </div>
@@ -48,6 +54,8 @@
                     placeholder="Số lượng"
                    min="1"
                    step="1"
+                   value="<%= typeof category !== 'undefined' ? category.limit_person : '' %>"
+                   required
                   />
                 </div>
               </div>
@@ -63,12 +71,13 @@
                     data-placeholder="Chọn thời gian..."
                     style="width: 250px"
 
+                    required
                   >
                     <option value="" selected></option>
                     <!-- Required for data-placeholder attribute to work with Chosen plugin -->
-                    <option value="DATE">DATE</option>
-                    <option value="WEEK">WEEK</option>
-                    <option value="MONTH">MONTH</option>
+                    <option value="DATE"  <%= typeof category !== 'undefined' && category.limit_time === 'DATE'  ? 'selected' : ''  %>>DATE</option>
+                    <option value="WEEK" <%= typeof category !== 'undefined' && category.limit_time === 'WEEK'  ? 'selected' : '' %>>WEEK</option>
+                    <option value="MONTH" <%= typeof category !== 'undefined' && category.limit_time === 'MONTH'  ? 'selected' : '' %>>MONTH</option>
                   </select>
                 </div>
               </div>
@@ -89,7 +98,50 @@
             </div>
             <!-- END Product Images Title -->
             <div id="category-product">
-              <div id="product1" class="form-horizontal form-bordered" style="margin-bottom: 25px">
+            <% if (typeof category !== 'undefined' && category.product_categories.length > 0) { %>
+                            <% category.product_categories.forEach((productCate, index) => {%>
+                            <div id="product<%=index%>" class="form-horizontal form-bordered" style="margin-bottom: 25px">
+                                <div class="form-inline">
+                                  <label class="col-md-2 control-label">Sản phẩm</label>
+                                  <div class="col-md-5">
+                                    <select
+                                      name="product_id"
+                                      class="select-chosen select-product"
+                                      data-placeholder="Chọn sản phẩm..."
+                                      style="width: 100%"
+                                      onchange="handleOnChangeProduct(event, this)"
+                                    >
+                                      <option value=""></option>
+                                      <!-- Required for data-placeholder attribute to work with Chosen plugin -->
+                                      <% products.forEach(function(product) { %>
+                                      <option value=<%=product.id%>
+                                      <%= product.id === productCate.product_id  ? 'selected' : ''  %> >
+                                        <%= product.name%>
+                                      </option>
+                                      <%})%>
+                                    </select>
+                                  </div>
+                                  <label class="col-md-2 control-label">Giới hạn</label>
+                                  <div class="col-md-2">
+                                    <input
+                                      type="number"
+                                      name="limit_product"
+                                      class="form-control limit-product"
+                                      placeholder="Số lượng"
+                                      value="<%=productCate.limit_product%>"
+                                      min="1"
+                                      step="1"
+                                    />
+                                  </div>
+                                </div>
+                                    <button class="btn fa fa-times-circle-o fa-2x"
+                                        onClick="removeDetail('product<%=index%>')" title="Remove detail"
+                                    ></button>
+                            </div>
+                            <%})%>
+                            <%}%>
+
+              <div id="product<%= typeof category !== 'undefined' ? category.product_categories.length : 0 %>" class="form-horizontal form-bordered" style="margin-bottom: 25px">
                 <div class="form-inline">
                   <label class="col-md-2 control-label">Sản phẩm</label>
                   <div class="col-md-5">
@@ -138,11 +190,18 @@
         <div class="form-group form-actions">
           <div class="col-md-12 text-center">
             <button type="submit" class="btn btn-primary">
-              <i class="fa fa-floppy-o"></i> Save
+              <i class="fa fa-floppy-o"></i> Lưu
             </button>
-            <button type="reset" class="btn btn-warning">
-              <i class="fa fa-repeat"></i> Reset
-            </button>
+            <%if (typeof category !== 'undefined'){%>
+             <a href="/categories" class="btn btn-warning">
+                            <i class="fa fa-repeat"></i> Hủy bỏ
+                         </a>
+
+            <%}else{%>
+           <button type="reset" class="btn btn-warning">
+                         <i class="fa fa-repeat"></i> Xóa trắng
+                       </button>
+            <%}%>
           </div>
         </div>
       </form>

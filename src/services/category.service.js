@@ -1,28 +1,62 @@
 const { sequelize } = require('../db');
-const { CategoryModel, ProductCategoryModel } = require('../models')(sequelize);
+const { CategoryModel, ProductCategoryModel, ProductModel } =
+    require('../models')(sequelize);
+
+const createCategoryNull = () => {
+    return CategoryModel.build();
+};
 
 const findAll = () => {
     return CategoryModel.findAll();
 };
 
-const createCategory = async (category, products, limitProducts) => {
-    const categorySave = await CategoryModel.create(category);
-    await categorySave.save();
-    for (let i = 0; i < products.length; i++) {
-        const product_id = products[i];
-        const limit_product = limitProducts[i];
-        const category_id = categorySave.id;
-        if (product_id) {
-            const productCategory = await ProductCategoryModel.create({
-                category_id,
-                product_id,
-                limit_product,
-            });
-            await productCategory.save();
-        }
+const createCategory = async (category) => {
+    const categorySave = await CategoryModel.create(category, {
+        include: 'product_categories',
+    });
+    return categorySave;
+};
+
+const findById = (id) => {
+    return CategoryModel.findByPk(id, {
+        include: 'product_categories',
+    });
+};
+
+const findCategoryIncludeProduct = async (idCategory) => {
+    try {
+        const category = await CategoryModel.findByPk(idCategory, {
+            include: {
+                model: ProductCategoryModel,
+                as: 'product_categories',
+                include: {
+                    model: ProductModel,
+                    as: 'product',
+                },
+            },
+        });
+        return category;
+    } catch (e) {
+        console.log(e.message);
     }
 };
-const createCategory2 = async (category) => {
+
+const destroy = async (id) => {
+    const category = await CategoryModel.findByPk(id, {
+        include: 'product_categories',
+    });
+    if (category) {
+        const productCategories = category.product_categories;
+        for (let i = 0; i < productCategories.length; i++) {
+            const productCategory = productCategories[i];
+            await productCategory.destroy();
+        }
+        await category.destroy();
+    }
+    return category;
+};
+
+const update = async (category) => {
     const categorySave = await CategoryModel.create(category, {
         include: 'product_categories',
     });
@@ -32,5 +66,8 @@ const createCategory2 = async (category) => {
 module.exports = {
     findAll,
     createCategory,
-    createCategory2,
+    destroy,
+    findById,
+    createCategoryNull,
+    findCategoryIncludeProduct,
 };
