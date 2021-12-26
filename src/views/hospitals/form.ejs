@@ -1,0 +1,184 @@
+<!-- Page content -->
+<div id="page-content">
+    <!-- Product Edit Content -->
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1">
+            <!-- General Data Block -->
+            <div class="block">
+                <!-- General Data Title -->
+                <div class="block-title">
+                    <h2><i class="fa fa-pencil"></i> <strong>Thông tin khu điều trị cách ly</strong></h2>
+                </div>
+                <!-- END General Data Title -->
+
+                <!-- General Data Content -->
+                <form method="post" class="form-horizontal form-bordered">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="hospital-name">Tên</label>
+                        <div class="col-md-9">
+                            <input type="text" id="hospital-name" name="name" class="form-control"
+                                   value="<%= typeof hospital !== 'undefined' ? hospital.name : '' %>"
+                                   required placeholder="Nhập tên khu điều trị cách ly">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="hospital-size">Sức chứa</label>
+                        <div class="col-md-9">
+                            <input type="number" id="hospital-size" name="size" class="form-control"
+                                   value="<%= typeof hospital !== 'undefined' ? hospital.size : '' %>"
+                                   required placeholder="Nhập sức chứa khu điều trị cách ly">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="hospital-current-size">Số lượng hiên tại</label>
+                        <div class="col-md-9">
+                            <input type="number" id="hospital-current-size" name="current_size" class="form-control"
+                                   value="<%= typeof hospital !== 'undefined' ? hospital.current_size : '' %>"
+                                   required placeholder="Nhập số lượng hiện tại khu điều trị cách ly">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="hospital-province">Tỉnh/TP</label>
+                        <div class="col-md-9">
+                            <select
+                                    id="hospital-province"
+                                    name="province_id"
+                                    class="select-chosen"
+                                    id="select-province"
+                                    data-placeholder="Chọn Tỉnh/TP"
+                            >
+                                <option value="">Chọn Tỉnh/TP</option>
+                                <% provinces.forEach(function(province) { %>
+                                    <option value="<%= province.id %>"
+                                            <%= typeof hospital !== 'undefined' ? hospital.province_id === province.id ? 'selected' : '' : '' %>
+                                    >
+                                        <%= province.name %>
+                                    </option>
+                                <%})%>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="hospital-district">Quận/Huyện</label>
+                        <div class="col-md-9">
+                            <select
+                                    id="hospital-district"
+                                    name="district_id"
+                                    class="select-chosen"
+                                    data-placeholder="Chọn Quận/Huyện"
+                            >
+                                <option value="">Chọn Quận/Huyện</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="hospital-ward">Phường/Xã</label>
+                        <div class="col-md-9">
+                            <select
+                                    id="hospital-ward"
+                                    name="ward_id"
+                                    class="select-chosen"
+                                    data-placeholder="Chọn Phường/Xã"
+                            >
+                                <option value="">Chọn Phường/Xã</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="hospital-address">Địa chỉ</label>
+                        <div class="col-md-9">
+                            <input type="text" id="hospital-address" name="address" class="form-control"
+                                   value="<%= typeof hospital !== 'undefined' ? hospital.address : '' %>"
+                                   required placeholder="Nhập địa chỉ khu điều trị cách ly">
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-6 col-md-offset-6">
+                            <% if(typeof hospital !== "undefined") {%>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Cập nhật
+                                </button>
+                                <a href="/hospitals" class="btn btn-danger"><i class="fa fa-times"></i> Hủy bỏ</a>
+                            <% } else { %>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Tạo mới
+                                </button>
+                                <button type="reset" class="btn btn-warning"><i class="fa fa-repeat"></i> Xóa trắng
+                                </button>
+                            <% } %>
+                        </div>
+                    </div>
+                </form>
+                <!-- END General Data Content -->
+            </div>
+            <!-- END General Data Block -->
+        </div>
+    </div>
+    <!-- END Product Edit Content -->
+</div>
+<!-- END Page Content -->
+<script src="/js/hospitals/hospital-form.js"></script>
+<script>
+    const hospital = JSON.parse('<%- typeof hospital !== 'undefined' && JSON.stringify(hospital) %>');
+    $(function () {
+        const provinceSelect = $('#hospital-province');
+        const districtSelect = $('#hospital-district');
+        const wardSelect = $('#hospital-ward');
+
+        updateDistrictSelect(hospital.province_id);
+        updateWardSelect(hospital.district_id);
+        function updateDistrictSelect(provinceId) {
+
+            if (provinceId) {
+                $.get('/api/provinces/' + provinceId + '/districts', function (districts) {
+                    districtSelect.empty();
+                    districtSelect.append('<option value="">Chọn Quận/Huyện</option>');
+                    $.each(districts, function (index, district) {
+                        districtSelect.append(`<option value="${district.id}" ${district.id === hospital.district_id && 'selected'} >${district.name}</option>`);
+                    });
+                    districtSelect.trigger('chosen:updated');
+                });
+            } else {
+                districtSelect.empty();
+                districtSelect.append('<option value="">Chọn Quận/Huyện</option>');
+                districtSelect.trigger("chosen:updated");
+            }
+            wardSelect.empty();
+            wardSelect.append('<option value="">Chọn Phường/Xã</option>');
+            wardSelect.trigger("chosen:updated");
+        }
+        function updateWardSelect(districtId) {
+            if (districtId) {
+                $.get('/api/districts/' + districtId + '/wards', function (wards) {
+                    wardSelect.empty();
+                    wardSelect.append('<option value="">Chọn Phường/Xã</option>');
+                    $.each(wards, function (index, ward) {
+                        wardSelect.append(`<option value="${ward.id}" ${ward.id === hospital.ward_id && 'selected'} >${ward.name}</option>`);
+                    });
+                    wardSelect.trigger('chosen:updated');
+                });
+                // $.ajax({
+                //     url: '/wards/district/' + districtId,
+                //     type: 'GET',
+                //     dataType: 'json',
+                //     success: function (data) {
+                //         wardSelect.empty();
+                //         wardSelect.append('<option value="">Chọn Phường/Xã</option>');
+                //         $.each(data, function (key, value) {
+                //             wardSelect.append(`<option value="${value.id}" ${value.id === hospital.ward_id && 'selected'}>${value.name}</option>`);
+                //         });
+                //         wardSelect.trigger("chosen:updated");
+                //     }
+                // });
+            } else {
+                wardSelect.empty();
+                wardSelect.append('<option value="">Chọn Phường/Xã</option>');
+                wardSelect.trigger("chosen:updated");
+            }
+        }
+        provinceSelect.change(function () {
+            updateDistrictSelect($(this).val());
+        });
+        districtSelect.change(function () {
+            updateWardSelect($(this).val());
+        });
+    });
+</script>
