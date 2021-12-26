@@ -9,6 +9,7 @@ router.get('/create', productController.getCreate);
 router.post('/create', upload.array('images'), productController.postCreate);
 router.get('/edit/:id', productController.getEdit);
 router.post('/edit/:id', upload.array('images'), productController.postEdit);
+router.get('/view/:id', productController.getView);
 router.get('/remove/:id', productController.remove);
 
 module.exports = router;
