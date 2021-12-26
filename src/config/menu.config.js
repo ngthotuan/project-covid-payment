@@ -50,7 +50,7 @@ const menu = [
         ],
     },
     {
-        name: 'Khu cách ly',
+        name: 'Khu điều trị, cách ly',
         icon: 'gi gi-bank',
         url: '/hospitals',
         sub: [

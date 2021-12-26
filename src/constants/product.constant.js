@@ -1,3 +1,3 @@
 module.exports = {
-    PRODUCT_IMAGE_PATH: './uploads/',
+    PRODUCT_IMAGE_PATH: 'uploads/',
 };

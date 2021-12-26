@@ -31,6 +31,10 @@ const postCreate = async (req, res, next) => {
 const getEdit = async (req, res, next) => {
     try {
         const product = await productService.findById(req.params.id);
+        if (!product) {
+            req.flash('error_msg', 'Sản phẩm không tồn tại');
+            return res.redirect('/products');
+        }
         res.render('products/form', { title: 'Sửa sản phẩm', product });
     } catch (error) {
         next(error);
