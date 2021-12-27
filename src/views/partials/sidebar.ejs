@@ -81,54 +81,30 @@
 
             <!-- Sidebar Navigation -->
             <ul class="sidebar-nav">
+            <% menu.forEach(item => {%>
                 <li>
-                    <a href="/" class="active"><i class="gi gi-stopwatch sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Dashboard</span></a>
+                    <%if(item.sub === undefined){%>
+                        <a href="<%= item.url%>">
+                            <i class="<%= item.icon%> sidebar-nav-icon"></i>
+                            <span class="sidebar-nav-mini-hide"><%= item.name%></span>
+                        </a>
+                    <%} else {%>
+                        <a href="#" class="sidebar-nav-menu">
+                            <i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i>
+                            <i class="<%= item.icon%> sidebar-nav-icon"></i>
+                            <span class="sidebar-nav-mini-hide"><%= item.name%></span>
+                        </a>
+                        <ul>
+                        <%item.sub.forEach(subItem => {%>
+                            <li>
+                                <a href="<%= subItem.url%>"><%= subItem.name%></a>
+                            </li>
+                        <%})%>
+                        </ul>
+                    <%}%>
+
                 </li>
-                <li>
-                    <a href="#" class="sidebar-nav-menu">
-                        <i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i>
-                        <i class="gi gi-user sidebar-nav-icon"></i>
-                        <span class="sidebar-nav-mini-hide">Bệnh Nhân</span>
-                    </a>
-                    <ul>
-                        <li>
-                            <a href="/patients/create">Tạo mới</a>
-                        </li>
-                        <li>
-                            <a href="/patients">Xem danh sách</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="sidebar-nav-menu">
-                        <i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i>
-                        <i class="gi gi-shopping_cart sidebar-nav-icon"></i>
-                        <span class="sidebar-nav-mini-hide">Gói nhu yếu phẩm</span>
-                    </a>
-                    <ul>
-                        <li>
-                            <a href="/categories/create">Tạo mới</a>
-                        </li>
-                        <li>
-                            <a href="/categories">Xem danh sách</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="sidebar-nav-menu">
-                        <i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i>
-                        <i class="gi gi-cake sidebar-nav-icon"></i>
-                        <span class="sidebar-nav-mini-hide">Sản phẩm</span>
-                    </a>
-                    <ul>
-                        <li>
-                            <a href="/products/create">Tạo mới</a>
-                        </li>
-                        <li>
-                            <a href="/products">Xem danh sách</a>
-                        </li>
-                    </ul>
-                </li>
+            <%})%>
             </ul>
             <!-- END Sidebar Navigation -->
         </div>

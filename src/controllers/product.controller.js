@@ -21,6 +21,7 @@ const postCreate = async (req, res, next) => {
             };
         });
         await productService.create(req.body);
+        req.flash('success_msg', 'Thêm sản phẩm thành công');
         res.redirect('/products');
     } catch (error) {
         next(error);
@@ -30,6 +31,10 @@ const postCreate = async (req, res, next) => {
 const getEdit = async (req, res, next) => {
     try {
         const product = await productService.findById(req.params.id);
+        if (!product) {
+            req.flash('error_msg', 'Sản phẩm không tồn tại');
+            return res.redirect('/products');
+        }
         res.render('products/form', { title: 'Sửa sản phẩm', product });
     } catch (error) {
         next(error);
@@ -39,28 +44,32 @@ const getEdit = async (req, res, next) => {
 const postEdit = async (req, res, next) => {
     try {
         const id = req.params.id;
-        // await productService.update(id, req.body);
-        const { name, amount, unit } = req.body;
-        const product = await productService.findById(id);
-        const imageOld = Array.from(req.body.imagePaths);
-        const newImages = product.images.filter((image) => {
-            return !imageOld.includes(image.path);
+        req.body.files = req.files.map((file) => {
+            return {
+                path: file.filename,
+            };
         });
-        newImages.push(
-            ...req.files.map((file) => {
-                return {
-                    path: file.filename,
-                };
-            }),
-        );
-        product.update({
-            name,
-            amount,
-            unit,
-            images: newImages,
-        });
-        await productService.create(product);
+        await productService.update(id, req.body);
+        req.flash('success_msg', 'Cập nhật sản phẩm thành công');
         res.redirect('/products');
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+};
+
+const getView = async (req, res, next) => {
+    try {
+        const product = await productService.findById(req.params.id);
+        if (!product) {
+            req.flash('error_msg', 'Sản phẩm không tồn tại');
+            return res.redirect('/products');
+        }
+        res.render('products/view', {
+            title: 'Chi tiết sản phẩm',
+            product,
+            layout: false,
+        });
     } catch (error) {
         next(error);
     }
@@ -70,9 +79,15 @@ const remove = async (req, res, next) => {
     try {
         const id = req.params.id;
         await productService.remove(id);
-        res.redirect('/products');
+        req.flash('success_msg', 'Xóa sản phẩm thành công');
+        return res.redirect('/products');
     } catch (error) {
-        next(error);
+        if (error.name === 'SequelizeForeignKeyConstraintError') {
+            req.flash('error_msg', 'Sản phẩm đang được sử dụng, không thể xóa');
+            return res.redirect('/products');
+        } else {
+            next(error);
+        }
     }
 };
 
@@ -82,5 +97,6 @@ module.exports = {
     postCreate,
     getEdit,
     postEdit,
+    getView,
     remove,
 };

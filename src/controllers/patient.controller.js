@@ -1,4 +1,10 @@
-const { patientService } = require('../services');
+const {
+    patientService,
+    provinceService,
+    hospitalService,
+} = require('../services');
+const { PatientStatusConstant } = require('../constants/');
+const { Op } = require('sequelize');
 
 const getList = async (req, res, next) => {
     const page = req.query?.page ? req.query.page : 0;
@@ -16,13 +22,27 @@ const getList = async (req, res, next) => {
     const listPatient = await patientService.findAll(condition);
     res.render('patients/list', { listPatient });
 };
-const getCreate = (req, res, next) => {
-    res.render('patients/form');
-};
-
-const postCreate = async (req, res, next) => {
-    const patientSave = await patientService.save(req.body);
-    res.redirect('/');
+const getCreate = async (req, res, next) => {
+    const condition = {
+        where: {
+            size: {
+                [Op.gt]: {
+                    [Op.col]: 'hospital.current_size',
+                },
+            },
+        },
+    };
+    const patients = await patientService.findAll({});
+    console.log(patients.rows);
+    const provinces = await provinceService.findAll();
+    const hospitals = await hospitalService.findAll(condition);
+    res.render('patients/form', {
+        title: 'Thêm bệnh nhân',
+        provinces,
+        statuses: PatientStatusConstant,
+        hospitals,
+        patients: patients.rows,
+    });
 };
 
 const getDetail = async (req, res, next) => {
@@ -30,9 +50,15 @@ const getDetail = async (req, res, next) => {
     res.render('patients/detail', { patientFind });
     // res.json(patientFind)
 };
-// const getDetail = async (req,res, next) =>{
-//
-// }
+const postCreate = async (req, res, next) => {
+    // console.log(req.body)
+    try {
+        await patientService.save(req.body);
+        res.redirect('/patients');
+    } catch (e) {
+        console.log(e);
+    }
+};
 module.exports = {
     getList,
     getCreate,

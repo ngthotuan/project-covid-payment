@@ -1,4 +1,9 @@
 ## This is source code of Project Covid-19
+### Deployment
+1. https://webprojectcovid.herokuapp.com/ 
+> Auto deployment on Heroku sync with dev database
+2. https://project-covid.ngthotuan.repl.co/
+> Manual deployment on Repl.it sync with product database
 
 ### How to use ?
 **Using this project, you need to install `git` `nodejs` `npm`**

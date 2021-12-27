@@ -1,15 +1,30 @@
 const { sequelize } = require('../db');
-const { hospital: Hospital } = require('../models')(sequelize);
-const deleteHospital = async (id) => {
-    const hospital = await Hospital.findByPk(id);
-    hospital
-        .destroy()
-        .then((result) => {
-            return result;
-        })
-        .catch((err) => console.log(err.message));
+
+const { HospitalModel } = require('../models')(sequelize);
+
+const findAll = (condition) => HospitalModel.findAll(condition);
+
+const create = (hospital) => HospitalModel.create(hospital);
+
+const findById = (id) => HospitalModel.findByPk(id);
+
+const update = async (id, data) => {
+    const hospital = await HospitalModel.findByPk(id);
+    hospital.update(data);
+    return await hospital.save();
 };
 
+const remove = async (id) => {
+    const hospital = await HospitalModel.findByPk(id);
+    await hospital.destroy();
+};
+const findByCriteria = async (criteria) => {
+    const hospitals = await HospitalModel.findAll();
+};
 module.exports = {
-    deleteHospital,
+    findAll,
+    create,
+    findById,
+    update,
+    remove,
 };

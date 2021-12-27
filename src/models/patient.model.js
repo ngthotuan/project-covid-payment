@@ -11,15 +11,15 @@ module.exports = function (sequelize, DataTypes) {
             },
             credit: {
                 type: DataTypes.BIGINT,
-                allowNull: false,
+                allowNull: true,
             },
             debt: {
                 type: DataTypes.BIGINT,
-                allowNull: false,
+                allowNull: true,
             },
             dob: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
+                allowNull: true,
             },
             identity: {
                 type: DataTypes.STRING(255),
@@ -31,7 +31,7 @@ module.exports = function (sequelize, DataTypes) {
             },
             payment_min: {
                 type: DataTypes.BIGINT,
-                allowNull: false,
+                allowNull: true,
             },
             status: {
                 type: DataTypes.STRING(255),
