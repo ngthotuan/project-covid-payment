@@ -38,9 +38,7 @@ const postCreate = async (req, res, next) => {
         limit_time: req.body.limit_time,
         product_categories,
     };
-    if (req.body.id) {
-        category.id = req.body.id;
-    }
+
     try {
         const categorySaved = await categoryService.createCategory(category);
         req.flash('success_msg', 'Thêm sản phẩm thành công');
@@ -51,6 +49,7 @@ const postCreate = async (req, res, next) => {
 };
 
 const getUpdate = async (req, res, next) => {
+    console;
     const id = req.params.id;
     const category = await categoryService.findById(id);
     const products = await productService.findAll();
@@ -59,6 +58,42 @@ const getUpdate = async (req, res, next) => {
         category,
         products,
     });
+};
+
+const postUpdate = async (req, res, next) => {
+    const category_id = req.params.id;
+    const products = req.body.product_id;
+    const limitProducts = req.body.limit_product;
+    const product_categories = [];
+
+    for (let i = 0; i < products.length; i++) {
+        const product_id = products[i];
+        const limit_product = limitProducts[i];
+        if (product_id && limit_product) {
+            product_categories.push({
+                category_id,
+                product_id,
+                limit_product,
+            });
+        }
+    }
+
+    const category = {
+        category_id,
+        name: req.body.name,
+        limit_person: req.body.limit_person,
+        limit_time: req.body.limit_time,
+    };
+    // try {
+    const categoryUpdated = await categoryService.update(
+        category,
+        product_categories,
+    );
+    req.flash('success_msg', 'Cập nhật sản phẩm thành công');
+    // } catch (err) {
+    //     req.flash('error_msg', 'Cập nhật sản phẩm thất bại');
+    // }
+    res.redirect('/categories');
 };
 
 const destroy = async (req, res, next) => {
@@ -81,6 +116,7 @@ module.exports = {
     getList,
     getCreate,
     postCreate,
+    postUpdate,
     destroy,
     getUpdate,
     detail,
