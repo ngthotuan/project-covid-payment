@@ -58,6 +58,23 @@ const postEdit = async (req, res, next) => {
     }
 };
 
+const getView = async (req, res, next) => {
+    try {
+        const product = await productService.findById(req.params.id);
+        if (!product) {
+            req.flash('error_msg', 'Sản phẩm không tồn tại');
+            return res.redirect('/products');
+        }
+        res.render('products/view', {
+            title: 'Chi tiết sản phẩm',
+            product,
+            layout: false,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 const remove = async (req, res, next) => {
     try {
         const id = req.params.id;
@@ -80,5 +97,6 @@ module.exports = {
     postCreate,
     getEdit,
     postEdit,
+    getView,
     remove,
 };

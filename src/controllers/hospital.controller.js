@@ -1,8 +1,10 @@
 const { hospitalService, provinceService } = require('../services');
+const { PatientStatusConstant } = require('../constants/');
 
 const index = async (req, res, next) => {
     try {
-        const hospitals = await hospitalService.findAll();
+        const condition = { include: [{ all: true }] };
+        const hospitals = await hospitalService.findAll(condition);
         res.render('hospitals/list', {
             title: 'Danh sách khu điều trị, cách ly',
             hospitals,
@@ -15,6 +17,7 @@ const index = async (req, res, next) => {
 const getCreate = async (req, res, next) => {
     try {
         const provinces = await provinceService.findAll();
+
         res.render('hospitals/form', {
             title: 'Thêm khu điều trị, cách ly',
             provinces,

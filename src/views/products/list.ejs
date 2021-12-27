@@ -45,14 +45,27 @@
             <tbody>
             <% products.forEach(function(product) { %>
             <tr>
-                <td class="text-center"><a href="/products/edit/<%= product.id %>"><strong><%= product.id %></strong></a></td>
-                <td><a href="/products/edit/<%= product.id %>"><%= product.name %></a></td>
+                <td class="text-center"><strong><%= product.id %></strong></td>
+                <td><a href="/products/view/<%= product.id %>" onclick="showModalDetail(<%= product.id %>)"><%= product.name %></a></td>
                 <td class="text-right hidden-xs"><strong><%= product.amount %></strong></td>
                 <td class="hidden-xs text-center"><%= product.unit %></td>
                 <td class="text-center">
                     <div class="btn-group btn-group-xs">
-                        <a href="/products/edit/<%= product.id %>" data-toggle="tooltip" title="Chỉnh sửa" class="btn btn-default"><i class="fa fa-pencil"></i></a>
-                        <button data-toggle="tooltip" onclick="showConfirmDelete(this)" title="Xóa" class="btn-delete btn btn-xs btn-danger"><i class="fa fa-times"></i></button>
+                        <button data-toggle="tooltip" onclick="showModalDetail(<%= product.id %>)" title="Xem chi tiêt"
+                                class="btn btn-success"
+                        >
+                            <i class="fa fa-file"></i>
+                        </button>
+                        <a href="/products/edit/<%= product.id %>" data-toggle="tooltip"
+                           title="Chỉnh sửa" class="btn btn-default"
+                        >
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                        <button data-toggle="tooltip" onclick="showConfirmDelete(this)" title="Xóa"
+                                class="btn-delete btn btn-xs btn-danger"
+                        >
+                            <i class="fa fa-times"></i>
+                        </button>
                     </div>
                 </td>
             </tr>
@@ -80,6 +93,18 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy bỏ</button>
                 <a id="productDeleteLink" type="button" class="btn btn-danger">Xóa</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>
