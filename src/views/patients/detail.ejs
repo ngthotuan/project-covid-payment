@@ -78,7 +78,7 @@
                                    <%} else {%>
                                    <td class="text-right hidden-xs"><strong ></strong></td>
                                    <%}%>
-                                <td class="hidden-xs text-center"><%= patient.ward?.name + " "+patient.district?.name+" " + patient.province?.name      %></td>
+                                <td class="hidden-xs text-center"><%= patient.ward?.name + ", "+patient.district?.name+", " + patient.province?.name      %></td>
                                 <td class="hidden-xs text-center"><%= patient.hospital?.name %></td>
                                 <td class="hidden-xs text-center"><%= patient.debt %></td>
                                 <td class="hidden-xs text-center"><%= patient.credit %></td>
@@ -115,7 +115,7 @@
                            <%} else {%>
                            <td class="text-right hidden-xs"><strong ></strong></td>
                            <%}%>
-                           <td class="hidden-xs text-center"><%= patientFind.parent?.ward?.name+" "+ patientFind.parent?.district?.name +" "+ patientFind.parent?.province?.name  %></td>
+                           <td class="hidden-xs text-center"><%= patientFind.parent?.ward?.name+", "+ patientFind.parent?.district?.name +", "+ patientFind.parent?.province?.name  %></td>
                            <td class="hidden-xs text-center"><%= patientFind.parent?.hospital?.name %></td>
                            <td class="hidden-xs text-center"><%= patientFind.parent?.debt %></td>
                            <td class="hidden-xs text-center"><%= patientFind.parent?.credit %></td>
