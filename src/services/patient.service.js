@@ -1,7 +1,14 @@
 const { sequelize } = require('../db');
 const bcrypt = require('bcrypt');
 
-const { PatientModel, AccountModel } = require('../models')(sequelize);
+const {
+    PatientModel,
+    AccountModel,
+    TransactionHistoryModel,
+    HospitalHistoryModel,
+    AccountHistoryModel,
+    StatusHistoryModel,
+} = require('../models')(sequelize);
 
 const findAll = async (condition) => {
     return await PatientModel.findAndCountAll(condition);
@@ -57,6 +64,17 @@ const findById = async (patientId) => {
                     as: 'parent',
                     include: [{ all: true }],
                 },
+                {
+                    model: AccountModel,
+                    as: 'accounts',
+                    include: [
+                        {
+                            model: AccountHistoryModel,
+                            as: 'account_histories',
+                        },
+                    ],
+                },
+                { all: true },
             ],
         });
         return patient;
