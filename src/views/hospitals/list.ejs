@@ -49,7 +49,7 @@
             <tbody>
             <% hospitals.forEach(function(hospital) { %>
             <tr>
-                <td class="text-center"><a href="/hospitals/edit/<%= hospital.id %>"><strong><%= hospital.id %></strong></a></td>
+                <td class="text-center"><strong><%= hospital.id %></strong></td>
                 <td><a href="/hospitals/edit/<%= hospital.id %>"><%= hospital.name %></a></td>
                 <td class="hidden-xs text-center"><%= hospital.current_size %></td>
                 <td class="hidden-xs text-center"><%= hospital.size %></td>
