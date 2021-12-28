@@ -1,7 +1,9 @@
 $(function () {
-    const provinceSelect = $('#hospital-province');
-    const districtSelect = $('#hospital-district');
-    const wardSelect = $('#hospital-ward');
+    const provinceSelect = $('#province');
+    const districtSelect = $('#district');
+    const wardSelect = $('#ward');
+    const form = $('#hospital-form');
+
     updateDistrictSelect(hospital.province_id);
     updateWardSelect(hospital.district_id);
 
@@ -41,6 +43,7 @@ $(function () {
         wardSelect.append('<option value="">Chọn Phường/Xã</option>');
         wardSelect.trigger('chosen:updated');
     }
+
     function updateWardSelect(districtId) {
         if (districtId) {
             $.get('/api/districts/' + districtId + '/wards', function (wards) {
@@ -62,45 +65,93 @@ $(function () {
         }
     }
 
-    $('form').on('submit', function (e) {
-        // Reset
-        provinceSelect.parents('.form-group').removeClass('has-error');
-        districtSelect.parents('.form-group').removeClass('has-error');
-        wardSelect.parents('.form-group').removeClass('has-error');
+    $('.select-chosen').change(function () {
+        validateSelect($(this));
+    });
 
-        if (provinceSelect.val() === '') {
-            // Add has-error class when provinceSelect element is required
-            provinceSelect.parents('.form-group').addClass('has-error');
-
-            // Stop submiting
-            return false;
-        }
-        if (districtSelect.val() === '') {
-            // Add has-error class when districtSelect element is required
-            districtSelect.parents('.form-group').addClass('has-error');
-
-            // Stop submiting
-            return false;
-        }
-        if (wardSelect.val() === '') {
-            // Add has-error class when wardSelect element is required
-            wardSelect.parents('.form-group').addClass('has-error');
-
-            // Stop submiting
+    form.validate({
+        errorClass: 'help-block animation-slideDown',
+        errorElement: 'div',
+        errorPlacement: function (error, e) {
+            e.parents('.form-group > div').append(error);
+        },
+        highlight: function (e) {
+            $(e)
+                .closest('.form-group')
+                .removeClass('has-success has-error')
+                .addClass('has-error');
+            $(e).closest('.help-block').remove();
+        },
+        success: function (e) {
+            e.closest('.form-group').removeClass('has-success has-error');
+            e.closest('.help-block').remove();
+        },
+        rules: {
+            name: {
+                required: true,
+                minlength: 5,
+            },
+            size: {
+                required: true,
+                number: true,
+            },
+            current_size: {
+                required: true,
+                number: true,
+            },
+            address: {
+                required: true,
+                minlength: 8,
+            },
+        },
+        messages: {
+            name: {
+                required: 'Vui lòng nhập tên',
+                minlength: 'Tên lớn hơn 5 ký tự',
+            },
+            size: {
+                required: 'Vui lòng nhập sức chứa',
+                number: 'Vui lòng nhập số',
+            },
+            current_size: {
+                required:
+                    'Vui lòng nhập số lượng bệnh nhân hiện tại, mặc định 0',
+                number: 'Vui lòng nhập số',
+            },
+            address: {
+                required: 'Vui lòng nhập địa chỉ',
+                minlength: 'Địa chỉ lớn hơn 8 ký tự',
+            },
+        },
+    });
+    form.submit(function () {
+        let valid = true;
+        $('.select-chosen').each(function () {
+            if (!validateSelect($(this))) {
+                valid = false;
+            }
+        });
+        if (!valid) {
             return false;
         }
     });
 
-    function checkForm(select) {
-        // Reset
-        select.parents('.form-group').removeClass('is-invalid');
+    function validateSelect(select, message = 'Vui lòng chọn') {
+        const formGroup = select.closest('.form-group');
+        formGroup
+            .removeClass('has-success has-error')
+            .find('.help-block')
+            .remove();
 
-        if (select.val() === '') {
-            // Add is-invalid class when select2 element is required
-            select.parents('.form-group').addClass('is-invalid');
-
-            // Stop submiting
+        if (!select.val()) {
+            formGroup.addClass('has-error');
+            select
+                .closest('.form-group > div')
+                .append(
+                    `<div class="help-block animation-slideDown">${message}</div>`,
+                );
             return false;
         }
+        return true;
     }
 });
