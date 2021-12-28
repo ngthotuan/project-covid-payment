@@ -61,4 +61,46 @@ $(function () {
             wardSelect.trigger('chosen:updated');
         }
     }
+
+    $('form').on('submit', function (e) {
+        // Reset
+        provinceSelect.parents('.form-group').removeClass('has-error');
+        districtSelect.parents('.form-group').removeClass('has-error');
+        wardSelect.parents('.form-group').removeClass('has-error');
+
+        if (provinceSelect.val() === '') {
+            // Add has-error class when provinceSelect element is required
+            provinceSelect.parents('.form-group').addClass('has-error');
+
+            // Stop submiting
+            return false;
+        }
+        if (districtSelect.val() === '') {
+            // Add has-error class when districtSelect element is required
+            districtSelect.parents('.form-group').addClass('has-error');
+
+            // Stop submiting
+            return false;
+        }
+        if (wardSelect.val() === '') {
+            // Add has-error class when wardSelect element is required
+            wardSelect.parents('.form-group').addClass('has-error');
+
+            // Stop submiting
+            return false;
+        }
+    });
+
+    function checkForm(select) {
+        // Reset
+        select.parents('.form-group').removeClass('is-invalid');
+
+        if (select.val() === '') {
+            // Add is-invalid class when select2 element is required
+            select.parents('.form-group').addClass('is-invalid');
+
+            // Stop submiting
+            return false;
+        }
+    }
 });
