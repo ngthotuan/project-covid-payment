@@ -13,6 +13,7 @@
 
                 <!-- General Data Content -->
                 <form method="post" class="form-horizontal form-bordered">
+                    <input required type="hidden" id="patient-name" name="id" class="form-control"value='<%= typeof patient !== 'undefined' ? patient.id:null%>' >
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="patient-name">Tên(*)</label>
                         <div class="col-md-9">
@@ -86,9 +87,10 @@
                                     data-placeholder="Chọn Người lây/ Nguồn lây"
                             >
                                 <option value="">Chọn Người lây/ Nguồn lây</option>
+
                                 <% patients.forEach(function(patientItem) { %>
                                     <option value="<%= patientItem.id %>"
-                                            <%= typeof patient !== 'undefined' ? patientItem.id === patient.parent.id ? 'selected' : '' : '' %>
+                                            <%= typeof patient !== 'undefined'  ? patientItem.id === patient.parent?.id ? 'selected' : '' : '' %>
                                     >
                                         <%= patientItem.name %>
                                     </option>
