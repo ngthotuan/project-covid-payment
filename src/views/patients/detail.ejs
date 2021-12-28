@@ -11,9 +11,9 @@
 
                 <!-- Customer Info -->
                 <div class="block-section text-center">
-                    <a href="javascript:void(0)">
-                        <img src="img/placeholders/avatars/avatar4@2x.jpg" alt="avatar" class="img-circle">
-                    </a>
+<!--                     <a href="javascript:void(0)"> -->
+<!--                         <img src="img/placeholders/avatars/avatar4@2x.jpg" alt="avatar" class="img-circle"> -->
+<!--                     </a> -->
                     <h3>
                         <strong><%= patientFind.name%></strong><br><small></small>
                     </h3>
@@ -62,30 +62,26 @@
                 <!-- Orders Title -->
                 <div class="block-title">
                     <div class="block-options pull-right">
-<!--                         <span class="label label-success"><strong>$ 2125,00</strong></span> -->
+                        <span class="label label-success button" id = "btn-add-patients" style = "cursor: pointer;"><strong>Thêm </strong><i class="fa fa-plus"></i></span>
+                         <span class="label label-primary button" id = "btn-save-patients" style = "cursor: pointer;"><strong>Lưu </strong><i class="fa fa-save"></i></span>
+
                     </div>
                     <h2><i class="fa fa-user"></i> <strong>Những người liên quan </strong>(<%= patientFind.patients.length %>)</h2>
                 </div>
                 <!-- END Orders Title -->
 
                 <!-- Orders Content -->
-                <table class="table table-bordered table-striped table-vcenter">
-                    <tbody>
+                <table id="table-patients" class="table table-bordered table-striped table-vcenter">
+                    <tbody >
                         <% patientFind.patients.forEach(patient => { %>
-                            <tr>
-                                <td class="text-center"><a href="/patients?id=<%= patient.id %>"><strong><%= patient.id %></strong></a></td>
+                            <tr >
                                 <td><a href="/patients?id=/<%= patient.id %>"><%= patient.name %></a></td>
                                 <td class="text-right hidden-xs"><strong><%= patient.status %></strong></td>
                                 <td class="hidden-xs text-center"><%= patient.province?.name + patient.district?.name+  patient.ward?.name  %></td>
                                 <td class="hidden-xs text-center"><%= patient.hospital?.name %></td>
                                 <td class="hidden-xs text-center"><%= patient.debt %></td>
                                 <td class="hidden-xs text-center"><%= patient.credit %></td>
-                                <td class="text-center">
-                                    <div class="btn-group btn-group-xs">
-                                        <a href="/patients/edit/<%= patient.id %>" data-toggle="tooltip" title="Edit" class="btn btn-default"><i class="fa fa-pencil"></i></a>
-                                        <a href="javascript:void(0)" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
-                                    </div>
-                                </td>
+
                             </tr>
                         <%})%>
 
@@ -112,8 +108,7 @@
                     <tbody>
 
                         <tr>
-                           <td class="text-center"><a href="/patients?id=<%= patientFind.id %>"><strong><%= patientFind.parent?.id %></strong></a></td>
-                           <td><a href="/patients?id=/<%= patientFind.id %>"><%= patientFind.name %></a></td>
+                           <td><a href="/patients?id=<%= patientFind.parent?.id %>"><%= patientFind.name %></a></td>
                            <td class="text-right hidden-xs"><strong><%= patientFind.parent?.status %></strong></td>
                            <td class="hidden-xs text-center"><%= patientFind.parent?.province?.name + patientFind.parent?.district?.name+  patientFind.parent?.ward?.name  %></td>
                            <td class="hidden-xs text-center"><%= patientFind.parent?.hospital?.name %></td>
@@ -137,4 +132,107 @@
         </div>
     </div>
     <!-- END Customer Content -->
+
 </div>
+
+<script >
+$(document).ready(function () {
+    const a = $('#content-patients')
+
+    $('#btn-add-patients').click(function(){
+        console.log(a.html())
+        $('#table-patients tbody').append(`<tr class="add">
+                                               <td class="hidden-xs text-center" >
+                                                   <label for="name">Name</label>
+                                                   <input type="text" id="name" name="name"></input>
+                                               </td>
+                                               <td class="hidden-xs text-center">
+                                                   <label for="status">Status</label>
+                                                   <input id="status" type="text" name="status"></input>
+                                               </td>
+                                               <td class="hidden-xs text-center">
+                                                   <label for="status">Tỉnh</label>
+                                                   <select
+                                                           id="example-chosen"
+                                                           name="product_id"
+                                                           class="select-chosen"
+                                                           data-placeholder="Chọn Tỉnh"
+                                                           style="width: 250px"
+                                                   >
+                                                       <option>Tinh</option>
+                                                       ><option>Tinh</option>
+                                                      </option><option>Tinh</option>
+                                                       <!-- Required for data-placeholder attribute to work with Chosen plugin -->
+
+                                                   </select>
+                                                   <label for="status">Quận</label>
+                                                   <select
+                                                           id="example-chosen"
+                                                           name="product_id"
+                                                           class="select-chosen"
+                                                           data-placeholder="Chọn Tỉnh"
+                                                           style="width: 250px"
+                                                   >
+                                                       <option>Tinh</option>
+                                                       ><option>Tinh</option>
+                                                      </option><option>Tinh</option>
+                                                       <!-- Required for data-placeholder attribute to work with Chosen plugin -->
+
+                                                   </select>
+                                                   <label for="status">Huyện</label>
+                                                   <select
+                                                           id="example-chosen"
+                                                           name="product_id"
+                                                           class="select-chosen"
+                                                           data-placeholder="Chọn Tỉnh"
+                                                           style="width: 250px"
+                                                   >
+                                                       <option>Tinh</option>
+                                                       ><option>Tinh</option>
+                                                      </option><option>Tinh</option>
+                                                       <!-- Required for data-placeholder attribute to work with Chosen plugin -->
+
+                                                   </select>
+                                               </td>
+
+                                               <td class="hidden-xs text-center">
+                                                   <label for="status">Bệnh viện</label>
+                                                   <input id="status" type="text" name="status"></input>
+                                               </td>
+                                               <td class="hidden-xs text-center">
+                                                   <label for="debt">Debt</label>
+                                                   <input type="text" id="debt" name="debt"></input>
+
+                                               </td>
+                                               <td class="hidden-xs text-center">
+                                                   // <label for="credit">Credit</label>
+                                                   <input type="text" id="credit" name="credit"></input>
+                                               </td>
+
+                                           </tr>`)
+    })
+     $('#btn-save-patients').click(function(){
+        console.log("click")
+        var items=[], options=[];
+
+        //Iterate all td's in second column
+        $('#table-patients tbody >.add > td:nth-child(2)').each( function(){
+           //add item to array
+           items.push( $(this).text() );
+        });
+
+        console.log(items.length)
+
+//         //restrict array to unique items
+//         var items = $.unique( items );
+//
+//         //iterate unique array and build array of select options
+//         $.each( items, function(i, item){
+//             options.push('<option value="' + item + '">' + item + '</option>');
+//         })
+//
+//         //finally empty the select and append the items from the array
+//         $('#selectId').empty().append( options.join() );
+     })
+});
+</script>

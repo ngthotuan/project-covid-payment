@@ -56,11 +56,43 @@ const destroy = async (id) => {
     return category;
 };
 
-const update = async (category) => {
-    const categorySave = await CategoryModel.create(category, {
+const update = async (category, productcategoriesUpdate) => {
+    const oldCategory = await CategoryModel.findByPk(category.category_id, {
         include: 'product_categories',
     });
-    return categorySave;
+    const { name, limit_person, limit_time } = category;
+
+    const categoryUpdated = await oldCategory.update({
+        name,
+        limit_person,
+        limit_time,
+    });
+
+    const oldProductCategories = oldCategory.product_categories;
+    for (let i = 0; i < productcategoriesUpdate.length; i++) {
+        const productCategoryUpdate = productcategoriesUpdate[i];
+        const checkFind = oldProductCategories.findIndex(
+            ({ product_id }) => product_id === productCategoryUpdate.product_id,
+        );
+
+        console.log(productCategoryUpdate);
+        if (checkFind < 0) {
+            await ProductCategoryModel.create(productCategoryUpdate);
+        }
+    }
+
+    for (let i = 0; i < oldProductCategories.length; i++) {
+        const oldProCate = oldProductCategories[i];
+        const checkFind = productcategoriesUpdate.findIndex(
+            ({ product_id }) => product_id === oldProCate.product_id,
+        );
+
+        if (checkFind < 0) {
+            await oldProCate.destroy();
+        }
+    }
+
+    return categoryUpdated;
 };
 
 module.exports = {
@@ -70,4 +102,5 @@ module.exports = {
     findById,
     createCategoryNull,
     findCategoryIncludeProduct,
+    update,
 };
