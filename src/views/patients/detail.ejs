@@ -22,7 +22,7 @@
                     <tbody>
 
                         <tr>
-                            <td class="text-right" style="width: 50%;""><strong>CMND</strong></td>
+                            <td class="text-right" style="width: 50%;"><strong>CMND</strong></td>
                             <td><%= patientFind.identity%></td>
                         </tr>
                         <tr>
@@ -53,11 +53,6 @@
                 </table>
                 <!-- END Customer Info -->
             </div>
-            <!-- END Customer Info Block -->
-
-
-
-                <!-- END Quick Stats Content -->
 
         </div>
         <div class="col-lg-8">
@@ -66,8 +61,6 @@
                 <!-- Orders Title -->
                 <div class="block-title">
                     <div class="block-options pull-right">
-                        <span class="label label-success button" id = "btn-add-patients" style = "cursor: pointer;"><strong>Thêm </strong><i class="fa fa-plus"></i></span>
-                         <span class="label label-primary button" id = "btn-save-patients" style = "cursor: pointer;"><strong>Lưu </strong><i class="fa fa-save"></i></span>
 
                     </div>
                     <h2><i class="fa fa-user"></i> <strong>Những người liên quan </strong>(<%= patientFind.patients.length %>)</h2>
@@ -85,7 +78,7 @@
                                    <%} else {%>
                                    <td class="text-right hidden-xs"><strong ></strong></td>
                                    <%}%>
-                                <td class="hidden-xs text-center"><%= patient.ward?.name + " "+patient.district?.name+" " + patient.province?.name      %></td>
+                                <td class="hidden-xs text-center"><%= patient.ward?.name + ", "+patient.district?.name+", " + patient.province?.name      %></td>
                                 <td class="hidden-xs text-center"><%= patient.hospital?.name %></td>
                                 <td class="hidden-xs text-center"><%= patient.debt %></td>
                                 <td class="hidden-xs text-center"><%= patient.credit %></td>
@@ -122,7 +115,7 @@
                            <%} else {%>
                            <td class="text-right hidden-xs"><strong ></strong></td>
                            <%}%>
-                           <td class="hidden-xs text-center"><%= patientFind.parent?.ward?.name+" "+ patientFind.parent?.district?.name +" "+ patientFind.parent?.province?.name  %></td>
+                           <td class="hidden-xs text-center"><%= patientFind.parent?.ward?.name+", "+ patientFind.parent?.district?.name +", "+ patientFind.parent?.province?.name  %></td>
                            <td class="hidden-xs text-center"><%= patientFind.parent?.hospital?.name %></td>
                            <td class="hidden-xs text-center"><%= patientFind.parent?.debt %></td>
                            <td class="hidden-xs text-center"><%= patientFind.parent?.credit %></td>
@@ -135,6 +128,153 @@
                 <!-- END Products in Cart Content -->
             </div>
 
+                <div class="block">
+                <!-- Orders Title -->
+                <div class="block-title">
+
+                    <h2><i class="fa fa-user"></i> <strong>Lịch sử chuyển trạng thái </strong>(<%= patientFind.status_histories.length %>)</h2>
+                </div>
+                <!-- END Orders Title -->
+
+                <!-- Orders Content -->
+                <table id="table-patients" class="table table-bordered table-striped table-vcenter">
+                <thead>
+                    <tr>
+                      <th >#</th>
+                      <th >Chuyển từ</th>
+                      <th >Thành</th>
+                      <th >Ngày chuyển</th>
+                    </tr>
+                  </thead>
+                    <tbody >
+                        <% patientFind.status_histories.forEach(status_history => { %>
+                            <tr >
+
+                                <td class="hidden-xs text-center"><%= status_history.id%></td>
+                                <td class="hidden-xs text-center">F<%= status_history.source %></td>
+                                <td class="hidden-xs text-center">F<%= status_history.destination %></td>
+                                <td class="hidden-xs text-center"><%= status_history.created_date %></td>
+
+                            </tr>
+                        <%})%>
+
+                    </tbody>
+                </table>
+                <!-- END Orders Content -->
+            </div>
+            <div class="block">
+                <!-- Orders Title -->
+                <div class="block-title">
+
+                    <h2><i class="fa fa-user"></i> <strong>Lịch sử giao dịch </strong>(<%= patientFind.transaction_histories.length %>)</h2>
+                </div>
+                <!-- END Orders Title -->
+
+                <!-- Orders Content -->
+                <table id="table-patients" class="table table-bordered table-striped table-vcenter">
+                <thead>
+                    <tr>
+                      <th >#</th>
+                      <th >Phương thức</th>
+                      <th >Trạng thái</th>
+                      <th >Mô tả</th>
+                      <th >Số tiền</th>
+                      <th >Ngày tạo</th>
+                    </tr>
+                  </thead>
+                    <tbody >
+                        <% patientFind.transaction_histories.forEach(transaction_history => { %>
+                            <tr >
+
+                                <td class="hidden-xs text-center"><%= transaction_history.id%></td>
+                                <td class="hidden-xs text-center"><%= transaction_history.method %></td>
+                                <td class="hidden-xs text-center">F<%= transaction_history.status %></td>
+                                <td class="hidden-xs text-center"><%= transaction_history.description %></td>
+                                <td class="hidden-xs text-center">F<%= transaction_history.amount %></td>
+                                <td class="hidden-xs text-center"><%= transaction_history.created_date %></td>
+
+                            </tr>
+                        <%})%>
+
+                    </tbody>
+                </table>
+                <!-- END Orders Content -->
+            </div>
+            <div class="block">
+                <!-- Orders Title -->
+                <div class="block-title">
+
+                    <h2><i class="fa fa-user"></i> <strong>Lịch sử chuyển khu điều trị/cách ly  </strong>(<%= patientFind.hospital_histories.length %>)</h2>
+                </div>
+                <!-- END Orders Title -->
+
+                <!-- Orders Content -->
+                <table id="table-patients" class="table table-bordered table-striped table-vcenter">
+                <thead>
+                    <tr>
+                      <th >#</th>
+                      <th >Tên khu điều trị/cách ly</th>
+                      <th >Ngày bắt đầu</th>
+                      <th >Ngày kết thúc</th>
+
+                    </tr>
+                  </thead>
+                    <tbody >
+                        <% patientFind.hospital_histories.forEach(hospital_history => { %>
+                            <tr >
+
+                                <td class="hidden-xs text-center"><%= hospital_history.id%></td>
+                                <td class="hidden-xs text-center"><%= hospital_history.hospital_name %></td>
+                                <td class="hidden-xs text-center">F<%= hospital_history.import_time %></td>
+                                <td class="hidden-xs text-center"><%= hospital_history.export_time %></td>
+
+
+                            </tr>
+                        <%})%>
+
+                    </tbody>
+                </table>
+                <!-- END Orders Content -->
+            </div>
+            <div class="block">
+                <!-- Orders Title -->
+                <div class="block-title">
+
+                    <h2><i class="fa fa-user"></i> <strong>Lịch sử thay đổi tài khoản</strong>(<%= typeof patientFind.accounts[0]!=='undefined'?patientFind.accounts[0].account_histories.length:0  %>)</h2>
+                </div>
+                <!-- END Orders Title -->
+
+                <!-- Orders Content -->
+                <table id="table-patients" class="table table-bordered table-striped table-vcenter">
+                <thead>
+                    <tr>
+                      <th >#</th>
+                      <th >Chi tiết</th>
+                      <th >Ngày tạo</th>
+
+
+                    </tr>
+                  </thead>
+                    <tbody >
+                    <%if( typeof patientFind.accounts[0]!=='undefined'){%>
+                        <% patientFind.hospital_histories.forEach(hospital_history => { %>
+                            <tr >
+                                <td class="hidden-xs text-center"><%= hospital_history.id%></td>
+                                <td class="hidden-xs text-center"><%= hospital_history.hospital_name %></td>
+                                <td class="hidden-xs text-center">F<%= hospital_history.import_time %></td>
+                                <td class="hidden-xs text-center"><%= hospital_history.export_time %></td>
+
+                            </tr>
+                        <%})%>
+                        <%}else{%>
+                        <tr/>
+                        <%}%>
+
+
+                    </tbody>
+                </table>
+                <!-- END Orders Content -->
+            </div>
 
         </div>
     </div>

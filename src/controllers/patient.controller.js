@@ -46,6 +46,7 @@ const getCreate = async (req, res, next) => {
 
 const getDetail = async (req, res, next) => {
     const patientFind = await patientService.findById(req.query.id);
+    console.log(patientFind);
     res.render('patients/detail', { patientFind });
     // res.json(patientFind)
 };
