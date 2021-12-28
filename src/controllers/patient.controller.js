@@ -52,7 +52,7 @@ const getDetail = async (req, res, next) => {
 const postCreate = async (req, res, next) => {
     try {
         await patientService.save(req.body);
-        res.redirect('/patients');
+        res.redirect('back');
     } catch (e) {
         console.log(e);
     }
