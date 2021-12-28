@@ -71,7 +71,6 @@ const getUpdate = async (req, res, next) => {
     const patients = await patientService.findAll({
         where: { id: { [Op.ne]: req.params.id } },
     });
-    console.log(patients);
     const provinces = await provinceService.findAll();
     const hospitals = await hospitalService.findAll(condition);
     res.render('patients/form', {
