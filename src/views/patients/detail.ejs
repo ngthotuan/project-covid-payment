@@ -31,7 +31,11 @@
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Trạng thái</strong></td>
-                            <td><%= patientFind.status%></td>
+                             <%if(patientFind.status !==null){%>
+                               <td><strong >F<%= patientFind.status %></strong></td>
+                               <%} else {%>
+                               <td><strong ></strong></td>
+                               <%}%>
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Tài khoản cho phép</strong></td>
@@ -75,7 +79,7 @@
                     <tbody >
                         <% patientFind.patients.forEach(patient => { %>
                             <tr >
-                                <td><a href="/patients?id=/<%= patient.id %>"><%= patient.name %></a></td>
+                                <td><a href="/patients?id=<%= patient.id %>"><%= patient.name %></a></td>
                                 <%if(patient.status !==null){%>
                                    <td class="text-right hidden-xs"><strong >F<%= patient.status %></strong></td>
                                    <%} else {%>
