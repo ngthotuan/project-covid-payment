@@ -11,11 +11,13 @@ module.exports = function (sequelize, DataTypes) {
             },
             balance: {
                 type: DataTypes.BIGINT,
-                allowNull: false,
+                default: 0,
+                allowNull: true,
             },
             blocked: {
                 type: DataTypes.BOOLEAN,
-                allowNull: false,
+                default: false,
+                allowNull: true,
             },
             password: {
                 type: DataTypes.STRING(255),

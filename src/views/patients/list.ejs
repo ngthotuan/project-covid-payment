@@ -49,9 +49,13 @@
             <% listPatient.rows.forEach(function(patient) { %>
             <tr>
                 <td class="text-center"><a href="/patients?id=<%= patient.id %>"><strong><%= patient.id %></strong></a></td>
-                <td><a href="/patients?id=/<%= patient.id %>"><%= patient.name %></a></td>
-                <td class="text-right hidden-xs"><strong><%= patient.status %></strong></td>
-                <td class="hidden-xs text-center"><%= patient.province?.name + patient.district?.name+  patient.ward?.name  %></td>
+                <td><a href="/patients?id=<%= patient.id %>"><%= patient.name %></a></td>
+                <%if(patient.status !==null){%>
+                <td class="text-right hidden-xs"><strong >F<%= patient.status %></strong></td>
+                <%} else {%>
+                <td class="text-right hidden-xs"><strong ></strong></td>
+                <%}%>
+                <td class="hidden-xs text-center"><%=  patient.ward?.name + " "+patient.district?.name+" " + patient.province?.name  %></td>
                 <td class="hidden-xs text-center"><%= patient.hospital?.name %></td>
                 <td class="hidden-xs text-center"><%= patient.debt %></td>
                 <td class="hidden-xs text-center"><%= patient.credit %></td>
@@ -69,6 +73,7 @@
     </div>
     <!-- END All Products Block -->
 </div>
+<script>  </script>
 
 <script src="/js/pages/ecomPatient.js"></script>
 <script>$(function(){ EcomPatients.init(); });</script>

@@ -19,16 +19,19 @@ const save = async (patientValue) => {
     if (patient.parent_id === '') {
         delete patient['parent_id'];
     }
-    const account = new AccountModel();
+    const accounts = [];
+    const account = {};
+
     account.username = patient.name;
     const salt = bcrypt.genSaltSync(10);
     account.password = bcrypt.hashSync(patient.name, salt);
+    accounts.push(account);
 
-    console.log(patient);
+    console.log(account);
     const patientSave = await PatientModel.create(
         {
             ...patient,
-            account,
+            accounts,
         },
         {
             include: ['accounts'],

@@ -33,7 +33,6 @@ const getCreate = async (req, res, next) => {
         },
     };
     const patients = await patientService.findAll({});
-    console.log(patients.rows);
     const provinces = await provinceService.findAll();
     const hospitals = await hospitalService.findAll(condition);
     res.render('patients/form', {
@@ -51,7 +50,6 @@ const getDetail = async (req, res, next) => {
     // res.json(patientFind)
 };
 const postCreate = async (req, res, next) => {
-    // console.log(req.body)
     try {
         await patientService.save(req.body);
         res.redirect('/patients');
