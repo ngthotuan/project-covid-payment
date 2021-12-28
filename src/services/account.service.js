@@ -5,6 +5,11 @@ function findAll() {
     return AccountModel.findAll();
 }
 
+const findAccountByUsername = (username) => {
+    return AccountModel.findOne({ where: { username: username } });
+};
+
 module.exports = {
     findAll,
+    findAccountByUsername,
 };

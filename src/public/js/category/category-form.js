@@ -6,6 +6,7 @@
 let extraIdProduct;
 
 $(document).ready(function () {
+    $('#limitTime').attr('required', 'true');
     $("a[name='linkRemoveDetail']").each(function (index) {
         $(this).click(function () {
             removeDetailByIndex(index);
@@ -22,7 +23,7 @@ function addNextProduct() {
 
     //add required
     $("select[name='product_id']").last().attr('required', 'true');
-    $('.limit-product').last().attr('required', 'true');
+    $("input[name='limit_product']").last().attr('required', 'true');
 
     let products = [];
     allOptProduct.each(function () {
@@ -63,7 +64,6 @@ function addNextProduct() {
                   <div class="col-md-2">
                     <input
                       type="number"
-                      id="limit_product"
                       name="limit_product"
                       class="form-control"
                       placeholder="Số lượng"
