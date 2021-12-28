@@ -2,6 +2,8 @@ $(function () {
     const provinceSelect = $('#patient-province');
     const districtSelect = $('#patient-district');
     const wardSelect = $('#patient-ward');
+    $('#datetimepicker4').datepicker();
+
     updateDistrictSelect(patient.province_id);
     updateWardSelect(patient.district_id);
 

@@ -37,8 +37,8 @@
             <tr>
                 <th class="text-center" style="width: 70px;">Mã</th>
                 <th>Tên</th>
-                <th class="text-right hidden-xs">Trạng thái</th>
-                <th class="text-right hidden-xs">Địa chỉ</th>
+                <th class="hidden-xs text-center">Trạng thái</th>
+                <th class="hidden-xs text-center">Địa chỉ</th>
                 <th class="hidden-xs text-center">Bệnh viện</th>
                 <th class="hidden-xs text-center">Tiền nợ</th>
                 <th class="hidden-xs text-center">Tiền cho phép</th>
@@ -51,9 +51,9 @@
                 <td class="text-center"><a href="/patients?id=<%= patient.id %>"><strong><%= patient.id %></strong></a></td>
                 <td><a href="/patients?id=<%= patient.id %>"><%= patient.name %></a></td>
                 <%if(patient.status !==null){%>
-                <td class="text-right hidden-xs"><strong >F<%= patient.status %></strong></td>
+                <td class="text-center hidden-xs"><strong >F<%= patient.status %></strong></td>
                 <%} else {%>
-                <td class="text-right hidden-xs"><strong ></strong></td>
+                <td class="hidden-xs text-center"><strong ></strong></td>
                 <%}%>
                 <td class="hidden-xs text-center"><%=  patient.ward?.name + ", "+patient.district?.name+", " + patient.province?.name  %></td>
                 <td class="hidden-xs text-center"><%= patient.hospital?.name %></td>

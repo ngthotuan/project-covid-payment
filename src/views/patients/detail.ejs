@@ -109,7 +109,7 @@
                     <tbody>
 
                         <tr>
-                           <td><a href="/patients?id=<%= patientFind.parent?.id %>"><%= patientFind.name %></a></td>
+                           <td><a href="/patients?id=<%= patientFind.parent?.id %>"><%= patientFind.parent.name %></a></td>
                             <%if(patientFind.parent?.status  !==null){%>
                            <td class="text-right hidden-xs"><strong >F<%= patientFind.parent?.status %></strong></td>
                            <%} else {%>

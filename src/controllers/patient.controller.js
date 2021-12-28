@@ -46,7 +46,6 @@ const getCreate = async (req, res, next) => {
 
 const getDetail = async (req, res, next) => {
     const patientFind = await patientService.findById(req.query.id);
-    console.log(patientFind);
     res.render('patients/detail', { patientFind });
     // res.json(patientFind)
 };
@@ -58,9 +57,44 @@ const postCreate = async (req, res, next) => {
         console.log(e);
     }
 };
+const getUpdate = async (req, res, next) => {
+    const condition = {
+        where: {
+            size: {
+                [Op.gt]: {
+                    [Op.col]: 'hospital.current_size',
+                },
+            },
+        },
+    };
+    const patient = await patientService.findById(req.params.id);
+    const patients = await patientService.findAll({
+        where: { id: { [Op.ne]: patient.id } },
+    });
+    const provinces = await provinceService.findAll();
+    const hospitals = await hospitalService.findAll(condition);
+    res.render('patients/form', {
+        title: 'Sửa thông tin bệnh nhân',
+        provinces,
+        statuses: PatientStatusConstant,
+        hospitals,
+        patients: patients.rows,
+        patient,
+    });
+};
+const postUpdate = async (req, res, next) => {
+    try {
+        const patientUpdate = await patientService.update({ ...req.body });
+        res.redirect('back');
+    } catch (e) {
+        console.log(e);
+    }
+};
 module.exports = {
     getList,
     getCreate,
     postCreate,
     getDetail,
+    getUpdate,
+    postUpdate,
 };

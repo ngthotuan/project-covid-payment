@@ -18,7 +18,7 @@ module.exports = function (sequelize, DataTypes) {
                 allowNull: true,
             },
             dob: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.DATE,
                 allowNull: true,
             },
             identity: {
