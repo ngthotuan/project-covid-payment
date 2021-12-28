@@ -7,7 +7,7 @@ router.get('/create', categoryController.getCreate);
 router.post('/create', categoryController.postCreate);
 router.get('/delete/:id', categoryController.destroy);
 router.get('/edit/:id', categoryController.getUpdate);
-router.post('/edit/:id', categoryController.postCreate);
+router.post('/edit/:id', categoryController.postUpdate);
 router.get('/:id', categoryController.detail);
 router.get('/', categoryController.getList);
 
