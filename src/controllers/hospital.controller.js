@@ -1,4 +1,8 @@
-const { hospitalService, provinceService } = require('../services');
+const {
+    hospitalService,
+    provinceService,
+    productService,
+} = require('../services');
 const { PatientStatusConstant } = require('../constants/');
 
 const index = async (req, res, next) => {
@@ -67,6 +71,22 @@ const postEdit = async (req, res, next) => {
     }
 };
 
+const getView = async (req, res, next) => {
+    try {
+        const hospital = await hospitalService.getById(req.params.id);
+        if (!hospital) {
+            req.flash('error_msg', 'Không tồn tại  khu điều trị, cách ly');
+            return res.redirect('/hospital');
+        }
+        res.render('hospitals/view', {
+            title: 'Chi tiết  khu điều trị, cách ly',
+            hospital,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 const remove = async (req, res, next) => {
     try {
         const id = req.params.id;
@@ -92,5 +112,6 @@ module.exports = {
     postCreate,
     getEdit,
     postEdit,
+    getView,
     remove,
 };

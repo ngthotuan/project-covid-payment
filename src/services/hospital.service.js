@@ -8,6 +8,9 @@ const create = (hospital) => HospitalModel.create(hospital);
 
 const findById = (id) => HospitalModel.findByPk(id);
 
+const getById = (id) =>
+    HospitalModel.findByPk(id, { include: [{ all: true }] });
+
 const update = async (id, data) => {
     const hospital = await HospitalModel.findByPk(id);
     hospital.update(data);
@@ -25,6 +28,7 @@ module.exports = {
     findAll,
     create,
     findById,
+    getById,
     update,
     remove,
 };
