@@ -13,38 +13,38 @@
                 <!-- END General Data Title -->
 
                 <!-- General Data Content -->
-                <form method="post" enctype="multipart/form-data" class="form-horizontal form-bordered">
+                <form method="post" id="product-form" enctype="multipart/form-data" class="form-horizontal form-bordered">
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="product-name">Tên</label>
+                        <label class="col-md-3 control-label" for="name">Tên</label>
                         <div class="col-md-9">
-                            <input type="text" id="product-name" name="name" class="form-control"
+                            <input type="text" id="name" name="name" class="form-control"
                                    value="<%= typeof product !== 'undefined' ? product.name : '' %>"
                                    required placeholder="Nhập tên sản phẩm">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="product-price">Giá tiền</label>
+                        <label class="col-md-3 control-label" for="price">Giá tiền</label>
                         <div class="col-md-9">
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-usd"></i></div>
-                                <input type="text" id="product-price" name="amount" class="form-control"
+                                <input type="text" id="price" name="amount" class="form-control"
                                        value="<%= typeof product !== 'undefined' ? Number(product.amount) : '' %>"
                                        required placeholder="0,00">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="product-unit">Đơn vị định lượng</label>
+                        <label class="col-md-3 control-label" for="unit">Đơn vị định lượng</label>
                         <div class="col-md-9">
-                            <input type="text" id="product-unit" name="unit" class="form-control"
+                            <input type="text" id="unit" name="unit" class="form-control"
                                    value="<%= typeof product !== 'undefined' ? product.unit : '' %>"
                                    required placeholder="Cái, Gói, Kg,...">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="product-image">Hình ảnh</label>
+                        <label class="col-md-3 control-label" for="images">Hình ảnh</label>
                         <div class="col-md-9">
-                            <div class="row equal m-2" id="product-images">
+                            <div class="row equal m-2" id="images">
                                 <% if (typeof product !== 'undefined' && product.images.length > 0) { %>
                                     <% for (let i = 0; i < product.images.length; i++) { %>
                                         <div class="col-sm-6 block extra-image">
@@ -72,13 +72,11 @@
                             <% if(typeof product !== "undefined") {%>
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Cập nhật
                                 </button>
-                                <a href="/products" class="btn btn-danger"><i class="fa fa-times"></i> Hủy bỏ</a>
                             <% } else { %>
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Tạo mới
                                 </button>
-                                <button type="reset" class="btn btn-warning"><i class="fa fa-repeat"></i> Xóa trắng
-                                </button>
                             <% } %>
+                                <a href="/products" class="btn btn-danger"><i class="fa fa-times"></i> Hủy bỏ</a>
                         </div>
                     </div>
                 </form>

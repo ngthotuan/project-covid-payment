@@ -2,6 +2,52 @@ $(function () {
     $('input[name=images]').change(function () {
         handleExtraInputChange(this);
     });
+
+    $('#product-form').validate({
+        ignore: '#images',
+        errorClass: 'help-block animation-slideDown',
+        errorElement: 'div',
+        errorPlacement: function (error, e) {
+            e.parents('.form-group > div').append(error);
+        },
+        highlight: function (e) {
+            $(e)
+                .closest('.form-group')
+                .removeClass('has-success has-error')
+                .addClass('has-error');
+            $(e).closest('.help-block').remove();
+        },
+        success: function (e) {
+            e.closest('.form-group').removeClass('has-success has-error');
+            e.closest('.help-block').remove();
+        },
+        rules: {
+            name: {
+                required: true,
+                minlength: 3,
+            },
+            amount: {
+                required: true,
+                number: true,
+            },
+            unit: {
+                required: true,
+            },
+        },
+        messages: {
+            name: {
+                required: 'Vui lòng nhập tên',
+                minlength: 'Tên lớn hơn 3 ký tự',
+            },
+            amount: {
+                required: 'Vui lòng nhập giá tiền',
+                number: 'Vui lòng nhập số',
+            },
+            unit: {
+                required: 'Vui lòng nhập đơn vị định lượng',
+            },
+        },
+    });
 });
 
 function handleExtraInputChange(input) {
@@ -31,7 +77,7 @@ function handleExtraInputChange(input) {
                                 <input onchange="handleExtraInputChange(this)"
                                     accept="image/*" class="form-file m-2" name="images" type="file"/>
                             </div>`;
-        $('#product-images').append(html);
+        $('#images').append(html);
     }
 }
 

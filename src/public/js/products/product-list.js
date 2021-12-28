@@ -24,6 +24,9 @@ function showConfirmDelete(button) {
 
 function showModalDetail(productId) {
     this.event.preventDefault();
-    const url = '/products/view/' + productId;
-    $('#detailModal').modal('show').find('.modal-body').load(url);
+    $('#productEdit').attr('href', '/products/edit/' + productId);
+    $('#detailModal')
+        .modal('show')
+        .find('.modal-body')
+        .load('/products/view/' + productId);
 }
