@@ -11,61 +11,61 @@ const {
     HospitalModel,
 } = require('../models')(sequelize);
 
+const { RoleConstants } = require('../constants');
+
 const findAll = async (condition) => {
     return await PatientModel.findAndCountAll(condition);
 };
 
 const save = async (patient) => {
-    patient.dob = new Date(patient.dob);
-    if (patient.parent_id === '') {
-        delete patient['parent_id'];
-    }
-    if (patient.id === '') {
-        delete patient['id'];
-    }
-    const hospital_histories = [];
-    const accounts = [];
-    const account = {};
-    const hospital_history = {};
+    // clean data
+    Object.keys(patient).forEach((key) => {
+        if (patient[key] === '') {
+            patient[key] = null;
+        }
+    });
 
-    account.username = patient.identity;
+    // create an account for the patient
     const salt = bcrypt.genSaltSync(10);
-    account.password = bcrypt.hashSync(patient.identity, salt);
-    accounts.push(account);
+    const hash = bcrypt.hashSync(patient.identity, salt);
+    const account = {
+        username: patient.identity,
+        password: hash,
+        role: RoleConstants.USER,
+    };
+    // update hospital current size
     const hospital = await HospitalModel.findByPk(patient.hospital_id);
-    if (hospital.current_size === hospital.size) return next();
-    await HospitalModel.update(
-        {
-            current_size: hospital.current_size + 1,
-        },
-        {
-            where: {
-                id: hospital.id,
-            },
-        },
-    );
-    hospital_history.import_time = new Date();
-    hospital_history.hospital_name = '' + hospital.name;
-    hospital_histories.push(hospital_history);
-    const patientSave = await PatientModel.create(
+    if (hospital.current_size === hospital.size) {
+        return next(new Error('Hospital is full'));
+    }
+    await hospital.update({
+        current_size: hospital.current_size + 1,
+    });
+
+    // update hospital history
+    const hospital_history = {
+        // hospital_id: patient.hospital_id,
+        hospital_name: hospital.name,
+        patient_id: patient.id,
+        import_time: new Date(),
+    };
+
+    return await PatientModel.create(
         {
             ...patient,
-            accounts,
-            hospital_histories,
+            dob: new Date(patient.dob),
+            accounts: [account],
+            hospital_histories: [hospital_history],
         },
         {
             include: ['accounts', 'hospital_histories'],
         },
     );
-    return patientSave;
 };
 
 const findById = async (patientId) => {
     try {
-        const patient = await PatientModel.findOne({
-            where: {
-                id: patientId,
-            },
+        const patient = await PatientModel.findByPk(patientId, {
             include: [
                 {
                     model: PatientModel,
