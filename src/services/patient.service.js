@@ -131,9 +131,10 @@ const update = async (patient) => {
                 },
             );
             // new hospital history
+            const hospital = await HospitalModel.findByPk(patient.hospital_id);
             const hospital_history = {
                 import_time: new Date(),
-                hospital_name: patient.hospital_id,
+                hospital_name: hospital.name,
                 patient_id: patient.id,
             };
             await HospitalHistoryModel.create(hospital_history, {

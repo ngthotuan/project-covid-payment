@@ -8,6 +8,7 @@
             <tr>
                 <th class="text-center" style="width: 70px;">Mã</th>
                 <th>Tên</th>
+                <th class="text-center">CMND</th>
                 <th class="text-center">Trạng thái</th>
                 <th class="hidden-xs text-center">Địa chỉ</th>
                 <th class="hidden-xs text-center">Khu điều trị</th>
@@ -19,6 +20,7 @@
             <tr>
                 <td class="text-center"><strong><%= patient.id %></strong></td>
                 <td><a href="/patients?id=<%= patient.id %>"><%= patient.name %></a></td>
+                <td class="hidden-xs text-center"><strong><%= patient.identity %></strong></td>
                 <% if(patient.status !== null){ %>
                     <td class="text-center hidden-xs"><strong>F<%= patient.status %></strong></td>
                 <% } else { %>
