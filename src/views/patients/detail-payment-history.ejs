@@ -1,8 +1,8 @@
 <div class="block">
     <div class="block-title">
-        <h2><i class="fa fa-paypal"></i> <strong>Lịch sử giao dịch </strong>(<%= transaction_histories.length %>)</h2>
+        <h2><i class="fa fa-paypal"></i> <strong>Lịch sử giao dịch </strong>(<%= transaction_histories?.length %>)</h2>
     </div>
-    <% if(transaction_histories.length) { %>
+    <% if(transaction_histories?.length) { %>
         <table id="detail-payment-history" class="table table-bordered table-striped table-vcenter">
             <thead>
             <tr>
