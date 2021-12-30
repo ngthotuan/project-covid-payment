@@ -17,6 +17,10 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING(255),
                 allowNull: true,
             },
+            created_date: {
+                type: DataTypes.DATE,
+                allowNull: true,
+            },
             patient_id: {
                 type: DataTypes.BIGINT,
                 allowNull: true,

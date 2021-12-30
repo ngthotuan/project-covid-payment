@@ -140,6 +140,7 @@ const update = async (patient) => {
                 transaction: t,
             });
         }
+        delete patient.status;
         await patientSaved.update(patient, {
             transaction: t,
         });
@@ -151,28 +152,26 @@ const update = async (patient) => {
 };
 
 const updateStatus = async (patientSaved, transaction, newStatus) => {
-    if (patientSaved.status > newStatus) {
-        const statusHistory = {
-            source: patientSaved.status,
-            destination: newStatus,
-            patient_id: patientSaved.id,
-            created_date: new Date(),
-        };
-        await StatusHistoryModel.create(statusHistory, {
+    const statusHistory = {
+        source: patientSaved.status,
+        destination: newStatus,
+        patient_id: patientSaved.id,
+        created_date: new Date(),
+    };
+    await StatusHistoryModel.create(statusHistory, {
+        transaction: transaction,
+    });
+    await PatientModel.update(
+        {
+            status: newStatus,
+        },
+        {
+            where: {
+                id: patientSaved.id,
+            },
             transaction: transaction,
-        });
-        await PatientModel.update(
-            {
-                status: newStatus,
-            },
-            {
-                where: {
-                    id: patientSaved.id,
-                },
-                transaction: transaction,
-            },
-        );
-    }
+        },
+    );
 
     const patients = await patientSaved.getPatients();
     for (let i = 0; i < patients.length; i++) {
