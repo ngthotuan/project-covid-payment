@@ -7,7 +7,9 @@
                 </div>
                 <div class="block-section text-center">
                     <h3>
-                        <strong><%= patientFind.name %></strong><br><small></small>
+                        <a href="/patients/edit/<%=patientFind.id%>">
+                            <strong><%= patientFind.name %></strong><br><small></small>
+                        </a>
                     </h3>
                 </div>
                 <table class="table table-borderless table-striped table-vcenter">
@@ -41,6 +43,8 @@
                         <td class="text-right"><strong>Trả khoản nhỏ nhất</strong></td>
                         <td><%= patientFind.payment_min %></td>
                     </tr>
+
+
                     </tbody>
                 </table>
             </div>

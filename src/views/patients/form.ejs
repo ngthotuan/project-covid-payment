@@ -32,7 +32,7 @@
                         <label class="col-md-3 control-label" for="patient-indent">Nhập ngày tháng năm sinh(*)</label>
                         <div class="col-md-9">
                             <input type='text' required name="dob" class="form-control" id='datetimepicker4' placeholder="Nhập ngày tháng năm sinh"
-                                   value='<%= typeof patient !== 'undefined' ? patient.dob:""%>'/>
+                                   value='<%= typeof patient !== 'undefined' ? moment(patient.dob).tz('Asia/Ho_Chi_Minh').format('DD-MM-YYYY, hh:mm:ss'):""%>'/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -172,11 +172,16 @@
 
                     <div class="form-group form-actions">
                         <div class="col-md-6 col-md-offset-6">
-
+                            <%if(typeof patient === 'undefined') {%>
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Tạo mới
                                 </button>
                                 <button type="reset" class="btn btn-warning"><i class="fa fa-repeat"></i> Xóa trắng
                                 </button>
+                            <%}else{%>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Cập nhật
+                                </button>
+                                <a href="/patients" class="btn btn-danger"><i class="fa fa-backward"></i> Quay lại</a>
+                            <%}%>
 
                         </div>
                     </div>
