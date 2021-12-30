@@ -12,20 +12,29 @@ module.exports = (app) => {
                 if (!user) {
                     return done(null, false, {
                         message: 'Tài khoản không tồn tại.',
+                        username,
+                        password,
                     });
                 }
                 const checkPasswordValid = bcrypt.compareSync(
                     password,
                     user.password,
                 );
+
                 if (!checkPasswordValid) {
                     return done(null, false, {
                         message: 'Mật khẩu không đúng.',
+                        username,
+                        password,
                     });
                 }
                 return done(null, user);
             } catch (error) {
-                return done('Đã xảy ra lỗi');
+                return done(true, false, {
+                    message: 'Đã xảy ra lỗi.',
+                    username,
+                    password,
+                });
             }
         }),
     );
@@ -42,7 +51,6 @@ module.exports = (app) => {
             done('Đã có lỗi xày ra');
         }
     });
-
     app.use(passport.initialize());
     app.use(passport.session());
 };

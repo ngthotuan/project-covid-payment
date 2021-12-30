@@ -8,8 +8,17 @@ function list(req, res, next) {
         .catch((err) => next(err));
 }
 
+const getLogout = (req, res, next) => {
+    req.logout();
+    res.redirect('/accounts/login');
+};
+
 const getLoginUsername = (req, res, next) => {
-    res.render('accounts/form-username', { layout: 'layouts/layout' });
+    const username = req.flash('username')[0] || '';
+    res.render('accounts/form-username', {
+        layout: 'layouts/layout',
+        username,
+    });
 };
 
 const postLoginUsername = async (req, res, next) => {
@@ -17,39 +26,87 @@ const postLoginUsername = async (req, res, next) => {
     const account = await accountService.findAccountByUsername(username);
     if (!account) {
         req.flash('error_msg', 'User không tồn tại');
+        req.flash('username', username);
         res.redirect('/accounts/login');
     } else if (!account.password) {
-        res.render('accounts/form-create-password');
+        req.flash('username', username);
+        res.redirect('/accounts/login/create');
     } else {
-        res.render('accounts/form-password');
+        req.flash('username', username);
+        res.redirect('/accounts/login/password');
     }
 };
 
-const postLogin = (req, res, next) => {
+const getLoginPassword = (req, res, next) => {
+    const password = req.flash('password')[0] || '';
+    const username = req.flash('username')[0] || '';
+    res.render('accounts/form-password', {
+        username,
+        password,
+    });
+};
+
+const postLoginPassword = (req, res, next) => {
     passport.authenticate('local', function (err, user, info) {
-        if (err) {
-            return res.render('accounts/form-password', {
-                error_msg: 'Mật khẩu không đúng',
-            });
-        }
-        if (!user) {
-            return res.render('accounts/form-password', {
-                error_msg: 'Mật khẩu không đúng',
-            });
+        if (err || !user) {
+            console.log('da vao login password...', info);
+            req.flash('error_msg', info.message);
+            req.flash('username', info.username);
+            req.flash('password', info.password);
+            return res.redirect('/accounts/login/password');
         }
 
         req.logIn(user, function (err) {
             if (err) {
-                return res.render('account/signin', {});
+                return res.redirect('/accounts/login');
             }
             return res.redirect('/');
         });
     })(req, res, next);
 };
 
+const getLoginCreate = async (req, res, next) => {
+    const username = req.flash('username')[0] || '';
+    const password = req.flash('password')[0] || '';
+    res.render('accounts/form-create-password', {
+        username,
+        password,
+    });
+};
+
+const postLoginCreate = async (req, res, next) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    if (!username || !password) {
+        req.flash('username', username);
+        req.flash('password', password);
+        req.flash('error_msg', 'Thiếu trường username hoặc password');
+        return res.redirect('/accounts/login/create');
+    }
+
+    try {
+        const account = await accountService.createPasswordInLogin(
+            username,
+            password,
+        );
+        req.flash('success_msg', 'Tạo mật khẩu thành công');
+        return res.redirect('/accounts/login');
+    } catch (err) {
+        req.flash('username', username);
+        req.flash('password', password);
+        req.flash('error_msg', 'Đã có lỗi xảy ra');
+        return res.redirect('/accounts/login/create');
+    }
+};
+
 module.exports = {
     list,
     getLoginUsername,
     postLoginUsername,
-    postLogin,
+    postLoginPassword,
+    postLoginCreate,
+    getLoginCreate,
+    getLoginPassword,
+    getLogout,
 };
