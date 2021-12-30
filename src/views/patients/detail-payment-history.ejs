@@ -22,7 +22,7 @@
                     <td class="hidden-xs text-center"><%= transaction_history.status %></td>
                     <td class="hidden-xs text-center"><%= transaction_history.description %></td>
                     <td class="text-center"><%= transaction_history.amount %></td>
-                    <td class="hidden-xs text-center"><%= transaction_history.created_date %></td>
+                    <td class="hidden-xs text-center"><%= moment(transaction_history.created_date).tz('Asia/Ho_Chi_Minh').format('DD-MM-YYYY, hh:mm:ss') %></td>
                 </tr>
             <% }) %>
             </tbody>
