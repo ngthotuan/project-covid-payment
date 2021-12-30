@@ -1,415 +1,60 @@
- <div id="page-content">
+<div id="page-content">
     <div class="row">
         <div class="col-lg-4">
-            <!-- Customer Info Block -->
             <div class="block">
-                <!-- Customer Info Title -->
                 <div class="block-title">
                     <h2><i class="fa fa-user"></i> Thông tin <strong>bệnh nhân</strong></h2>
                 </div>
-                <!-- END Customer Info Title -->
-
-                <!-- Customer Info -->
                 <div class="block-section text-center">
-<!--                     <a href="javascript:void(0)"> -->
-<!--                         <img src="img/placeholders/avatars/avatar4@2x.jpg" alt="avatar" class="img-circle"> -->
-<!--                     </a> -->
                     <h3>
-                        <strong><%= patientFind.name%></strong><br><small></small>
+                        <strong><%= patientFind.name %></strong><br><small></small>
                     </h3>
                 </div>
                 <table class="table table-borderless table-striped table-vcenter">
                     <tbody>
 
-                        <tr>
-                            <td class="text-right" style="width: 50%;"><strong>CMND</strong></td>
-                            <td><%= patientFind.identity%></td>
-                        </tr>
-                        <tr>
-                            <td class="text-right"><strong>DOB</strong></td>
-                            <td><%= patientFind.dob%></td>
-                        </tr>
-                        <tr>
-                            <td class="text-right"><strong>Trạng thái</strong></td>
-                             <%if(patientFind.status !==null){%>
-                               <td><strong >F<%= patientFind.status %></strong></td>
-                               <%} else {%>
-                               <td><strong ></strong></td>
-                               <%}%>
-                        </tr>
-                        <tr>
-                            <td class="text-right"><strong>Tài khoản cho phép</strong></td>
-                            <td><%= patientFind.credit%></td>
-                        </tr>
-                        <tr>
-                            <td class="text-right"><strong>Khoản nợ</strong></td>
-                            <td><%= patientFind.debt%></td>
-                        </tr>
-                        <tr>
-                            <td class="text-right"><strong>Trả khoản nhỏ nhất</strong></td>
-                            <td><%= patientFind.payment_min%></td>
-                        </tr>
+                    <tr>
+                        <td class="text-right" style="width: 50%;"><strong>CMND/CCCD</strong></td>
+                        <td><%= patientFind.identity %></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>Ngày sinh</strong></td>
+                        <td><%= moment(patientFind.dob).tz('Asia/Ho_Chi_Minh').format('DD-MM-YYYY') %></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>Trạng thái</strong></td>
+                        <% if(patientFind.status !== null){ %>
+                            <td><strong>F<%= patientFind.status %></strong></td>
+                        <% } else { %>
+                            <td><strong></strong></td>
+                        <% } %>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>Tài khoản cho phép</strong></td>
+                        <td><%= patientFind.credit %></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>Khoản nợ</strong></td>
+                        <td><%= patientFind.debt %></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>Trả khoản nhỏ nhất</strong></td>
+                        <td><%= patientFind.payment_min %></td>
+                    </tr>
                     </tbody>
                 </table>
-                <!-- END Customer Info -->
             </div>
 
         </div>
         <div class="col-lg-8">
-            <!-- Orders Block -->
-            <div class="block">
-                <!-- Orders Title -->
-                <div class="block-title">
-                    <div class="block-options pull-right">
-
-                    </div>
-                    <h2><i class="fa fa-user"></i> <strong>Những người liên quan </strong>(<%= patientFind.patients.length %>)</h2>
-                </div>
-                <!-- END Orders Title -->
-
-                <!-- Orders Content -->
-                <table id="table-patients" class="table table-bordered table-striped table-vcenter">
-                    <thead>
-                    <tr>
-
-                        <th >Tên</th>
-                        <th >CMND</th>
-                        <th >Trạng thái</th>
-                        <th >Địa chỉ</th>
-                        <th >Bện viện</th>
-                        <th >Số nợ</th>
-                        <th >Tài khoản cho phép</th>
-
-                    </tr>
-                    </thead>
-                    <tbody >
-                        <% patientFind.patients.forEach(patient => { %>
-                            <tr >
-                                <td class="hidden-xs text-center"><a href="/patients?id=<%= patient.id %>"><%= patient.name %></a></td>
-                                <td class="hidden-xs text-center"><a href="/patients?id=<%= patient.id %>"><%= patient.identity %></a></td>
-                                <%if(patient.status !==null){%>
-                                   <td class="text-center hidden-xs"><strong >F<%= patient.status %></strong></td>
-                                   <%} else {%>
-                                   <td class="text-center hidden-xs"><strong ></strong></td>
-                                   <%}%>
-                                <td class="hidden-xs text-center"><%= patient.ward?.name + ", "+patient.district?.name+", " + patient.province?.name      %></td>
-                                <td class="hidden-xs text-center"><%= patient.hospital?.name %></td>
-                                <td class="hidden-xs text-center"><%= patient.debt %></td>
-                                <td class="hidden-xs text-center"><%= patient.credit %></td>
-
-                            </tr>
-                        <%})%>
-
-                    </tbody>
-                </table>
-                <!-- END Orders Content -->
-            </div>
-            <!-- END Orders Block -->
-
-            <!-- Products in Cart Block -->
-            <div class="block">
-                <!-- Products in Cart Title -->
-                <div class="block-title">
-                    <div class="block-options pull-right">
-<!--                         <span class="label label-success"><strong>$ 517,00</strong></span> -->
-                    </div>
-                    <h2><i class="fa fa-user"></i> <strong>Người lây bệnh</strong> <% if(patientFind.parent!==null){%>(1)<%} else {%> (0)<%}%></h2>
-                </div>
-                <!-- END Products in Cart Title -->
-
-                <% if(patientFind.parent!==null){%>
-                <!-- Products in Cart Content -->
-                <table class="table table-bordered table-striped table-vcenter">
-                    <thead>
-                    <tr>
-
-                        <th >Tên</th>
-                        <th >CMND</th>
-                        <th >Trạng thái</th>
-                        <th >Địa chỉ</th>
-                        <th >Bện viện</th>
-                        <th >Số nợ</th>
-                        <th >Tài khoản cho phép</th>
-
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                        <tr>
-                           <td class="hidden-xs text-center"><a href="/patients?id=<%= patientFind.parent?.id %>"><%= patientFind.parent.name %></a></td>
-                            <td class="hidden-xs text-center"><a href="/patients?id=<%= patientFind.parent?.id %>"><%= patientFind.parent?.identity %></a></td>
-                            <%if(patientFind.parent?.status  !==null){%>
-                           <td class="text-center hidden-xs"><strong >F<%= patientFind.parent?.status %></strong></td>
-                           <%} else {%>
-                           <td class="text-center hidden-xs"><strong ></strong></td>
-                           <%}%>
-                           <td class="hidden-xs text-center"><%= patientFind.parent?.ward?.name+", "+ patientFind.parent?.district?.name +", "+ patientFind.parent?.province?.name  %></td>
-                           <td class="hidden-xs text-center"><%= patientFind.parent?.hospital?.name %></td>
-                           <td class="hidden-xs text-center"><%= patientFind.parent?.debt %></td>
-                           <td class="hidden-xs text-center"><%= patientFind.parent?.credit %></td>
-
-                       </tr>
-
-                    </tbody>
-                </table>
-                <%}%>
-                <!-- END Products in Cart Content -->
-            </div>
-
-                <div class="block">
-                <!-- Orders Title -->
-                <div class="block-title">
-
-                    <h2><i class="fa fa-user"></i> <strong>Lịch sử chuyển trạng thái </strong>(<%= patientFind.status_histories.length %>)</h2>
-                </div>
-                <!-- END Orders Title -->
-
-                <!-- Orders Content -->
-                <table id="table-patients" class="table table-bordered table-striped table-vcenter">
-                <thead>
-                    <tr>
-                      <th >#</th>
-                      <th >Chuyển từ</th>
-                      <th >Thành</th>
-                      <th >Ngày chuyển</th>
-                    </tr>
-                  </thead>
-                    <tbody >
-                        <% patientFind.status_histories.forEach(status_history => { %>
-                            <tr >
-
-                                <td class="hidden-xs text-center"><%= status_history.id%></td>
-                                <td class="hidden-xs text-center">F<%= status_history.source %></td>
-                                <td class="hidden-xs text-center">F<%= status_history.destination %></td>
-                                <td class="hidden-xs text-center"><%= status_history.created_date %></td>
-
-                            </tr>
-                        <%})%>
-
-                    </tbody>
-                </table>
-                <!-- END Orders Content -->
-            </div>
-            <div class="block">
-                <!-- Orders Title -->
-                <div class="block-title">
-
-                    <h2><i class="fa fa-user"></i> <strong>Lịch sử giao dịch </strong>(<%= patientFind.transaction_histories.length %>)</h2>
-                </div>
-                <!-- END Orders Title -->
-
-                <!-- Orders Content -->
-                <table id="table-patients" class="table table-bordered table-striped table-vcenter">
-                <thead>
-                    <tr>
-                      <th >#</th>
-                      <th >Phương thức</th>
-                      <th >Trạng thái</th>
-                      <th >Mô tả</th>
-                      <th >Số tiền</th>
-                      <th >Ngày tạo</th>
-                    </tr>
-                  </thead>
-                    <tbody >
-                        <% patientFind.transaction_histories.forEach(transaction_history => { %>
-                            <tr >
-
-                                <td class="hidden-xs text-center"><%= transaction_history.id%></td>
-                                <td class="hidden-xs text-center"><%= transaction_history.method %></td>
-                                <td class="hidden-xs text-center">F<%= transaction_history.status %></td>
-                                <td class="hidden-xs text-center"><%= transaction_history.description %></td>
-                                <td class="hidden-xs text-center">F<%= transaction_history.amount %></td>
-                                <td class="hidden-xs text-center"><%= transaction_history.created_date %></td>
-
-                            </tr>
-                        <%})%>
-
-                    </tbody>
-                </table>
-                <!-- END Orders Content -->
-            </div>
-            <div class="block">
-                <!-- Orders Title -->
-                <div class="block-title">
-
-                    <h2><i class="fa fa-user"></i> <strong>Lịch sử chuyển khu điều trị/cách ly  </strong>(<%= patientFind.hospital_histories.length %>)</h2>
-                </div>
-                <!-- END Orders Title -->
-
-                <!-- Orders Content -->
-                <table id="table-patients" class="table table-bordered table-striped table-vcenter">
-                <thead>
-                    <tr>
-                      <th >#</th>
-                      <th >Tên khu điều trị/cách ly</th>
-                      <th >Ngày bắt đầu</th>
-                      <th >Ngày kết thúc</th>
-
-                    </tr>
-                  </thead>
-                    <tbody >
-                        <% patientFind.hospital_histories.forEach(hospital_history => { %>
-                            <tr >
-
-                                <td class="hidden-xs text-center"><%= hospital_history.id%></td>
-                                <td class="hidden-xs text-center"><%= hospital_history.hospital_name %></td>
-                                <td class="hidden-xs text-center">F<%= hospital_history.import_time %></td>
-                                <td class="hidden-xs text-center"><%= hospital_history.export_time %></td>
-
-
-                            </tr>
-                        <%})%>
-
-                    </tbody>
-                </table>
-                <!-- END Orders Content -->
-            </div>
-            <div class="block">
-                <!-- Orders Title -->
-                <div class="block-title">
-
-                    <h2><i class="fa fa-user"></i> <strong>Lịch sử thay đổi tài khoản</strong>(<%= typeof patientFind.accounts[0]!=='undefined'?patientFind.accounts[0].account_histories.length:0  %>)</h2>
-                </div>
-                <!-- END Orders Title -->
-
-                <!-- Orders Content -->
-                <table id="table-patients" class="table table-bordered table-striped table-vcenter">
-                <thead>
-                    <tr>
-                      <th >#</th>
-                      <th >Chi tiết</th>
-                      <th >Ngày tạo</th>
-
-
-                    </tr>
-                  </thead>
-                    <tbody >
-                    <%if( typeof patientFind.accounts[0]!=='undefined'){%>
-                        <% patientFind.hospital_histories.forEach(hospital_history => { %>
-                            <tr >
-                                <td class="hidden-xs text-center"><%= hospital_history.id%></td>
-                                <td class="hidden-xs text-center"><%= hospital_history.hospital_name %></td>
-                                <td class="hidden-xs text-center">F<%= hospital_history.import_time %></td>
-                                <td class="hidden-xs text-center"><%= hospital_history.export_time %></td>
-
-                            </tr>
-                        <%})%>
-                        <%}else{%>
-                        <tr/>
-                        <%}%>
-
-
-                    </tbody>
-                </table>
-                <!-- END Orders Content -->
-            </div>
-
+            <%- include('detail-related', { patients: patientFind.patients }); %>
+            <%- include('detail-parent', { patient: patientFind.parent }); %>
+            <%- include('detail-status-history', { status_histories: patientFind.status_histories }); %>
+            <%- include('detail-payment-history', { transaction_histories: patientFind.transaction_histories }); %>
+            <%- include('detail-hospital-history', { hospital_histories: patientFind.hospital_histories }); %>
+            <%- include('detail-account-history', { account_histories: patientFind.accounts[0]?.account_histories }); %>
         </div>
     </div>
-    <!-- END Customer Content -->
-
 </div>
-
-<script >
-$(document).ready(function () {
-    const a = $('#content-patients')
-
-    $('#btn-add-patients').click(function(){
-        console.log(a.html())
-        $('#table-patients tbody').append(`<tr class="add">
-                                               <td class="hidden-xs text-center" >
-                                                   <label for="name">Name</label>
-                                                   <input type="text" id="name" name="name"></input>
-                                               </td>
-                                               <td class="hidden-xs text-center">
-                                                   <label for="status">Status</label>
-                                                   <input id="status" type="text" name="status"></input>
-                                               </td>
-                                               <td class="hidden-xs text-center">
-                                                   <label for="status">Tỉnh</label>
-                                                   <select
-                                                           id="example-chosen"
-                                                           name="product_id"
-                                                           class="select-chosen"
-                                                           data-placeholder="Chọn Tỉnh"
-                                                           style="width: 250px"
-                                                   >
-                                                       <option>Tinh</option>
-                                                       ><option>Tinh</option>
-                                                      </option><option>Tinh</option>
-                                                       <!-- Required for data-placeholder attribute to work with Chosen plugin -->
-
-                                                   </select>
-                                                   <label for="status">Quận</label>
-                                                   <select
-                                                           id="example-chosen"
-                                                           name="product_id"
-                                                           class="select-chosen"
-                                                           data-placeholder="Chọn Tỉnh"
-                                                           style="width: 250px"
-                                                   >
-                                                       <option>Tinh</option>
-                                                       ><option>Tinh</option>
-                                                      </option><option>Tinh</option>
-                                                       <!-- Required for data-placeholder attribute to work with Chosen plugin -->
-
-                                                   </select>
-                                                   <label for="status">Huyện</label>
-                                                   <select
-                                                           id="example-chosen"
-                                                           name="product_id"
-                                                           class="select-chosen"
-                                                           data-placeholder="Chọn Tỉnh"
-                                                           style="width: 250px"
-                                                   >
-                                                       <option>Tinh</option>
-                                                       ><option>Tinh</option>
-                                                      </option><option>Tinh</option>
-                                                       <!-- Required for data-placeholder attribute to work with Chosen plugin -->
-
-                                                   </select>
-                                               </td>
-
-                                               <td class="hidden-xs text-center">
-                                                   <label for="status">Bệnh viện</label>
-                                                   <input id="status" type="text" name="status"></input>
-                                               </td>
-                                               <td class="hidden-xs text-center">
-                                                   <label for="debt">Debt</label>
-                                                   <input type="text" id="debt" name="debt"></input>
-
-                                               </td>
-                                               <td class="hidden-xs text-center">
-                                                   // <label for="credit">Credit</label>
-                                                   <input type="text" id="credit" name="credit"></input>
-                                               </td>
-
-                                           </tr>`)
-    })
-     $('#btn-save-patients').click(function(){
-        console.log("click")
-        var items=[], options=[];
-
-        //Iterate all td's in second column
-        $('#table-patients tbody >.add > td:nth-child(2)').each( function(){
-           //add item to array
-           items.push( $(this).text() );
-        });
-
-        console.log(items.length)
-
-//         //restrict array to unique items
-//         var items = $.unique( items );
-//
-//         //iterate unique array and build array of select options
-//         $.each( items, function(i, item){
-//             options.push('<option value="' + item + '">' + item + '</option>');
-//         })
-//
-//         //finally empty the select and append the items from the array
-//         $('#selectId').empty().append( options.join() );
-     })
-});
-</script>
- <script src="/js/pages/ecomPatient.js"></script>
- <script>$(function(){ EcomPatients.init(); });</script>
+<!-- Load and execute javascript code used only in this page -->
+<script src="/js/patients/patient-detail.js"></script>

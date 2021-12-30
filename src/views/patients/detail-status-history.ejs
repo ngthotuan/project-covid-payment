@@ -1,0 +1,31 @@
+<div class="block">
+    <div class="block-title">
+        <h2><i class="fa fa-history"></i> <strong>Lịch sử chuyển trạng thái </strong>(<%= status_histories.length %>)</h2>
+    </div>
+    <% if(status_histories.length) { %>
+        <table id="detail-status-history" class="table table-bordered table-striped table-vcenter">
+            <thead>
+            <tr>
+                <th class="text-center" style="width: 70px;">Mã</th>
+                <th class="text-center">Chuyển từ</th>
+                <th class="text-center">Chuyển thành</th>
+                <th class="hidden-xs text-center">Ngày chuyển</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% status_histories.forEach(function(status_history) { %>
+                <tr>
+                    <td class="text-center"><strong><%= status_history.id %></strong></td>
+                    <td class="text-center">F<%= status_history.source %></td>
+                    <td class="text-center">F<%= status_history.destination %></td>
+                    <td class="hidden-xs text-center"><%= status_history.created_date %></td>
+                </tr>
+            <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <div class="alert alert-info">
+            <h4><i class="fa fa-info-circle"></i> Không có lịch sử chuyển trạng thái.</h4>
+        </div>
+    <% } %>
+</div>
