@@ -1,3 +1,4 @@
+const moment = require('moment-timezone');
 const { menu } = require('../config');
 
 module.exports = (app) => {
@@ -5,6 +6,7 @@ module.exports = (app) => {
         res.locals.success_msg = req.flash('success_msg');
         res.locals.error_msg = req.flash('error_msg');
         res.locals.menu = menu;
+        res.locals.moment = moment;
         next();
     });
 };
