@@ -15,9 +15,9 @@
             </tr>
             </thead>
             <tbody>
-            <% transaction_histories.forEach(transaction_history => { %>
+            <% transaction_histories.forEach((transaction_history, index) => { %>
                 <tr>
-                    <td class="text-center"><%= transaction_history.id %></td>
+                    <td class="text-center"><%= index + 1 %></td>
                     <td class="hidden-xs text-center"><%= transaction_history.method %></td>
                     <td class="hidden-xs text-center"><%= transaction_history.status %></td>
                     <td class="hidden-xs text-center"><%= transaction_history.description %></td>

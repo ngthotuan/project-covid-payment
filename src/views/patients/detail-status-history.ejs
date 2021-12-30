@@ -13,9 +13,9 @@
             </tr>
             </thead>
             <tbody>
-            <% status_histories.forEach(function(status_history) { %>
+            <% status_histories.forEach(function(status_history, index) { %>
                 <tr>
-                    <td class="text-center"><strong><%= status_history.id %></strong></td>
+                    <td class="text-center"><strong><%= index + 1 %></strong></td>
                     <td class="text-center">F<%= status_history.source %></td>
                     <td class="text-center">F<%= status_history.destination %></td>
                     <td class="hidden-xs text-center"><%= moment(status_history.created_date).tz('Asia/Ho_Chi_Minh').format('DD-MM-YYYY, hh:mm:ss') %></td>

@@ -13,9 +13,9 @@
             </tr>
             </thead>
             <tbody>
-            <% hospital_histories.forEach(hospital_history => { %>
+            <% hospital_histories.forEach((hospital_history, index) => { %>
                 <tr >
-                    <td class="text-center"><%= hospital_history.id %></td>
+                    <td class="text-center"><%= index + 1%></td>
                     <td class="text-center"><%= hospital_history.hospital_name %></td>
                     <td class="hidden-xs text-center"><%= moment(hospital_history.import_time).tz('Asia/Ho_Chi_Minh').format('DD-MM-YYYY, hh:mm:ss') %></td>
                     <td class="hidden-xs text-center"><%= hospital_history.export_time ? moment(hospital_history.export_time).tz('Asia/Ho_Chi_Minh').format('DD-MM-YYYY, hh:mm:ss') : '' %></td>
