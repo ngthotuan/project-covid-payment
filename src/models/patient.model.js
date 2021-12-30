@@ -34,7 +34,7 @@ module.exports = function (sequelize, DataTypes) {
                 allowNull: true,
             },
             status: {
-                type: DataTypes.STRING(255),
+                type: DataTypes.INTEGER,
                 allowNull: true,
             },
             district_id: {

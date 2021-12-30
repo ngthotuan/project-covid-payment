@@ -25,13 +25,8 @@ const save = async (patient) => {
             patient[key] = null;
         }
     });
-
-    // create an account for the patient
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(patient.identity, salt);
     const account = {
         username: patient.identity,
-        password: hash,
         role: RoleConstants.USER,
     };
     // update hospital current size
@@ -147,47 +142,8 @@ const update = async (patient) => {
     try {
         if (patient.status !== patientSaved.status) {
             // update current patient status
-            const statusHistory = {
-                source: patientSaved.status,
-                destination: patient.status,
-                patient_id: patient.id,
-                created_date: new Date(),
-            };
-            await StatusHistoryModel.create(statusHistory, {
-                transaction: t,
-            });
-
             // update all related patient status
-            const patients = await patientSaved.getPatients();
-            const patients_update = patients.filter(
-                (p) => p.status > patient.status,
-            );
-            const newStatus = parseInt(patient.status) + 1;
-            await PatientModel.update(
-                {
-                    status: newStatus,
-                },
-                {
-                    where: {
-                        id: {
-                            [Op.in]: patients_update.map((p) => p.id),
-                        },
-                    },
-                    transaction: t,
-                },
-            );
-            // update related patient status history
-            const relatedHistory = patients_update.map((p) => {
-                return {
-                    source: p.status,
-                    destination: newStatus,
-                    patient_id: p.id,
-                    created_date: new Date(),
-                };
-            });
-            await StatusHistoryModel.bulkCreate(relatedHistory, {
-                transaction: t,
-            });
+            await updateStatus(patientSaved, t, patient.status);
         }
         if (patient.hospital_id !== patientSaved.hospital_id) {
             // update hospital history
@@ -222,6 +178,39 @@ const update = async (patient) => {
     // return updatePatient;
 };
 
+const updateStatus = async (patientSaved, transaction, patientSavedStatus) => {
+    if (patientSaved.status > patientSavedStatus) {
+        const statusHistory = {
+            source: patientSaved.status,
+            destination: patientSavedStatus,
+            patient_id: patientSaved.id,
+            created_date: new Date(),
+        };
+        await StatusHistoryModel.create(statusHistory, {
+            transaction: transaction,
+        });
+        await PatientModel.update(
+            {
+                status: patientSavedStatus,
+            },
+            {
+                where: {
+                    id: patientSaved.id,
+                },
+                transaction: transaction,
+            },
+        );
+    }
+
+    const patients = await patientSaved.getPatients();
+    for (let i = 0; i < patients.length; i++) {
+        await updateStatus(
+            patients[i],
+            transaction,
+            parseInt(patientSavedStatus) + 1,
+        );
+    }
+};
 module.exports = {
     findAll,
     save,
