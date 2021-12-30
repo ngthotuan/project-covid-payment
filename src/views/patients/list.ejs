@@ -37,6 +37,7 @@
             <tr>
                 <th class="text-center" style="width: 70px;">Mã</th>
                 <th>Tên</th>
+                <th class="hidden-xs text-center">CMND</th>
                 <th class="hidden-xs text-center">Trạng thái</th>
                 <th class="hidden-xs text-center">Địa chỉ</th>
                 <th class="hidden-xs text-center">Bệnh viện</th>
@@ -46,10 +47,11 @@
             </tr>
             </thead>
             <tbody>
-            <% listPatient.rows.forEach(function(patient) { %>
+            <% listPatient.rows.forEach(function(patient,index) { %>
             <tr>
-                <td class="text-center"><a href="/patients?id=<%= patient.id %>"><strong><%= patient.id %></strong></a></td>
+                <td class="text-center"><a href="/patients?id=<%= patient.id %>"><strong><%= index +1 %></strong></a></td>
                 <td><a href="/patients?id=<%= patient.id %>"><%= patient.name %></a></td>
+                <td><a href="/patients?id=<%= patient.id %>"><%= patient.identity %></a></td>
                 <%if(patient.status !==null){%>
                 <td class="text-center hidden-xs"><strong >F<%= patient.status %></strong></td>
                 <%} else {%>
@@ -62,7 +64,7 @@
                 <td class="text-center">
                     <div class="btn-group btn-group-xs">
                         <a href="/patients/edit/<%= patient.id %>" data-toggle="tooltip" title="Edit" class="btn btn-default"><i class="fa fa-pencil"></i></a>
-                        <a href="javascript:void(0)" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+<!--                        <a href="javascript:void(0)" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>-->
                     </div>
                 </td>
             </tr>

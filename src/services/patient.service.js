@@ -104,33 +104,6 @@ const findById = async (patientId) => {
 };
 
 const update = async (patient) => {
-    // const patientBuild = PatientModel.build();
-    // const patientSaved = await PatientModel.findByPk(patient.id);
-    // if (patientSaved.status !== patient.status) {
-    //     const statusHistory = {};
-    //     statusHistory.source = patientSaved.status;
-    //     statusHistory.destination = patient.status;
-    //     statusHistory.created_date = new Date();
-    //     patientSaved.hospital_histories.push(statusHistory)
-    //     // statusHistory.patient_id = patient.id;
-    //     // StatusHistoryModel.create(statusHistory);
-    //     patientSaved.patients = patientSaved.patients.map((patient_item) => {
-    //         if (patient_item.status > patient.status) {
-    //             patient_item.status = parseInt(patient.status) + 1;
-    //             return patient_item;
-    //         }
-    //     });
-    // }
-    // if (patientSaved.hospital_id !== patient.hospital_id) {
-    //     const hospital_history = {};
-    //     const length = patientSaved.hospital_histories.length;
-    //     patientSaved.hospital_histories[length - 1].export_time = new Date();
-    //     hospital_history.import_time = new Date();
-    //     hospital_history.hospital_name = patient.hospital_id;
-    //     patientSaved.hospital_histories.push(hospital_history);
-    // }
-    // console.log(update.hospital_histories.length);
-
     const patientSaved = await PatientModel.findByPk(patient.id);
     // clean data
     Object.keys(patient).forEach((key) => {
@@ -175,14 +148,13 @@ const update = async (patient) => {
         await t.rollback();
         console.log(e.message);
     }
-    // return updatePatient;
 };
 
-const updateStatus = async (patientSaved, transaction, patientSavedStatus) => {
-    if (patientSaved.status > patientSavedStatus) {
+const updateStatus = async (patientSaved, transaction, newStatus) => {
+    if (patientSaved.status > newStatus) {
         const statusHistory = {
             source: patientSaved.status,
-            destination: patientSavedStatus,
+            destination: newStatus,
             patient_id: patientSaved.id,
             created_date: new Date(),
         };
@@ -191,7 +163,7 @@ const updateStatus = async (patientSaved, transaction, patientSavedStatus) => {
         });
         await PatientModel.update(
             {
-                status: patientSavedStatus,
+                status: newStatus,
             },
             {
                 where: {
@@ -204,11 +176,7 @@ const updateStatus = async (patientSaved, transaction, patientSavedStatus) => {
 
     const patients = await patientSaved.getPatients();
     for (let i = 0; i < patients.length; i++) {
-        await updateStatus(
-            patients[i],
-            transaction,
-            parseInt(patientSavedStatus) + 1,
-        );
+        await updateStatus(patients[i], transaction, parseInt(newStatus) + 1);
     }
 };
 module.exports = {
