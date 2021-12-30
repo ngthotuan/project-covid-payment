@@ -18,7 +18,7 @@
                     <td class="text-center"><strong><%= status_history.id %></strong></td>
                     <td class="text-center">F<%= status_history.source %></td>
                     <td class="text-center">F<%= status_history.destination %></td>
-                    <td class="hidden-xs text-center"><%= status_history.created_date %></td>
+                    <td class="hidden-xs text-center"><%= moment(status_history.created_date).tz('Asia/Ho_Chi_Minh').format('DD-MM-YYYY, hh:mm:ss') %></td>
                 </tr>
             <% }); %>
             </tbody>
