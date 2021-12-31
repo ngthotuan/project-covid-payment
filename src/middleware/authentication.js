@@ -2,14 +2,18 @@ const { USER, ADMIN, MANAGER } = require('../constants/role.constant');
 
 const checkUsername = (req, res, next) => {
     const checkHasUsername = req.flash('username').length <= 0;
-    if (checkHasUsername) {
-        return res.redirect('/accounts/login');
-    }
+    console.log(
+        'check has username...',
+        req.flash('username')[0],
+        checkHasUsername,
+    );
+    // if (checkHasUsername) {
+    //     return res.redirect('/accounts/login');
+    // }
     next();
 };
 
 const checkAuthenAndAuthor = (req, res, next) => {
-    console.log('authen....', !req.isAuthenticated());
     if (!req.isAuthenticated()) {
         return res.redirect('/accounts/login');
     }

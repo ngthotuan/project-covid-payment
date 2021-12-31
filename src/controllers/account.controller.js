@@ -49,7 +49,6 @@ const getLoginPassword = (req, res, next) => {
 const postLoginPassword = (req, res, next) => {
     passport.authenticate('local', function (err, user, info) {
         if (err || !user) {
-            console.log('da vao login password...', info);
             req.flash('error_msg', info.message);
             req.flash('username', info.username);
             req.flash('password', info.password);

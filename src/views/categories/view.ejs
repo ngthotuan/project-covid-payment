@@ -89,12 +89,16 @@
             <%category.product_categories.forEach(proCate => {%>
             <tr>
               <td>
-                <a href="/products/edit/<%=proCate.product_id%>"
+                <a
+                  style="cursor: pointer"
+                  onclick="showModalDetail(<%= proCate.product_id %>)"
                   ><%=proCate.product_id%></a
                 >
               </td>
               <td>
-                <a href="/products/edit/<%=proCate.product_id%>"
+                <a
+                  style="cursor: pointer"
+                  onclick="showModalDetail(<%= proCate.product_id %>)"
                   ><%=proCate.product.name%></a
                 >
               </td>
@@ -147,7 +151,22 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="detailModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body"></div>
+        <div class="modal-footer">
+          <a id="productEdit" href="#" class="btn btn-primary">Cập nhật</a>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- Load and execute javascript code used only in this page -->
   <script src="/js/category/category-list.js"></script>
   <script src="/js/category/category-form.js"></script>
+  <script src="/js/category/category-view.js"></script>
 </div>
