@@ -1,25 +1,63 @@
 $(document).ready(() => {
-    $('.input-group')
-        .last()
-        .change(() => {
-            '#form-group'.last().removeClass('has-error');
-            '#input-group'.last().find('.help-block').remove();
-        });
+    const form = $('#form-create-password');
+
+    $('#repeat_password').change(() => {
+        $('.form-group').eq(1).removeClass('has-error');
+        $('.form-group').eq(1).find('.help-block').remove();
+    });
+
+    form.validate({
+        errorClass: 'help-block animation-slideDown',
+        errorElement: 'div',
+        errorPlacement: function (error, e) {
+            e.parents('.form-group').append(error);
+        },
+        highlight: function (e) {
+            $(e)
+                .closest('.form-group')
+                .removeClass('has-success has-error')
+                .addClass('has-error');
+            $(e).closest('.help-block').remove();
+        },
+        success: function (e) {
+            e.closest('.form-group').removeClass('has-success has-error');
+            e.closest('.help-block').remove();
+        },
+        rules: {
+            password: {
+                required: true,
+                minlength: 5,
+            },
+            repeat_password: {
+                required: true,
+                minlength: 5,
+            },
+        },
+        messages: {
+            password: {
+                required: 'Vui lòng nhập mật khẩu',
+                minlength: 'Độ dài lớn hơn 5 ký tự',
+            },
+            repeat_password: {
+                required: 'Vui lòng nhập mật khẩu',
+                minlength: 'Độ dài lớn hơn 5 ký tự',
+            },
+        },
+    });
+
+    form.submit(() => {
+        const password = $('#password').val();
+        const repeatPassword = $('#repeat_password').val();
+
+        if (password !== repeatPassword) {
+            $('.form-group').eq(1).addClass('has-error');
+            $('.form-group')
+                .eq(1)
+                .append(
+                    `<div class="help-block animation-slideDown">Mật khẩu không khớp á</div>`,
+                );
+            return false;
+        }
+        return true;
+    });
 });
-
-const checkPassword = (e, form) => {
-    console.log('dava');
-    e.preventDefault();
-    const password = '#password'.val();
-    const repeatPassword = '#repeat-password'.val();
-
-    if (password !== repeatPassword) {
-        $('.form-group').last().addClass('has-error');
-        $('.input-group')
-            .last()
-            .append(
-                `<div class="help-block animation-slideDown">Mật khẩu không khớp á</div>`,
-            );
-        return false;
-    }
-};
