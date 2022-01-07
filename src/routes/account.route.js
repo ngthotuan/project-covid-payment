@@ -11,6 +11,10 @@ router.post('/login/password', accountController.postLoginPassword);
 router.get('/login', accountController.getLoginUsername);
 router.post('/login', accountController.postLoginUsername);
 router.get('/logout', accountController.getLogout);
-router.get('/', accountController.list);
-
+//router.get('/', accountController.list);
+router.get('/create', accountController.getCreateAccount);
+router.post('/create', accountController.postCreateAccount);
+router.get('/', accountController.getList);
+router.get('/block/:id', accountController.getBlockAccount);
+router.get('/:id', accountController.getById);
 module.exports = router;

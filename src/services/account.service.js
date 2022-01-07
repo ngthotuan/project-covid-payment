@@ -2,8 +2,8 @@ const { sequelize } = require('../db');
 const { AccountModel } = require('../models')(sequelize);
 const bcrypt = require('bcrypt');
 
-function findAll() {
-    return AccountModel.findAll();
+function findAll(condition) {
+    return AccountModel.findAll(condition);
 }
 
 const findAccountByUsername = (username) => {
@@ -23,8 +23,32 @@ const createPasswordInLogin = async (username, password) => {
     return account;
 };
 
+const createAccount = async (username, password, role) => {
+    const passwordHashed = bcrypt.hashSync(password, 8);
+    const newAccount = await AccountModel.create({
+        username: username,
+        password: passwordHashed,
+        role: role,
+        blocked: false,
+        balance: 0,
+    });
+    return newAccount;
+};
+
+const findById = async (id) => {
+    return AccountModel.findByPk(id);
+};
+
+const update = async (id, data) => {
+    const product = await AccountModel.findByPk(id);
+    product.update(data);
+};
+
 module.exports = {
     findAll,
     findAccountByUsername,
+    findById,
     createPasswordInLogin,
+    createAccount,
+    update,
 };

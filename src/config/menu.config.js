@@ -64,6 +64,21 @@ const menu = [
             },
         ],
     },
+    {
+        name: 'Admin',
+        icon: 'gi gi-user',
+        url: '/accounts',
+        sub: [
+            {
+                name: 'Tạo mới',
+                url: '/accounts/create',
+            },
+            {
+                name: 'Xem danh sách',
+                url: '/accounts',
+            },
+        ],
+    },
 ];
 
 module.exports = menu;

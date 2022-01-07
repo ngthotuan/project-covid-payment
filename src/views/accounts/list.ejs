@@ -1,0 +1,74 @@
+<!-- Page content -->
+<div id="page-content">
+    <!-- Quick Stats -->
+    <div class="row text-center">
+        <div class="col-sm-6">
+            <a href="/accounts/create" class="widget widget-hover-effect2">
+                <div class="widget-extra themed-background-success">
+                    <h4 class="widget-content-light"><strong>Thêm</strong> tài khoản</h4>
+                </div>
+                <div class="widget-extra-full"><span class="h2 text-success animation-expandOpen"><i
+                                class="fa fa-plus"></i></span></div>
+            </a>
+        </div>
+        <div class="col-sm-6">
+            <a href="javascript:void(0)" class="widget widget-hover-effect2">
+                <div class="widget-extra themed-background-dark">
+                    <h4 class="widget-content-light"><strong>Tất cả</strong> tài khoản</h4>
+                </div>
+                <div class="widget-extra-full"><span class="h2 themed-color-dark animation-expandOpen"><%= accounts.length %></span>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!-- END Quick Stats -->
+
+    <!-- All Products Block -->
+    <div class="block full">
+        <!-- All Products Title -->
+        <div class="block-title">
+            <h2><strong>Tất cả</strong> tài khoản</h2>
+        </div>
+        <!-- END All Products Title -->
+
+        <!-- All Products Content -->
+        <table id="ecom-accounts" class="table table-bordered table-striped table-vcenter">
+            <thead>
+            <tr>
+                <th class="text-center" style="width: 70px;">Mã</th>
+                <th class="hidden-xs text-center">Username</th>
+                <th class="hidden-xs text-center">Role</th>
+                <th class="hidden-xs text-center">Trạng thái</th>
+                <th class="hidden-xs text-center">Balance</th>
+                <th class="text-center">Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% accounts.forEach(function(account,index) { %>
+            <tr>
+                <td class="text-center"><a href="/accounts?id=<%= account.id %>"><strong><%= index +1 %></strong></a></td>
+                <td><a href="/accounts/<%= account.id %>"><%= account.username %></a></td>
+                <td class="text-center hidden-xs"><%= account.role %></td>
+                <td class="text-center hidden-xs"><strong ><%= account.blocked %></strong></td>
+                <td class="text-center hidden-xs"><strong ><%= account.balance %></strong></td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-xs">
+                        <a href="/accounts/edit/<%= account.id %>" data-toggle="tooltip" title="Edit" class="btn btn-default"><i
+                                class="fa fa-pencil"></i></a>
+                        <!--                        <a href="javascript:void(0)" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>-->
+                        <a href="javascript:void(0)" data-toggle="tooltip" title="Block" class="btn btn-xs btn-danger"><i
+                                class="fa fa-ban"></i></a>
+                    </div>
+                </td>
+            </tr>
+            <% }); %>
+            </tbody>
+        </table>
+        <!-- END All Products Content -->
+    </div>
+    <!-- END All Products Block -->
+</div>
+<script>  </script>
+
+<script src="/js/pages/ecomaccount.js"></script>
+<script>$(function(){ EcomAccounts.init(); });</script>
