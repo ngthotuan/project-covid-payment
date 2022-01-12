@@ -27,8 +27,8 @@ MINVALUE  1
 MAXVALUE 9223372036854775807
 START 1
 ),
-  "balance" int8 NOT NULL,
-  "blocked" bool NOT NULL,
+  "balance" int8 NOT NULL default 0,
+  "blocked" bool NOT NULL default false,
   "password" varchar(255) COLLATE "pg_catalog"."default",
   "role" varchar(255) COLLATE "pg_catalog"."default",
   "username" varchar(255) COLLATE "pg_catalog"."default",
@@ -190,7 +190,7 @@ START 1
 ),
   "credit" int8 NOT NULL,
   "debt" int8 NOT NULL,
-  "dob" int4 NOT NULL,
+  "dob" date NOT NULL,
   "identity" varchar(255) COLLATE "pg_catalog"."default",
   "name" varchar(255) COLLATE "pg_catalog"."default",
   "payment_min" int8 NOT NULL,
