@@ -49,15 +49,21 @@
                 <td class="text-center"><a href="/accounts?id=<%= account.id %>"><strong><%= index +1 %></strong></a></td>
                 <td><a href="/accounts/<%= account.id %>"><%= account.username %></a></td>
                 <td class="text-center hidden-xs"><%= account.role %></td>
-                <td class="text-center hidden-xs"><strong ><%= account.blocked %></strong></td>
+                <%if(account.blocked){%>
+                    <td class="text-center hidden-xs">Đã khóa</td>
+                    <%} else {%>
+                        <td class="text-center hidden-xs">Hoạt động</td>
+                        <%}%>
                 <td class="text-center hidden-xs"><strong ><%= account.balance %></strong></td>
                 <td class="text-center">
                     <div class="btn-group btn-group-xs">
                         <a href="/accounts/edit/<%= account.id %>" data-toggle="tooltip" title="Edit" class="btn btn-default"><i
                                 class="fa fa-pencil"></i></a>
                         <!--                        <a href="javascript:void(0)" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>-->
-                        <a href="javascript:void(0)" data-toggle="tooltip" title="Block" class="btn btn-xs btn-danger"><i
-                                class="fa fa-ban"></i></a>
+                        <button id="<%= account.id %>" data-toggle="tooltip" onclick="showConfirmBlock(this)" title="Khóa tài khoản" class="btn-delete btn btn-xs btn-danger"
+                            <% if(account.blocked) { %> disabled <% } %>><i
+                                class="fa fa-ban"></i></button>
+
                     </div>
                 </td>
             </tr>
@@ -68,7 +74,24 @@
     </div>
     <!-- END All Products Block -->
 </div>
-<script>  </script>
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="confirmBlock" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Khóa tài khoản</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Bạn có chắc chắn muốn khóa tài khoản: <b id="userName"></b></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+                <a id="accountBlockLink" type="button" class="btn btn-primary">Xác nhận</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="/js/pages/ecomaccount.js"></script>
 <script>$(function(){ EcomAccounts.init(); });</script>

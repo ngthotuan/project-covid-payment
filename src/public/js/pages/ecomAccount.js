@@ -26,3 +26,11 @@ var EcomAccounts = (function () {
         },
     };
 })();
+
+function showConfirmBlock(button) {
+    const accountId = $(button)[0].id;
+    const username = $(button).parents('tr').find('td:nth-child(2)').text();
+    $('#accountBlockLink').attr('href', '/accounts/block/' + accountId);
+    $('#userName').text(username);
+    $('#confirmBlock').modal('show');
+}

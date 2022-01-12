@@ -1,4 +1,4 @@
-const { accountService } = require('../services');
+const { accountService, accountHistoryService } = require('../services');
 const passport = require('passport');
 const { RoleConstants } = require('../constants');
 
@@ -159,7 +159,7 @@ const getList = async (req, res, next) => {
 const getBlockAccount = async (req, res, next) => {
     const id = req.params.id;
     const account = await accountService.findById(id);
-    if (!account.blocked) {
+    if (account && !account.blocked) {
         await accountService.update(id, { blocked: true });
     }
     res.redirect('/accounts');
@@ -170,6 +170,12 @@ const getById = async (req, res, next) => {
         const id = req.params.id;
         let account = await accountService.findById(id);
         delete account.password;
+        let history = await accountHistoryService.findAll({
+            where: {
+                account_id: id,
+            },
+        });
+        history;
         console.log(account);
 
         res.json(account);
