@@ -1,7 +1,7 @@
 function middleware(app) {
     require('./engine')(app);
     require('./common')(app);
-    require('./global')(app);
     require('./passport')(app);
+    require('./global')(app);
 }
 module.exports = middleware;

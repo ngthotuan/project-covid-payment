@@ -47,6 +47,7 @@ const getLoginPassword = (req, res, next) => {
     res.render('accounts/form-password', {
         username,
         password,
+        layout: 'layouts/layout',
     });
 };
 
@@ -77,6 +78,7 @@ const getLoginCreate = async (req, res, next) => {
     res.render('accounts/form-create-password', {
         username,
         password,
+        layout: 'layouts/layout',
     });
 };
 

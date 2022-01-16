@@ -1,11 +1,16 @@
+const { RoleConstants } = require('../constants');
+const { ADMIN, MANAGER, USER } = RoleConstants;
+
 const menu = [
     {
         name: 'Dashboard',
+        roles: [ADMIN, MANAGER],
         icon: 'gi gi-stopwatch',
         url: '/',
     },
     {
         name: 'Bệnh Nhân',
+        roles: [ADMIN, MANAGER],
         icon: 'gi gi-user',
         url: '/patients',
         sub: [
@@ -21,6 +26,7 @@ const menu = [
     },
     {
         name: 'Sản phẩm',
+        roles: [ADMIN, MANAGER],
         icon: 'gi gi-cake',
         url: '/products',
         sub: [
@@ -36,6 +42,7 @@ const menu = [
     },
     {
         name: 'Gói nhu yếu phẩm',
+        roles: [ADMIN, MANAGER],
         icon: 'gi gi-shopping_cart',
         url: '/categories',
         sub: [
@@ -51,6 +58,7 @@ const menu = [
     },
     {
         name: 'Khu điều trị, cách ly',
+        roles: [ADMIN],
         icon: 'gi gi-bank',
         url: '/hospitals',
         sub: [
@@ -66,6 +74,7 @@ const menu = [
     },
     {
         name: 'Quản lý người dùng',
+        roles: [ADMIN],
         icon: 'gi gi-user_add',
         url: '/accounts',
         sub: [
@@ -81,6 +90,7 @@ const menu = [
     },
     {
         name: 'Quản lý thanh toán',
+        roles: [ADMIN],
         icon: 'gi gi-sampler',
         url: '/payments',
         sub: [
@@ -96,6 +106,7 @@ const menu = [
     },
     {
         name: 'Thông tin cá nhân',
+        roles: [USER],
         icon: 'gi gi-old_man',
         url: '/users',
         sub: [
@@ -119,6 +130,7 @@ const menu = [
     },
     {
         name: 'Nhu yếu phẩm',
+        roles: [USER],
         icon: 'gi gi-package',
         url: '/users/categories',
     },
