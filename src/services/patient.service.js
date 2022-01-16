@@ -134,6 +134,17 @@ const update = async (patient) => {
             );
             // new hospital history
             const hospital = await HospitalModel.findByPk(patient.hospital_id);
+            const preHospital = await HospitalModel.findByPk(
+                patientSaved.hospital_id,
+            );
+            //update current-size hospital destination
+            await hospital.update({ current_size: hospital.current_size + 1 });
+            hospital.save();
+            //update current-size hospital source
+            await preHospital.update({
+                current_size: preHospital.current_size - 1,
+            });
+            preHospital.save();
             const hospital_history = {
                 import_time: new Date(),
                 hospital_name: hospital.name,
