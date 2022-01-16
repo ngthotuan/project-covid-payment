@@ -17,6 +17,10 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.DATE,
                 allowNull: true,
             },
+            amount: {
+                type: DataTypes.BIGINT,
+                allowNull: false,
+            },
             account_id: {
                 type: DataTypes.BIGINT,
                 allowNull: true,

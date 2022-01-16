@@ -23,21 +23,9 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING(255),
                 allowNull: true,
             },
-            role: {
-                type: DataTypes.STRING(255),
-                allowNull: true,
-            },
             username: {
                 type: DataTypes.STRING(255),
                 allowNull: true,
-            },
-            patient_id: {
-                type: DataTypes.BIGINT,
-                allowNull: true,
-                references: {
-                    model: 'patient',
-                    key: 'id',
-                },
             },
         },
         {
