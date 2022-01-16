@@ -9,7 +9,7 @@ const index = async (req, res, next) => {
     }
 };
 
-const getCreate = (req, res, next) => {
+const getCreate = (req, res) => {
     res.render('products/form', { title: 'Thêm sản phẩm' });
 };
 

@@ -1,9 +1,4 @@
-const {
-    hospitalService,
-    provinceService,
-    productService,
-} = require('../services');
-const { PatientStatusConstant } = require('../constants/');
+const { hospitalService, provinceService } = require('../services');
 
 const index = async (req, res, next) => {
     try {
@@ -33,7 +28,6 @@ const getCreate = async (req, res, next) => {
 
 const postCreate = async (req, res, next) => {
     try {
-        console.log(req.body);
         await hospitalService.create(req.body);
         req.flash('success_msg', 'Thêm khu điều trị, cách ly thành công');
         res.redirect('/hospitals');
