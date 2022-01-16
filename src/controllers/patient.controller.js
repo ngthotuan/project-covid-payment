@@ -52,9 +52,9 @@ const getDetail = async (req, res, next) => {
 const postCreate = async (req, res, next) => {
     try {
         await patientService.save(req.body);
-        res.redirect('back');
     } catch (e) {
-        console.log(e);
+        req.flash('error_msg', 'Chứng minh nhân dân của người này đã tồn tại');
+        res.redirect('back');
     }
 };
 const getUpdate = async (req, res, next) => {
