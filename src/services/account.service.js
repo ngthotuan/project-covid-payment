@@ -44,6 +44,12 @@ const update = async (id, data) => {
     product.update(data);
 };
 
+const changePassword = async (id, password) => {
+    const passwordHashed = bcrypt.hashSync(password, 8);
+    const account = await AccountModel.findByPk(id);
+    account.update({ password: passwordHashed });
+};
+
 module.exports = {
     findAll,
     findAccountByUsername,
@@ -51,4 +57,5 @@ module.exports = {
     createPasswordInLogin,
     createAccount,
     update,
+    changePassword,
 };
