@@ -97,7 +97,7 @@
             <div id="category-product">
             <% if (typeof category !== 'undefined' && category.product_categories.length > 0) { %>
                             <% category.product_categories.forEach((productCate, index) => {%>
-                            <div id="product<%=index%>" class="form-horizontal form-bordered" style="margin-bottom: 25px">
+                            <div id="product<%=index%>" class="form-horizontal form-bordered item-product" style="margin-bottom: 25px">
                               <div class="form-group">
                                 <div class="form-inline">
                                   <label class="col-md-2 control-label">Sản phẩm</label>
@@ -134,7 +134,8 @@
                                   </div>
                                 </div>
                                 <button class="btn fa fa-times-circle-o fa-2x remove-product"
-                                         title="Remove detail"></button>
+                                onclick="deleteItem(this)"
+                                 title="Remove detail"></button>
                               </div>
                             </div>
                             <%})%>

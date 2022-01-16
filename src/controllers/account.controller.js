@@ -41,6 +41,9 @@ const postLoginUsername = async (req, res, next) => {
 const getLoginPassword = (req, res, next) => {
     const password = req.flash('password')[0] || '';
     const username = req.flash('username')[0] || '';
+    if (!username || username === '') {
+        return res.redirect('/accounts/login');
+    }
     res.render('accounts/form-password', {
         username,
         password,
@@ -68,6 +71,9 @@ const postLoginPassword = (req, res, next) => {
 const getLoginCreate = async (req, res, next) => {
     const username = req.flash('username')[0] || '';
     const password = req.flash('password')[0] || '';
+    if (!username || username === '') {
+        return res.redirect('/accounts/login');
+    }
     res.render('accounts/form-create-password', {
         username,
         password,

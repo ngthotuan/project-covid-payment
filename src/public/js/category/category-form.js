@@ -71,6 +71,14 @@ $(document).ready(function () {
             }
         });
 
+        let lengthItem = $('.item-product').length;
+        if (lengthItem < 2) {
+            $('#category-product').append(`
+             <div class="help-block animation-slideDown" id="notify-category-product" style="
+             color: red;">Vui lòng nhập ít nhất 2 sản phẩm</div>
+            `);
+            return false;
+        }
         if (!valid) {
             return false;
         }
@@ -136,8 +144,10 @@ function addNextProduct() {
             </option>`;
     });
 
+    $('#notify-category-product').remove();
+
     htmlDetail =
-        ` <div id="product${extraIdProduct}" class="form-horizontal form-bordered" style="margin-bottom: 25px">
+        ` <div id="product${extraIdProduct}" class="form-horizontal form-bordered item-product" style="margin-bottom: 25px">
     <div class="form-group">
     <div class="form-inline">
       <label class="col-md-2 control-label">Sản phẩm</label>
@@ -170,6 +180,7 @@ function addNextProduct() {
     </div>
     <button class="btn fa fa-times-circle-o fa-2x remove-product"
      title="Remove detail"
+     onclick="deleteItem(this)"
     ></button>
   </div>
   </div>`;
@@ -180,6 +191,6 @@ function addNextProduct() {
     extraIdProduct++;
 }
 
-$('.remove-product').click(function () {
-    $(this).closest('.form-horizontal').remove();
-});
+function deleteItem(button) {
+    $(button).closest('.form-horizontal').remove();
+}
