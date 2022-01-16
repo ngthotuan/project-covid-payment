@@ -24,6 +24,7 @@ module.exports = function (sequelize, DataTypes) {
             identity: {
                 type: DataTypes.STRING(255),
                 allowNull: true,
+                unique: true,
             },
             name: {
                 type: DataTypes.STRING(255),
