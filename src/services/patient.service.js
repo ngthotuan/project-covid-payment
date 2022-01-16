@@ -60,49 +60,54 @@ const save = async (patient) => {
         },
     );
 };
-
-const findById = async (patientId) => {
+const findByIdWithInclude = async (patientId, include) => {
     try {
-        const patient = await PatientModel.findByPk(patientId, {
-            include: [
-                {
-                    model: PatientModel,
-                    as: 'patients',
-                    include: [{ all: true }],
-                },
-                {
-                    model: PatientModel,
-                    as: 'parent',
-                    include: [{ all: true }],
-                },
-                {
-                    model: AccountModel,
-                    as: 'accounts',
-                    include: [
-                        {
-                            model: AccountHistoryModel,
-                            as: 'account_histories',
-                        },
-                    ],
-                },
-                {
-                    model: StatusHistoryModel,
-                    as: 'status_histories',
-                },
-                {
-                    model: HospitalHistoryModel,
-                    as: 'hospital_histories',
-                },
-                {
-                    model: TransactionHistoryModel,
-                    as: 'transaction_histories',
-                },
-            ],
-        });
+        const patient = await PatientModel.findByPk(patientId, include);
         return patient;
     } catch (e) {
         console.log(e.message);
     }
+};
+
+const findById = async (patientId) => {
+    const include = {
+        include: [
+            {
+                model: PatientModel,
+                as: 'patients',
+                include: [{ all: true }],
+            },
+            {
+                model: PatientModel,
+                as: 'parent',
+                include: [{ all: true }],
+            },
+            {
+                model: AccountModel,
+                as: 'accounts',
+                include: [
+                    {
+                        model: AccountHistoryModel,
+                        as: 'account_histories',
+                    },
+                ],
+            },
+            {
+                model: StatusHistoryModel,
+                as: 'status_histories',
+            },
+            {
+                model: HospitalHistoryModel,
+                as: 'hospital_histories',
+            },
+            {
+                model: TransactionHistoryModel,
+                as: 'transaction_histories',
+            },
+        ],
+    };
+    const patient = await findByIdWithInclude(patientId, include);
+    return patient;
 };
 
 const update = async (patient) => {
@@ -197,4 +202,5 @@ module.exports = {
     save,
     findById,
     update,
+    findByIdWithInclude,
 };
