@@ -20,11 +20,13 @@ const findAll = async (condition) => {
 
 const save = async (patient) => {
     // clean data
+
     Object.keys(patient).forEach((key) => {
         if (patient[key] === '') {
             patient[key] = null;
         }
     });
+    console.log(patient);
     const account = {
         username: patient.identity,
         role: RoleConstants.USER,

@@ -13,32 +13,32 @@
 
                 <!-- General Data Content -->
                 <form method="post" class="form-horizontal form-bordered" id = "form-patient" >
-                    <input required type="hidden" id="patient-id" name="id" class="form-control"value='<%= typeof patient !== 'undefined' ? patient.id:null%>' >
+                    <input  type="hidden" id="patient-id" name="id" class="form-control"value='<%= typeof patient !== 'undefined' ? patient.id:''%>' >
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="patient-name">Tên(*)</label>
                         <div class="col-md-9">
-                            <input required type="text" id="patient-name" name="name" class="form-control"
+                            <input  type="text" id="patient-name" name="name" class="form-control"
                                    placeholder="Nhập tên bệnh nhân" value='<%= typeof patient !== 'undefined' ? patient.name:""%>'>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="patient-identity">Nhập mã số định danh(CMND/căn cước công dân)(*)</label>
                         <div class="col-md-9">
-                            <input required type="text" id="patient-identity" name="identity" class="form-control"
-                                   required placeholder="Nhập mã số định danh"  value='<%= typeof patient !== 'undefined' ? patient.identity:""%>'>
+                            <input  type="text" id="patient-identity" name="identity" class="form-control"
+                                    placeholder="Nhập mã số định danh"  value='<%= typeof patient !== 'undefined' ? patient.identity:""%>'>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="patient-dob">Nhập ngày tháng năm sinh(*)</label>
                         <div class="col-md-9">
-                            <input type='text' required name="dob" class="form-control" id='patient-dob' placeholder="Nhập ngày tháng năm sinh"
+                            <input type='text'  name="dob" class="form-control" id='patient-dob' placeholder="Nhập ngày tháng năm sinh"
                                    value='<%= typeof patient !== 'undefined' ? patient.dob:""%>'/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="patient-status">Trạng thái(*)</label>
                         <div class="col-md-9">
-                            <select required
+                            <select 
                                     id="patient-status"
                                     name="status"
                                     class="select-chosen"
@@ -57,7 +57,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="patient-hospital">Khu điều trị/cách ly(*)</label>
                         <div class="col-md-9">
-                            <select required
+                            <select 
                                     id="patient-hospital"
                                     name="hospital_id"
                                     class="select-chosen"
@@ -100,7 +100,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="patient-province">Tỉnh/TP(*)</label>
                         <div class="col-md-9">
-                            <select required
+                            <select 
                                     id="patient-province"
                                     name="province_id"
                                     class="select-chosen"
@@ -122,7 +122,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="patient-district">Quận/Huyện(*)</label>
                         <div class="col-md-9">
-                            <select required
+                            <select 
                                     id="patient-district"
                                     name="district_id"
                                     class="select-chosen"
@@ -135,7 +135,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="patient-ward">Phường/Xã(*)</label>
                         <div class="col-md-9">
-                            <select required
+                            <select 
                                     id="patient-ward"
                                     name="ward_id"
                                     class="select-chosen"
@@ -150,21 +150,21 @@
                         <label class="col-md-3 control-label" for="patient-debt">Tiền nợ(*)</label>
                         <div class="col-md-9">
                             <input type="number" id="patient-debt" name="debt" class="form-control"
-                                   required placeholder="Nhập tiên nợ" value='<%= typeof patient !== 'undefined' ? patient.debt:""%>'>
+                                    placeholder="Nhập tiên nợ" value='<%= typeof patient !== 'undefined' ? patient.debt:""%>'>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="patient-credit">Tiền cho phép(*)</label>
                         <div class="col-md-9">
                             <input type="number" id="patient-credit" name="credit" class="form-control"
-                                   required placeholder="Nhập tiền cho phép" value='<%= typeof patient !== 'undefined' ? patient.credit:""%>'>
+                                    placeholder="Nhập tiền cho phép" value='<%= typeof patient !== 'undefined' ? patient.credit:""%>'>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="patient-payment-min">Số tiền chi trả nhơ nhất(*)</label>
                         <div class="col-md-9">
                             <input type="number" id="patient-payment-min" name="payment_min" class="form-control"
-                                   required placeholder="Nhập số tiền chi trả nhỏ nhất" value='<%= typeof patient !== 'undefined' ? patient.payment_min:""%>'>
+                                    placeholder="Nhập số tiền chi trả nhỏ nhất" value='<%= typeof patient !== 'undefined' ? patient.payment_min:""%>'>
                         </div>
                     </div>
 
