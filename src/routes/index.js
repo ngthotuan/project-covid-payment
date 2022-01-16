@@ -7,6 +7,7 @@ function route(app) {
     app.use('/products', require('./product.route'));
     app.use('/categories', require('./category.route'));
     app.use('/hospitals', require('./hospital.route'));
+    app.use('/users', require('./user.route'));
     app.use('/', require('./site.route'));
 }
 

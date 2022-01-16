@@ -101,26 +101,26 @@ const menu = [
         sub: [
             {
                 name: 'Các thông tin cơ bản',
-                url: '/user/details',
+                url: '/users/details',
             },
             {
                 name: 'Lịch sử được quản lý',
-                url: '/user/manager-history',
+                url: '/users/manager-history',
             },
             {
                 name: 'Lịch sử tiêu thụ',
-                url: '/user/category-history',
+                url: '/users/category-history',
             },
             {
                 name: 'Dư nợ & Lịch sử thanh toán',
-                url: '/user/payment-history',
+                url: '/users/payment-history',
             },
         ],
     },
     {
         name: 'Nhu yếu phẩm',
         icon: 'gi gi-package',
-        url: '/products',
+        url: '/users/categories',
     },
 ];
 
