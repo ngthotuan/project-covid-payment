@@ -65,8 +65,8 @@ const menu = [
         ],
     },
     {
-        name: 'Admin',
-        icon: 'gi gi-user',
+        name: 'Quản lý người dùng',
+        icon: 'gi gi-user_add',
         url: '/accounts',
         sub: [
             {
@@ -78,6 +78,49 @@ const menu = [
                 url: '/accounts',
             },
         ],
+    },
+    {
+        name: 'Quản lý thanh toán',
+        icon: 'gi gi-sampler',
+        url: '/payments',
+        sub: [
+            {
+                name: 'Thay đổi hạn mức',
+                url: '/payments/change-limit',
+            },
+            {
+                name: 'Duyệt danh sách',
+                url: '/payments',
+            },
+        ],
+    },
+    {
+        name: 'Thông tin cá nhân',
+        icon: 'gi gi-old_man',
+        url: '/users',
+        sub: [
+            {
+                name: 'Các thông tin cơ bản',
+                url: '/user/details',
+            },
+            {
+                name: 'Lịch sử được quản lý',
+                url: '/user/manager-history',
+            },
+            {
+                name: 'Lịch sử tiêu thụ',
+                url: '/user/category-history',
+            },
+            {
+                name: 'Dư nợ & Lịch sử thanh toán',
+                url: '/user/payment-history',
+            },
+        ],
+    },
+    {
+        name: 'Nhu yếu phẩm',
+        icon: 'gi gi-package',
+        url: '/products',
     },
 ];
 

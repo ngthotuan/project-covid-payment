@@ -5,5 +5,6 @@ module.exports = {
     patientController: require('./patient.controller'),
     categoryController: require('./category.controller'),
     hospitalController: require('./hospital.controller'),
+    userController: require('./user.controller'),
     ...require('./api'),
 };
