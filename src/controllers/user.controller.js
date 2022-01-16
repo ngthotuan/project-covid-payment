@@ -28,8 +28,6 @@ const detail = async (req, res, next) => {
     });
 };
 
-const index = async (req, res, next) => {};
-
 const getChangePassword = (req, res) => {
     res.render('users/change-password', {
         title: 'Thay đổi mật khẩu',
@@ -106,7 +104,6 @@ const getBuyHistory = async (req, res, next) => {
     res.render('users/user-buy-history', { patient });
 };
 module.exports = {
-    index,
     getProfile,
     getTransactionHistory,
     getUserHistories,
