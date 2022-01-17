@@ -13,6 +13,8 @@ router.post('/login/password', siteController.postLoginPassword);
 router.get('/login', siteController.getLoginUsername);
 router.post('/login', siteController.postLoginUsername);
 router.get('/logout', siteController.getLogout);
+router.get('/init', siteController.getInit);
+router.post('/init', siteController.postInit);
 
 router.get(
     '/change-password',

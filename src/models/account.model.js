@@ -27,6 +27,11 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING(255),
                 allowNull: true,
             },
+            master: {
+                type: DataTypes.BOOLEAN,
+                default: false,
+                allowNull: true,
+            },
         },
         {
             sequelize,

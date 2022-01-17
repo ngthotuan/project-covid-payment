@@ -77,6 +77,20 @@ const createUser = async (username) => {
     return user;
 };
 
+const count = async () => {
+    return AccountModel.count();
+};
+
+const createMasterAccount = async (username, password) => {
+    const hashedPassword = bcrypt.hashSync(password, 8);
+    return await AccountModel.create({
+        username,
+        password: hashedPassword,
+        master: true,
+        balance: 0,
+    });
+};
+
 module.exports = {
     findAll,
     deposit,
@@ -87,4 +101,6 @@ module.exports = {
     changePassword,
     findwithCondition,
     createUser,
+    count,
+    createMasterAccount,
 };
