@@ -64,6 +64,19 @@ function updateBalance(id, balance) {
     return AccountModel.update({ balance }, { where: { id } });
 }
 
+const createUser = async (username) => {
+    let user = await AccountModel.findOne({ where: { username: username } });
+    if (user) {
+        throw Error('Username đã tồn tại');
+        return;
+    }
+    user = await AccountModel.create({
+        username,
+        balance: 0,
+    });
+    return user;
+};
+
 module.exports = {
     findAll,
     deposit,
@@ -73,4 +86,5 @@ module.exports = {
     createPasswordInLogin,
     changePassword,
     findwithCondition,
+    createUser,
 };

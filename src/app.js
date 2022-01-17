@@ -3,6 +3,7 @@ const express = require('express');
 
 const middleware = require('./middleware');
 const route = require('./routes');
+const routeApi = require('./routes/api');
 const db = require('./db');
 const app = express();
 
