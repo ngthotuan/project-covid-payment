@@ -21,11 +21,11 @@ $('#change-password-form').validate({
         },
         newPassword: {
             required: true,
-            minlength: 6,
+            minlength: 5,
         },
         confirmPassword: {
             required: true,
-            minlength: 6,
+            minlength: 5,
             equalTo: '#newPassword',
         },
     },
@@ -35,11 +35,11 @@ $('#change-password-form').validate({
         },
         newPassword: {
             required: 'Vui lòng nhập mật khẩu mới',
-            minlength: 'Tối thiểu 6 ký tự',
+            minlength: 'Tối thiểu 5 ký tự',
         },
         confirmPassword: {
             required: 'Vui lòng xác nhận mật khẩu mới',
-            minlength: 'Tối thiểu 6 ký tự',
+            minlength: 'Tối thiểu 5 ký tự',
             equalTo: 'Mật khẩu mới không khớp',
         },
     },
