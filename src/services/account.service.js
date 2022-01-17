@@ -56,7 +56,10 @@ const changePassword = async (id, password) => {
     const account = await AccountModel.findByPk(id);
     account.update({ password: passwordHashed });
 };
-
+const findwithCondition = async (accountId, include) => {
+    const account = await AccountModel.findByPk(accountId, include);
+    return account;
+};
 function updateBalance(id, balance) {
     return AccountModel.update({ balance }, { where: { id } });
 }
@@ -69,4 +72,5 @@ module.exports = {
     findById,
     createPasswordInLogin,
     changePassword,
+    findwithCondition,
 };

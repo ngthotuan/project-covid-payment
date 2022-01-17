@@ -2,8 +2,12 @@ const { accountService } = require('../services');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 
-const getProfile = (req, res, next) => {
-    const user = req.user || '';
+const getProfile = async (req, res, next) => {
+    const include = {
+        include: ['account_histories'],
+    };
+    const user = await accountService.findwithCondition(req.user.id, include);
+
     res.render('home', {
         user,
     });
