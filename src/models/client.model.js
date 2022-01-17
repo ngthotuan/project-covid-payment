@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 module.exports = function (sequelize, DataTypes) {
     return sequelize.define(
-        'account',
+        'client',
         {
             id: {
                 autoIncrement: true,
@@ -9,33 +9,29 @@ module.exports = function (sequelize, DataTypes) {
                 allowNull: false,
                 primaryKey: true,
             },
-            balance: {
-                type: DataTypes.INTEGER,
+            client_id: {
+                type: DataTypes.STRING(64),
                 default: 0,
                 allowNull: true,
             },
-            blocked: {
-                type: DataTypes.BOOLEAN,
+            client_secret: {
+                type: DataTypes.STRING(64),
                 default: false,
                 allowNull: true,
             },
-            password: {
-                type: DataTypes.STRING(255),
-                allowNull: true,
-            },
-            username: {
+            redirect_url: {
                 type: DataTypes.STRING(255),
                 allowNull: true,
             },
         },
         {
             sequelize,
-            tableName: 'account',
+            tableName: 'client',
             schema: 'public',
             timestamps: false,
             indexes: [
                 {
-                    name: 'account_pkey',
+                    name: 'client_pkey',
                     unique: true,
                     fields: [{ name: 'id' }],
                 },

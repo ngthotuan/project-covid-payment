@@ -13,13 +13,24 @@
                 <!-- END General Data Title -->
 
                 <!-- General Data Content -->
-                <form method="post" id="product-form"  class="form-horizontal form-bordered">
+                <form method="post" class="form-horizontal form-bordered">
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="name">Tài khoản nhận tiền</label>
                         <div class="col-md-9">
                             <input type="text" disabled id="name" name="username" class="form-control"
-                                   value="<%= user.username%>"
+                                   value="<%= user?.username%>"
                                    required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="price">Số tiền còn lại trong tài khoản</label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <div class="input-group-addon">đ</div>
+                                <input type="text" id="price" class="form-control"
+                                       value="<%= user?.balance%>"
+                                       required placeholder="0,00">
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
