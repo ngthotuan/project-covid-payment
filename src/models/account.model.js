@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
                 primaryKey: true,
             },
             balance: {
-                type: DataTypes.BIGINT,
+                type: DataTypes.INTEGER,
                 default: 0,
                 allowNull: true,
             },

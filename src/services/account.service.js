@@ -5,6 +5,22 @@ const bcrypt = require('bcrypt');
 function findAll(condition) {
     return AccountModel.findAll(condition);
 }
+const deposit = async (username, amount) => {
+    try {
+        if (amount < 0) return false;
+        const account = await AccountModel.findOne({
+            where: { username: username },
+        });
+
+        await account.update({
+            balance: parseInt(account.balance) + parseInt(amount),
+        });
+        account.save();
+        return true;
+    } catch (e) {
+        console.log(e.message);
+    }
+};
 
 const findAccountByUsername = (username) => {
     return AccountModel.findOne({ where: { username: username } });
@@ -39,6 +55,7 @@ function updateBalance(id, balance) {
 
 module.exports = {
     findAll,
+    deposit,
     updateBalance,
     findAccountByUsername,
     findById,

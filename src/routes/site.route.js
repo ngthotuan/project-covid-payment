@@ -3,6 +3,8 @@ const router = express.Router();
 
 const { siteController } = require('../controllers');
 
+router.get('/deposit', siteController.getDeposit);
+router.post('/deposit', siteController.postDeposit);
 router.get('/login/create', siteController.getLoginCreate);
 router.post('/login/create', siteController.postLoginCreate);
 router.get('/login/password', siteController.getLoginPassword);

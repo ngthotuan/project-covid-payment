@@ -29,6 +29,24 @@ const postChangePassword = async (req, res) => {
     res.redirect('/change-password');
 };
 
+const getDeposit = async (req, res, next) => {
+    const account = await accountService.findAccountByUsername(
+        req.user.username,
+    );
+    res.render('user-deposit', { user: account });
+};
+const postDeposit = async (req, res, next) => {
+    const result = await accountService.deposit(
+        req.user.username,
+        req.body.amount,
+    );
+    if (result) {
+        req.flash('', 'Nạp tiền thành công');
+    } else {
+        req.flash('', 'Nạp tiền thất bại');
+    }
+    res.redirect('/deposit');
+};
 const getLogout = (req, res, next) => {
     req.logout();
     res.redirect('/login');
@@ -136,6 +154,8 @@ module.exports = {
     postLoginCreate,
     postLoginPassword,
     postLoginUsername,
+    getDeposit,
+    postDeposit,
     getProfile,
     getChangePassword,
     postChangePassword,
