@@ -27,7 +27,7 @@
             <div class="widget-main">
               <div class="list-group remove-margin">
                 <a href="javascript:void(0)" class="list-group-item">
-                  <span class="pull-right"><strong><%user.balance%></strong> VND</span>
+                  <span class="pull-right"><strong><%= user.balance%></strong> VND</span>
                   <h4 class="list-group-item-heading remove-margin">
                     <i class="fa fa-file fa-fw"></i> Số dư
                   </h4>
@@ -36,12 +36,12 @@
             </div>
             <!-- END Widget Main -->
             <div style="text-align: center;">
-                <button
-                  type="button"
+                <a
+                  href="/change-password"
                   class="btn btn-primary mb-2"  
                 >
                   Đổi mật khẩu
-                </button>
+            </a>
               </div>
           </div>
         </div>
