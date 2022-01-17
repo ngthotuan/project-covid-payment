@@ -26,7 +26,7 @@
             </div>
             <p>Bạn sẽ được chuyển về trong <strong id="countdown">5</strong> giây</p>
             <br>
-            <a href="<%= redirectUrl %>">Chuyển về ngay</a>
+            <a id="btnClick" href="<%= redirectUrl %>">Chuyển về ngay</a>
         </div>
     </div>
     <!-- END Invoice Block -->
@@ -39,7 +39,7 @@
             $("#countdown").html(seconds);
             if (seconds <= 0) {
                 clearInterval(countdown);
-                window.location.href = "<%= redirectUrl %>";
+                $("#btnClick").click();
             }
             seconds--;
         }, 1000);
