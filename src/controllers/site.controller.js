@@ -1,6 +1,17 @@
 const { accountService } = require('../services');
 const passport = require('passport');
 
+const getProfile = (req, res, next) => {
+    const user = req.user || '';
+    res.render('home', {
+        user,
+    });
+};
+
+const getChangePassword = (req, res, next) => {
+    res.render('authen/change-password');
+};
+
 const getLogout = (req, res, next) => {
     req.logout();
     res.redirect('/login');
@@ -108,4 +119,6 @@ module.exports = {
     postLoginCreate,
     postLoginPassword,
     postLoginUsername,
+    getProfile,
+    getChangePassword,
 };
