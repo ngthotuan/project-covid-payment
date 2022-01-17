@@ -1,37 +1,52 @@
+const bcrypt = require('bcrypt');
 const { accountService, clientService } = require('../services');
 
 const getPayment = async (req, res, next) => {
-    const { clientId, amount, description, redirect } = req.query;
+    const { clientId, amount, description, redirect, dataCallback } = req.query;
     try {
-        const client = await clientService.findByClientId(clientId);
-        if (!client) {
-            return res.status(404).json({
-                message: 'Client not found',
-            });
+        let client = null;
+        let err = null;
+        let success = false;
+
+        if (!clientId || !amount || !description || !redirect) {
+            err = 'Yêu cầu không hợp lệ';
+        } else {
+            client = await clientService.findByClientId(clientId);
+            if (!client) {
+                err = 'Yêu cầu không hợp lệ';
+            } else {
+                const account = req.user;
+                const newBalance = account.balance - amount;
+                if (newBalance < 0) {
+                    err =
+                        'Số dư không đủ. Vui lòng nạp thêm tiền vào tài khoản';
+                } else {
+                    await accountService.updateBalance(account.id, newBalance);
+                    success = true;
+                }
+            }
         }
-        const cancelUrl = `${redirect || client.redirect_url}?cancel=true`;
+
+        const cancelUrl = `${redirect}?cancel=true`;
+        let successUrl = `${redirect}?success=false`;
+        if (client != null) {
+            const code = bcrypt.hashSync(client.client_secret, 8);
+            successUrl = `${redirect}?success=true&amount=${amount}&dataCallback=${dataCallback}&code=${code}`;
+        }
         res.render('payment', {
-            title: 'Payment',
+            title: 'Thanh toán dịch vụ',
+            success,
+            err,
             app: client,
             amount,
             description,
             cancelUrl,
+            successUrl,
         });
     } catch (error) {
         console.log(error);
         next(error);
     }
-    // else {
-    //     const account = req.user;
-    //     const newBalance = account.balance - amount;
-    //     if (newBalance < 0) {
-    //         req.flash('err_msg', 'Insufficient balance');
-    //     } else {
-    //         await accountService.updateBalance(account.id, newBalance);
-    //         const redirectUrl = redirect || client.redirect_url;
-    //         res.redirect(redirectUrl);
-    //     }
-    // }
 };
 
 module.exports = {

@@ -20,17 +20,21 @@
             <h2><strong>Hóa đơn thanh toán dịch vụ</strong></h2>
         </div>
         <!-- END Invoice Title -->
-
-        <!-- Invoice Content -->
-        <!-- 2 Column grid -->
-        <div class="row block-section">
-            <!-- Company Info -->
-            <div class="col-sm-6">
-                <h2>Nhà cung cấp: <strong><%= app.name %></strong></h2>
-                <address>
-                    Địa chỉ: <strong><%= app.address %></strong><br>
-                </address>
-            </div>
+        <% if(err) { %>
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="fa fa-exclamation-circle"></i> <%= err %></h4>
+            <% } else { %>
+                <!-- Invoice Content -->
+                <!-- 2 Column grid -->
+                <div class="row block-section">
+                    <!-- Company Info -->
+                    <div class="col-sm-6">
+                        <h2>Nhà cung cấp: <strong><%= app.name %></strong></h2>
+                        <address>
+                            Địa chỉ: <strong><%= app.address %></strong><br>
+                        </address>
+                    </div>
             <!-- END Company Info -->
 
             <!-- Client Info -->
@@ -63,15 +67,18 @@
                 </tbody>
             </table>
         </div>
-        <!-- END Table -->
-
-        <div class="clearfix">
-            <div class="btn-group pull-right">
-                <a href="<%= cancelUrl %>" class="btn btn-default"><i class="fa fa-print"></i> Hủy thanh toán</a>
-                <a href="javascript:void(0)" class="btn btn-primary"><i class="fa fa-angle-right"></i> Xác nhận</a>
-            </div>
+                <!-- END Table -->
+                <div class="clearfix">
+                    <div class="btn-group pull-right">
+                        <a href="<%= cancelUrl %>" class="btn btn-default"><i class="fa fa-print"></i> Hủy thanh
+                            toán</a>
+                        <a href="<%= successUrl %>"<%= !success && 'disabled' %>
+                           title="<%= success ? '' : 'Số dư không đủ vui lòng nạp thêm tiền' %>"
+                           class="btn btn-primary"><i class="fa fa-angle-right"></i> Xác nhận</a>
+                    </div>
+                </div>
+            <% } %>
+            <!-- END Invoice Content -->
         </div>
-        <!-- END Invoice Content -->
+        <!-- END Invoice Block -->
     </div>
-    <!-- END Invoice Block -->
-</div>
