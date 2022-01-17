@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { checkAuthenAndAuthor } = require('../middleware/authentication');
 
 const { siteController } = require('../controllers');
 
@@ -13,8 +14,16 @@ router.get('/login', siteController.getLoginUsername);
 router.post('/login', siteController.postLoginUsername);
 router.get('/logout', siteController.getLogout);
 
-router.get('/change-password', siteController.getChangePassword);
-router.post('/change-password', siteController.postChangePassword);
-router.get('/', siteController.getProfile);
+router.get(
+    '/change-password',
+    checkAuthenAndAuthor,
+    siteController.getChangePassword,
+);
+router.post(
+    '/change-password',
+    checkAuthenAndAuthor,
+    siteController.postChangePassword,
+);
+router.get('/', checkAuthenAndAuthor, siteController.getProfile);
 
 module.exports = router;
