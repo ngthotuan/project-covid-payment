@@ -1,3 +1,3 @@
 module.exports = {
-    accountController: require('./account.controller'),
+    siteController: require('./site.controller'),
 };

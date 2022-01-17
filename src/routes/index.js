@@ -1,5 +1,5 @@
 function route(app) {
-    app.use('/accounts', require('./account.route'));
+    app.use('/', require('./site.route'));
 }
 
 module.exports = route;
