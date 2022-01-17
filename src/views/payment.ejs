@@ -1,0 +1,80 @@
+<div id="page-content">
+    <!-- Invoice Header -->
+    <div class="content-header">
+        <div class="header-section">
+            <h1>
+                <i class="gi gi-usd"></i>Thanh toán hóa đơn<br><small>UI for getting paid!</small>
+            </h1>
+        </div>
+    </div>
+    <!-- END Invoice Header -->
+
+    <!-- Invoice Block -->
+    <div class="block full">
+        <!-- Invoice Title -->
+        <div class="block-title">
+            <div class="block-options pull-right">
+                <a href="javascript:void(0)" class="btn btn-sm btn-alt btn-default" data-toggle="tooltip"
+                   title="New invoice"><i class="fa fa-plus"></i></a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-alt btn-default" data-toggle="tooltip"
+                   title="Delete invoice"><i class="fa fa-times"></i></a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-alt btn-default" onclick="App.pagePrint();"><i
+                            class="fa fa-print"></i> Print</a>
+            </div>
+            <h2><strong>Invoice</strong> #INV0152</h2>
+        </div>
+        <!-- END Invoice Title -->
+
+        <!-- Invoice Content -->
+        <!-- 2 Column grid -->
+        <div class="row block-section">
+            <!-- Company Info -->
+            <div class="col-sm-6">
+                <h2><strong><%= client.name %></strong></h2>
+                <address>
+                    <%= client.address %>
+                </address>
+            </div>
+            <!-- END Company Info -->
+
+            <!-- Client Info -->
+            <div class="col-sm-6 text-right">
+                <h2><strong>Client</strong></h2>
+                <address>
+                    <%= description %>
+                </address>
+            </div>
+            <!-- END Client Info -->
+        </div>
+        <!-- END 2 Column grid -->
+
+        <!-- Table -->
+        <div class="table-responsive">
+            <table class="table table-vcenter">
+                <tr class="active">
+                    <td colspan="4" class="text-right"><span class="h4">Tạm tính</span></td>
+                    <td class="text-right"><span class="h4">$ <%= amount %></span></td>
+                </tr>
+                <tr class="active">
+                    <td colspan="4" class="text-right"><span class="h4">Giảm giá</span></td>
+                    <td class="text-right"><span class="h4">0%</span></td>
+                </tr>
+                <tr class="active">
+                    <td colspan="4" class="text-right"><span class="h3"><strong>Thành tiền</strong></span></td>
+                    <td class="text-right"><span class="h3"><strong>$ <%= amount %></strong></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- END Table -->
+
+        <div class="clearfix">
+            <div class="btn-group pull-right">
+                <a href="javascript:void(0)" class="btn btn-default"><i class="fa fa-print"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-primary"><i class="fa fa-angle-right"></i> Send Invoice</a>
+            </div>
+        </div>
+        <!-- END Invoice Content -->
+    </div>
+    <!-- END Invoice Block -->
+</div>

@@ -11,15 +11,21 @@ module.exports = function (sequelize, DataTypes) {
             },
             client_id: {
                 type: DataTypes.STRING(64),
-                default: 0,
-                allowNull: true,
+                allowNull: false,
             },
             client_secret: {
                 type: DataTypes.STRING(64),
-                default: false,
-                allowNull: true,
+                allowNull: false,
             },
             redirect_url: {
+                type: DataTypes.STRING(255),
+                allowNull: true,
+            },
+            name: {
+                type: DataTypes.STRING(255),
+                allowNull: true,
+            },
+            address: {
                 type: DataTypes.STRING(255),
                 allowNull: true,
             },
