@@ -3,7 +3,7 @@
     <div class="content-header">
         <div class="header-section">
             <h1>
-                <i class="gi gi-usd"></i>Thanh toán hóa đơn<br><small>UI for getting paid!</small>
+                <i class="gi gi-usd"></i>Thanh toán hóa đơn<br><small>Hệ thống thanh toán</small>
             </h1>
         </div>
     </div>
@@ -14,14 +14,10 @@
         <!-- Invoice Title -->
         <div class="block-title">
             <div class="block-options pull-right">
-                <a href="javascript:void(0)" class="btn btn-sm btn-alt btn-default" data-toggle="tooltip"
-                   title="New invoice"><i class="fa fa-plus"></i></a>
-                <a href="javascript:void(0)" class="btn btn-sm btn-alt btn-default" data-toggle="tooltip"
-                   title="Delete invoice"><i class="fa fa-times"></i></a>
                 <a href="javascript:void(0)" class="btn btn-sm btn-alt btn-default" onclick="App.pagePrint();"><i
                             class="fa fa-print"></i> Print</a>
             </div>
-            <h2><strong>Invoice</strong> #INV0152</h2>
+            <h2><strong>Hóa đơn thanh toán dịch vụ</strong></h2>
         </div>
         <!-- END Invoice Title -->
 
@@ -30,18 +26,19 @@
         <div class="row block-section">
             <!-- Company Info -->
             <div class="col-sm-6">
-                <h2><strong><%= client.name %></strong></h2>
+                <h2>Nhà cung cấp: <strong><%= app.name %></strong></h2>
                 <address>
-                    <%= client.address %>
+                    Địa chỉ: <strong><%= app.address %></strong><br>
                 </address>
             </div>
             <!-- END Company Info -->
 
             <!-- Client Info -->
             <div class="col-sm-6 text-right">
-                <h2><strong>Client</strong></h2>
+                <h2>Người thanh toán: <strong><%= user.username %></strong></h2>
                 <address>
-                    <%= description %>
+                    Số dư: <strong><%= user.balance %></strong><br>
+                    Nội dung: <strong><%= description %></strong>
                 </address>
             </div>
             <!-- END Client Info -->
@@ -70,8 +67,8 @@
 
         <div class="clearfix">
             <div class="btn-group pull-right">
-                <a href="javascript:void(0)" class="btn btn-default"><i class="fa fa-print"></i> Save</a>
-                <a href="javascript:void(0)" class="btn btn-primary"><i class="fa fa-angle-right"></i> Send Invoice</a>
+                <a href="<%= cancelUrl %>" class="btn btn-default"><i class="fa fa-print"></i> Hủy thanh toán</a>
+                <a href="javascript:void(0)" class="btn btn-primary"><i class="fa fa-angle-right"></i> Xác nhận</a>
             </div>
         </div>
         <!-- END Invoice Content -->

@@ -1,22 +1,21 @@
 const { accountService, clientService } = require('../services');
 
-const pay = async (req, res, next) => {
+const getPayment = async (req, res, next) => {
     const { clientId, amount, description, redirect } = req.query;
-    console.log(req.query);
     try {
         const client = await clientService.findByClientId(clientId);
-        console.log(client);
         if (!client) {
             return res.status(404).json({
                 message: 'Client not found',
             });
         }
+        const cancelUrl = `${redirect || client.redirect_url}?cancel=true`;
         res.render('payment', {
             title: 'Payment',
-            client,
+            app: client,
             amount,
             description,
-            redirect,
+            cancelUrl,
         });
     } catch (error) {
         console.log(error);
@@ -36,5 +35,5 @@ const pay = async (req, res, next) => {
 };
 
 module.exports = {
-    pay,
+    getPayment,
 };
