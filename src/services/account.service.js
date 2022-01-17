@@ -1,6 +1,7 @@
 const { sequelize } = require('../db');
-const { AccountModel } = require('../models')(sequelize);
+const { AccountModel, AccountHistoryModel } = require('../models')(sequelize);
 const bcrypt = require('bcrypt');
+const depositStatus = require('../constants/deposit.status');
 
 function findAll(condition) {
     return AccountModel.findAll(condition);
@@ -12,6 +13,13 @@ const deposit = async (username, amount) => {
             where: { username: username },
         });
 
+        const accountHistory = {
+            action: depositStatus.DEPOSIT,
+            created_date: Date.now(),
+            amount: amount,
+            account_id: account.id,
+        };
+        await AccountHistoryModel.create(accountHistory);
         await account.update({
             balance: parseInt(account.balance) + parseInt(amount),
         });
