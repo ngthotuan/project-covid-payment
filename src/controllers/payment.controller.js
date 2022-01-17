@@ -1,8 +1,12 @@
 const bcrypt = require('bcrypt');
-const { accountService, clientService } = require('../services');
+const {
+    accountService,
+    clientService,
+    accountHistoryService,
+} = require('../services');
 
 const getPayment = async (req, res, next) => {
-    const { clientId, amount, description, redirect, dataCallback } = req.query;
+    const { clientId, amount, description, redirect } = req.query;
     try {
         let client = null;
         let err = null;
@@ -15,25 +19,17 @@ const getPayment = async (req, res, next) => {
             if (!client) {
                 err = 'Yêu cầu không hợp lệ';
             } else {
-                const account = req.user;
-                const newBalance = account.balance - amount;
-                if (newBalance < 0) {
+                if (req.user.balance < amount) {
                     err =
                         'Số dư không đủ. Vui lòng nạp thêm tiền vào tài khoản';
                 } else {
-                    await accountService.updateBalance(account.id, newBalance);
                     success = true;
                 }
             }
         }
 
         const cancelUrl = `${redirect}?cancel=true`;
-        let successUrl = `${redirect}?success=false`;
-        if (client != null) {
-            const code = bcrypt.hashSync(client.client_secret, 8);
-            successUrl = `${redirect}?success=true&amount=${amount}&dataCallback=${dataCallback}&code=${code}`;
-        }
-        res.render('payment', {
+        res.render('payment/invoice', {
             title: 'Thanh toán dịch vụ',
             success,
             err,
@@ -41,8 +37,34 @@ const getPayment = async (req, res, next) => {
             amount,
             description,
             cancelUrl,
-            successUrl,
         });
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+};
+
+const postPayment = async (req, res, next) => {
+    const { clientId, amount, redirect, dataCallback } = req.query;
+    try {
+        const client = await clientService.findByClientId(clientId);
+        const { id, balance } = req.user;
+        const newBalance = balance - amount;
+        if (newBalance < 0) {
+            res.render('payment/success', {
+                title: 'Thanh toán thất bại',
+                msg: 'Số dư không đủ, vui lòng nạp thêm tiền vào tài khoản',
+            });
+        } else {
+            await accountService.payment(id, amount);
+            await accountService.updateMasterBalance(amount);
+            const code = bcrypt.hashSync(client.client_secret, 8);
+            const redirectUrl = `${redirect}?success=true&amount=${amount}&dataCallback=${dataCallback}&code=${code}`;
+            res.render('payment/success', {
+                title: 'Thanh toán thành công',
+                redirectUrl,
+            });
+        }
     } catch (error) {
         console.log(error);
         next(error);
@@ -51,4 +73,5 @@ const getPayment = async (req, res, next) => {
 
 module.exports = {
     getPayment,
+    postPayment,
 };

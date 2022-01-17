@@ -60,9 +60,17 @@ const findwithCondition = async (accountId, include) => {
     const account = await AccountModel.findByPk(accountId, include);
     return account;
 };
-function updateBalance(id, balance) {
-    return AccountModel.update({ balance }, { where: { id } });
-}
+const payment = async (id, amount) => {
+    const account = await AccountModel.findByPk(id);
+    const accountHistory = {
+        action: depositStatus.PAYMENT,
+        created_date: Date.now(),
+        amount: amount,
+        account_id: account.id,
+    };
+    await AccountHistoryModel.create(accountHistory);
+    account.update({ balance: account.balance - amount });
+};
 
 const createUser = async (username) => {
     let user = await AccountModel.findOne({ where: { username: username } });
@@ -91,10 +99,22 @@ const createMasterAccount = async (username, password) => {
     });
 };
 
+const updateMasterBalance = async (amount) => {
+    const account = await AccountModel.findOne({ where: { master: true } });
+    const accountHistory = {
+        action: depositStatus.RECEIVE_MONEY,
+        created_date: Date.now(),
+        amount: amount,
+        account_id: account.id,
+    };
+    await AccountHistoryModel.create(accountHistory);
+    account.update({ balance: account.balance + amount });
+};
+
 module.exports = {
     findAll,
     deposit,
-    updateBalance,
+    payment,
     findAccountByUsername,
     findById,
     createPasswordInLogin,
@@ -103,4 +123,5 @@ module.exports = {
     createUser,
     count,
     createMasterAccount,
+    updateMasterBalance,
 };

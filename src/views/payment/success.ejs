@@ -1,0 +1,47 @@
+<div id="page-content">
+    <!-- Invoice Header -->
+    <div class="content-header">
+        <div class="header-section">
+            <h1>
+                <i class="gi gi-usd"></i>Thanh toán hóa đơn<br><small>Hệ thống thanh toán</small>
+            </h1>
+        </div>
+    </div>
+    <!-- END Invoice Header -->
+
+    <!-- Invoice Block -->
+    <div class="block full">
+        <!-- Invoice Title -->
+        <div class="block-title">
+            <div class="block-options pull-right">
+                <a href="javascript:void(0)" class="btn btn-sm btn-alt btn-default" onclick="App.pagePrint();"><i
+                            class="fa fa-print"></i> Print</a>
+            </div>
+            <h2><strong>Hóa đơn thanh toán dịch vụ</strong></h2>
+        </div>
+        <div class="text-center">
+            <div class="alert alert-success alert-dismissable text-center">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="fa fa-check-circle"></i> Thanh toán thành công. </h4>
+            </div>
+            <p>Bạn sẽ được chuyển về trong <strong id="countdown">5</strong> giây</p>
+            <br>
+            <a href="<%= redirectUrl %>">Chuyển về ngay</a>
+        </div>
+    </div>
+    <!-- END Invoice Block -->
+</div>
+
+<script>
+    $(function () {
+        let seconds = 5;
+        const countdown = setInterval(function () {
+            $("#countdown").html(seconds);
+            if (seconds <= 0) {
+                clearInterval(countdown);
+                window.location.href = "<%= redirectUrl %>";
+            }
+            seconds--;
+        }, 1000);
+    });
+</script>

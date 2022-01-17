@@ -1,0 +1,88 @@
+<div id="page-content">
+    <!-- Invoice Header -->
+    <div class="content-header">
+        <div class="header-section">
+            <h1>
+                <i class="gi gi-usd"></i>Thanh toán hóa đơn<br><small>Hệ thống thanh toán</small>
+            </h1>
+        </div>
+    </div>
+    <!-- END Invoice Header -->
+
+    <!-- Invoice Block -->
+    <div class="block full">
+        <!-- Invoice Title -->
+        <div class="block-title">
+            <div class="block-options pull-right">
+                <a href="javascript:void(0)" class="btn btn-sm btn-alt btn-default" onclick="App.pagePrint();"><i
+                            class="fa fa-print"></i> Print</a>
+            </div>
+            <h2><strong>Hóa đơn thanh toán dịch vụ</strong></h2>
+        </div>
+        <!-- END Invoice Title -->
+        <% if(err) { %>
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="fa fa-exclamation-circle"></i> <%= err %></h4>
+            </div>
+        <% } else { %>
+            <!-- Invoice Content -->
+            <!-- 2 Column grid -->
+            <form method="post">
+                <div class="row block-section">
+                    <!-- Company Info -->
+                    <div class="col-sm-6">
+                        <h2>Nhà cung cấp: <strong><%= app.name %></strong></h2>
+                        <address>
+                            Địa chỉ: <strong><%= app.address %></strong><br>
+                        </address>
+                    </div>
+                    <!-- END Company Info -->
+
+                    <!-- Client Info -->
+                    <div class="col-sm-6 text-right">
+                        <h2>Người thanh toán: <strong><%= user.username %></strong></h2>
+                        <address>
+                            Số dư: <strong><%= user.balance %></strong><br>
+                            Nội dung: <strong><%= description %></strong>
+                        </address>
+                    </div>
+                    <!-- END Client Info -->
+                </div>
+                <!-- END 2 Column grid -->
+
+                <!-- Table -->
+                <div class="table-responsive">
+                    <table class="table table-vcenter">
+                        <tbody>
+                        <tr class="active">
+                            <td colspan="4" class="text-right"><span class="h4">Tạm tính</span></td>
+                            <td class="text-right"><span class="h4">$ <%= amount %></span></td>
+                        </tr>
+                        <tr class="active">
+                            <td colspan="4" class="text-right"><span class="h4">Giảm giá</span></td>
+                            <td class="text-right"><span class="h4">0%</span></td>
+                        </tr>
+                        <tr class="active">
+                            <td colspan="4" class="text-right"><span class="h3"><strong>Thành tiền</strong></span></td>
+                            <td class="text-right"><span class="h3"><strong>$ <%= amount %></strong></span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- END Table -->
+                <div class="clearfix">
+                    <div class="btn-group pull-right">
+                        <a href="<%= cancelUrl %>" class="btn btn-default"><i class="fa fa-print"></i> Hủy thanh
+                            toán</a>
+                        <button type="submit" <%= !success && 'disabled' %>
+                           title="<%= success ? '' : 'Số dư không đủ vui lòng nạp thêm tiền' %>"
+                           class="btn btn-primary"><i class="fa fa-angle-right"></i> Xác nhận</button>
+                    </div>
+                </div>
+            </form>
+        <% } %>
+        <!-- END Invoice Content -->
+    </div>
+    <!-- END Invoice Block -->
+</div>
