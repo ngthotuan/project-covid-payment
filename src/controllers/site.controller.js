@@ -1,5 +1,33 @@
 const { accountService } = require('../services');
 const passport = require('passport');
+const bcrypt = require('bcrypt');
+
+const getProfile = (req, res, next) => {
+    const user = req.user || '';
+    res.render('home', {
+        user,
+    });
+};
+
+const getChangePassword = (req, res, next) => {
+    res.render('authen/change-password');
+};
+
+const postChangePassword = async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+    if (!bcrypt.compareSync(oldPassword, req.user.password)) {
+        req.flash('error_msg', 'Mật khẩu cũ không chính xác!');
+    } else {
+        try {
+            await accountService.changePassword(req.user.id, newPassword);
+            req.flash('success_msg', 'Thay đổi mật khẩu thành công!');
+        } catch (error) {
+            console.error('user.controller change password', error);
+            req.flash('error_msg', 'Thay đổi mật khẩu thất bại!');
+        }
+    }
+    res.redirect('/change-password');
+};
 
 const getDeposit = async (req, res, next) => {
     const account = await accountService.findAccountByUsername(
@@ -128,4 +156,7 @@ module.exports = {
     postLoginUsername,
     getDeposit,
     postDeposit,
+    getProfile,
+    getChangePassword,
+    postChangePassword,
 };

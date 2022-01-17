@@ -1,0 +1,53 @@
+<div id="page-content">
+  <div class="block">
+    <div class="block-title">
+      <h2>
+        <strong>Thông tin cá nhân</strong>
+      </h2>
+    </div>
+    <div class="row" style="display: flex; justify-content: center">
+      <div class="col-md-4">
+        <!-- Advanced Active Theme Color Widget Alternative -->
+        <div class="widget">
+          <div class="widget-advanced widget-advanced-alt">
+            <!-- Widget Header -->
+            <div class="widget-header text-center themed-background-dark">
+              <a href="page_ready_user_profile.html">
+                <img
+                  src="img/placeholders/avatars/avatar15.jpg"
+                  alt="avatar"
+                  class="widget-image img-circle"
+                />
+              </a>
+              <h4 class="widget-content-light"><a><%= user.username %></a><br /></h4>
+            </div>
+            <!-- END Widget Header -->
+
+            <!-- Widget Main -->
+            <div class="widget-main">
+              <div class="list-group remove-margin">
+                <a href="javascript:void(0)" class="list-group-item">
+                  <span class="pull-right"><strong><%= user.balance%></strong> VND</span>
+                  <h4 class="list-group-item-heading remove-margin">
+                    <i class="fa fa-file fa-fw"></i> Số dư
+                  </h4>
+                </a>
+              </div>
+            </div>
+            <!-- END Widget Main -->
+            <div style="text-align: center;">
+                <a
+                  href="/change-password"
+                  class="btn btn-primary mb-2"  
+                >
+                  Đổi mật khẩu
+            </a>
+              </div>
+          </div>
+        </div>
+        <!-- END Advanced Active Theme Color Widget Alternative -->
+      </div>
+    </div>
+  </div>
+  </div>
+</div>

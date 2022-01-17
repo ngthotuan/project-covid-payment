@@ -49,9 +49,14 @@ const changePassword = async (id, password) => {
     account.update({ password: passwordHashed });
 };
 
+function updateBalance(id, balance) {
+    return AccountModel.update({ balance }, { where: { id } });
+}
+
 module.exports = {
     findAll,
     deposit,
+    updateBalance,
     findAccountByUsername,
     findById,
     createPasswordInLogin,
