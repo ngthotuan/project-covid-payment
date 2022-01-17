@@ -10,6 +10,7 @@ router.post('/login/password', siteController.postLoginPassword);
 router.get('/login', siteController.getLoginUsername);
 router.post('/login', siteController.postLoginUsername);
 router.get('/logout', siteController.getLogout);
+
 router.get('/change-password', siteController.getChangePassword);
 router.post('/change-password', siteController.postChangePassword);
 router.get('/', siteController.getProfile);
