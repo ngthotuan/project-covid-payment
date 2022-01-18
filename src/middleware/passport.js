@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt');
 const { accountService } = require('../services');
 
 module.exports = (app) => {
+    app.use(passport.initialize());
+    app.use(passport.session());
+
     passport.use(
         new LocalStrategy(async (username, password, done) => {
             let user;
@@ -51,7 +54,4 @@ module.exports = (app) => {
             done('Đã có lỗi xày ra');
         }
     });
-    app.use(passport.initialize());
-    app.use(passport.session());
-    app.use(passport.session());
 };

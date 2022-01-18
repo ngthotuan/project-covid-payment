@@ -12,7 +12,7 @@ function common(app) {
     app.use(cookieParser());
     app.use(
         session({
-            secret: 'keyboard cat',
+            secret: 'project-covid-payment',
             resave: true,
             saveUninitialized: true,
             cookie: { maxAge: 24 * 60 * 60 * 1000 },

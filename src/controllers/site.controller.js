@@ -3,11 +3,7 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 
 const getProfile = async (req, res, next) => {
-    const include = {
-        include: ['account_histories'],
-    };
-    const user = await accountService.findwithCondition(req.user.id, include);
-
+    const user = await accountService.findById(req.user.id);
     res.render('home', {
         user,
     });
@@ -140,10 +136,7 @@ const postLoginCreate = async (req, res, next) => {
     }
 
     try {
-        const account = await accountService.createPasswordInLogin(
-            username,
-            password,
-        );
+        await accountService.createPasswordInLogin(username, password);
         req.flash('success_msg', 'Tạo mật khẩu thành công');
         return res.redirect('/login');
     } catch (err) {
@@ -171,6 +164,17 @@ const postInit = async (req, res) => {
     return res.redirect('/login');
 };
 
+const getTransactions = async (req, res, next) => {
+    const include = {
+        include: ['account_histories'],
+    };
+    const user = await accountService.findwithCondition(req.user.id, include);
+
+    res.render('transactions', {
+        user,
+    });
+};
+
 module.exports = {
     getLoginCreate,
     getLoginPassword,
@@ -186,4 +190,5 @@ module.exports = {
     postChangePassword,
     getInit,
     postInit,
+    getTransactions,
 };
