@@ -16,7 +16,7 @@ const getPayment = async (req, res, next) => {
             if (!client) {
                 err = 'Yêu cầu không hợp lệ';
             } else {
-                if (req.user.balance < amount) {
+                if (req.user.balance < +amount) {
                     err =
                         'Số dư không đủ. Vui lòng nạp thêm tiền vào tài khoản';
                 } else {
