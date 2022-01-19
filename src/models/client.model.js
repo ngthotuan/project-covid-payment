@@ -17,10 +17,6 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING(64),
                 allowNull: false,
             },
-            redirect_url: {
-                type: DataTypes.STRING(255),
-                allowNull: true,
-            },
             name: {
                 type: DataTypes.STRING(255),
                 allowNull: true,

@@ -1,9 +1,6 @@
-const bcrypt = require('bcrypt');
-const {
-    accountService,
-    clientService,
-    accountHistoryService,
-} = require('../services');
+const jsonwebtoken = require('jsonwebtoken');
+
+const { accountService, clientService } = require('../services');
 
 const getPayment = async (req, res, next) => {
     const { clientId, amount, description, redirect } = req.query;
@@ -51,16 +48,23 @@ const postPayment = async (req, res, next) => {
         const { id, balance } = req.user;
         const newBalance = balance - amount;
         if (newBalance < 0) {
-            res.render('payment/success', {
+            return res.render('payment/success', {
                 title: 'Thanh toán thất bại',
                 msg: 'Số dư không đủ, vui lòng nạp thêm tiền vào tài khoản',
             });
         } else {
             await accountService.payment(id, amount);
             await accountService.updateMasterBalance(amount);
-            const code = bcrypt.hashSync(client.client_secret, 8);
-            const redirectUrl = `${redirect}?success=true&amount=${amount}&dataCallback=${dataCallback}&code=${code}`;
-            res.render('payment/success', {
+            const token = jsonwebtoken.sign(
+                {
+                    amount,
+                    dataCallback,
+                },
+                client.client_secret,
+            );
+
+            const redirectUrl = `${redirect}?success=true&token=${token}`;
+            return res.render('payment/success', {
                 title: 'Thanh toán thành công',
                 redirectUrl,
             });

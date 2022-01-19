@@ -69,7 +69,7 @@ const payment = async (id, amount) => {
         account_id: account.id,
     };
     await AccountHistoryModel.create(accountHistory);
-    account.update({ balance: account.balance - amount });
+    await account.update({ balance: account.balance - amount });
 };
 
 const createUser = async (username) => {
@@ -108,7 +108,7 @@ const updateMasterBalance = async (amount) => {
         account_id: account.id,
     };
     await AccountHistoryModel.create(accountHistory);
-    account.update({ balance: account.balance + amount });
+    await account.update({ balance: account.balance + amount });
 };
 
 module.exports = {
