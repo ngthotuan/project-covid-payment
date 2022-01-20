@@ -2,7 +2,7 @@ const { sequelize } = require('../db');
 const { AccountModel, AccountHistoryModel } = require('../models')(sequelize);
 const bcrypt = require('bcrypt');
 const depositStatus = require('../constants/deposit.status');
-
+const { v4: uuidv4 } = require('uuid');
 function findAll(condition) {
     return AccountModel.findAll(condition);
 }
@@ -13,11 +13,14 @@ const deposit = async (username, amount) => {
             where: { username: username },
         });
 
+        const code = uuidv4();
+
         const accountHistory = {
             action: depositStatus.DEPOSIT,
             created_date: Date.now(),
             amount: amount,
             account_id: account.id,
+            code,
         };
         await AccountHistoryModel.create(accountHistory);
         await account.update({
