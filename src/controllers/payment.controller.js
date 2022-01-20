@@ -1,5 +1,5 @@
 const jsonwebtoken = require('jsonwebtoken');
-
+const { v4: uuidv4 } = require('uuid');
 const { accountService, clientService } = require('../services');
 
 const getPayment = async (req, res, next) => {
@@ -53,12 +53,14 @@ const postPayment = async (req, res, next) => {
                 msg: 'Số dư không đủ, vui lòng nạp thêm tiền vào tài khoản',
             });
         } else {
-            await accountService.payment(id, amount);
+            const code = uuidv4();
+            await accountService.payment(id, amount, code);
             await accountService.updateMasterBalance(amount);
             const token = jsonwebtoken.sign(
                 {
                     amount,
                     dataCallback,
+                    code,
                 },
                 client.client_secret,
             );

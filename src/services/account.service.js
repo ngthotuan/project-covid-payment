@@ -56,17 +56,17 @@ const changePassword = async (id, password) => {
     const account = await AccountModel.findByPk(id);
     account.update({ password: passwordHashed });
 };
-const findwithCondition = async (accountId, include) => {
-    const account = await AccountModel.findByPk(accountId, include);
-    return account;
+const findwithCondition = (accountId, include) => {
+    return AccountModel.findByPk(accountId, include);
 };
-const payment = async (id, amount) => {
+const payment = async (id, amount, code) => {
     const account = await AccountModel.findByPk(id);
     const accountHistory = {
         action: depositStatus.PAYMENT,
         created_date: Date.now(),
         amount: amount,
         account_id: account.id,
+        code: code,
     };
     await AccountHistoryModel.create(accountHistory);
     await account.update({ balance: account.balance - amount });
