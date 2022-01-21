@@ -2,7 +2,7 @@ const { sequelize } = require('../db');
 const { AccountModel, AccountHistoryModel } = require('../models')(sequelize);
 const bcrypt = require('bcrypt');
 const depositStatus = require('../constants/deposit.status');
-
+const { v4: uuidv4 } = require('uuid');
 function findAll(condition) {
     return AccountModel.findAll(condition);
 }
@@ -13,11 +13,14 @@ const deposit = async (username, amount) => {
             where: { username: username },
         });
 
+        const code = uuidv4();
+
         const accountHistory = {
             action: depositStatus.DEPOSIT,
             created_date: Date.now(),
             amount: amount,
             account_id: account.id,
+            code,
         };
         await AccountHistoryModel.create(accountHistory);
         await account.update({
@@ -56,17 +59,17 @@ const changePassword = async (id, password) => {
     const account = await AccountModel.findByPk(id);
     account.update({ password: passwordHashed });
 };
-const findwithCondition = async (accountId, include) => {
-    const account = await AccountModel.findByPk(accountId, include);
-    return account;
+const findwithCondition = (accountId, include) => {
+    return AccountModel.findByPk(accountId, include);
 };
-const payment = async (id, amount) => {
+const payment = async (id, amount, code) => {
     const account = await AccountModel.findByPk(id);
     const accountHistory = {
         action: depositStatus.PAYMENT,
         created_date: Date.now(),
         amount: amount,
         account_id: account.id,
+        code: code,
     };
     await AccountHistoryModel.create(accountHistory);
     await account.update({ balance: account.balance - amount });

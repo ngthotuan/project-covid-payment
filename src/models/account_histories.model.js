@@ -21,6 +21,10 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.BIGINT,
                 allowNull: false,
             },
+            code: {
+                type: DataTypes.STRING(255),
+                allowNull: true,
+            },
             account_id: {
                 type: DataTypes.BIGINT,
                 allowNull: true,
