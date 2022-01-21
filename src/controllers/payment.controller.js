@@ -54,8 +54,8 @@ const postPayment = async (req, res, next) => {
             });
         } else {
             const code = uuidv4();
-            await accountService.payment(id, amount, code);
-            await accountService.updateMasterBalance(amount);
+            await accountService.payment(id, +amount, code);
+            await accountService.updateMasterBalance(+amount);
             const token = jsonwebtoken.sign(
                 {
                     amount,
